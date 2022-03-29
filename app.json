@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "mark-it",
+    "slug": "mark-it",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
