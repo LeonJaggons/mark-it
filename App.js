@@ -1,21 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { NativeBaseProvider, Box } from "native-base";
+import React from "react";
+import { StyleSheet } from "react-native";
+import MarkItNavigation from "./components/nav/MarkItNavigation";
+import MarkItItem from "./js/MarkItItem";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    let markItItem = new MarkItItem(
+        { firstName: "Leon" },
+        "My First Item",
+        "Lorem ipsum sdsad sfsaf asfa.",
+        90,
+        ["My", "First", "Item"]
+    );
+    return (
+        <NativeBaseProvider>
+            <Box flex={1} bg={"white"}>
+                <MarkItNavigation />
+                <StatusBar style="light" />
+            </Box>
+        </NativeBaseProvider>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
