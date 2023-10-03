@@ -1,0 +1,33 @@
+body {
+    overflow: initial !important;
+}
+#mark-it-header {
+    top: 0px;
+    z-index: 999;
+    background-color: white;
+    position: sticky;
+    justify-content: space-between;
+    padding: 12px 7vw;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+#mi-app-container {
+    height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+}
+#mi-content {
+    position: relative;
+    flex: 1;
+    padding: 16px 7vw;
+}
+#mi-post-btn {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+}
+
+.mark-it-menu-item {
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none !important;
+}

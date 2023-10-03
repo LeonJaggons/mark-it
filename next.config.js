@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+    reactStrictMode: true,
+    // loaders: [
+    //     {
+    //         test: /\.txt$/,
+    //         use: ["text-loader"],
+    //     },
+    // ],
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
