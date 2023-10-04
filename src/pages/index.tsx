@@ -62,6 +62,8 @@ export default function Home() {
 const BrowseFilters = () => {
     return (
         <Card
+            borderWidth={0.5}
+            borderColor={"rgba(0,0,0,.1)"}
             position={"sticky"}
             top={"140px"}
             maxH={"calc(100vh - 160px)"}

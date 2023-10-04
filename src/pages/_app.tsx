@@ -8,7 +8,11 @@ import { store } from "@/redux/store";
 import { useEffect, useState } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "@/firebase/firebase-init";
-import { getUserFromFBUser, updateLoginState } from "@/services/auth_services";
+import {
+    getUserFromFBUser,
+    loginUser,
+    updateLoginState,
+} from "@/services/auth_services";
 import { useRouter } from "next/router";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -17,16 +21,18 @@ export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const [onPost, setOnPost] = useState<boolean>(false);
     useEffect(() => {
-        const unsub = onAuthStateChanged(fireAuth, async (fbUser) => {
+        // loginUser(true);
+        onAuthStateChanged(fireAuth, (fbUser) => {
             if (fbUser?.uid) {
-                const user = await getUserFromFBUser(fbUser);
-                updateLoginState(user);
+                getUserFromFBUser(fbUser).then((user) => {
+                    updateLoginState(user);
+                });
             }
         });
 
-        return () => {
-            unsub();
-        };
+        // return () => {
+        //     unsub();
+        // };
     }, []);
     useEffect(() => {
         if (router.isReady) {

@@ -39,6 +39,7 @@ import { RootState } from "@/redux/store";
 import { loginUser } from "@/services/auth_services";
 import axios from "axios";
 import { MdLocationOn, MdShop, MdShop2, MdStore } from "react-icons/md";
+import * as CryptoJS from "crypto-js";
 const MarkItHeader = () => {
     const [categories, setCategories] = useState<any[]>([]);
     const getCategories = async () => {
@@ -183,7 +184,7 @@ const MarkItMenu = () => {
             { href: "/saved", label: "Saved" },
             { href: "/sell", label: "Selling" },
             { href: "/notifications", label: "Notifications" },
-            { href: "/messages", label: "Messages" },
+            { href: "/message", label: "Messages" },
         ];
         setMenuItems(loggedIn ? loggedInMI : loggedOutMI);
     }, [loggedIn]);
@@ -233,6 +234,7 @@ const MarkItLoginModal = () => {
     const dispatch = useDispatch();
     const [canSubmit, setCanSubmit] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [saveLogin, setSaveLogin] = useState(false);
     const loggedIn = useSelector<RootState, boolean>(
         (state) => state.account.loggedIn
     );
@@ -271,9 +273,14 @@ const MarkItLoginModal = () => {
     const handleUpdatePassword = (e: any) =>
         dispatch(setLoginPassword(e.target.value));
 
+    const handleSaveLogin = () => {
+        localStorage.setItem("email", loginCreds.email);
+        localStorage.setItem("password", loginCreds.password);
+    };
     const handleLogin = async () => {
         setLoading(true);
         await loginUser();
+        saveLogin && handleSaveLogin();
         setLoading(false);
     };
     return (
@@ -296,7 +303,13 @@ const MarkItLoginModal = () => {
                                 onChange={handleUpdatePassword}
                             />
                             <HStack justify={"space-between"}>
-                                <Checkbox>Remember me</Checkbox>
+                                <Checkbox
+                                    onChange={(e) =>
+                                        setSaveLogin(e.target.checked)
+                                    }
+                                >
+                                    Remember me
+                                </Checkbox>
                                 <Button variant={"link"} size={"sm"}>
                                     Forgot password?
                                 </Button>

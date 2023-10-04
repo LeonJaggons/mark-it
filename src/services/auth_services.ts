@@ -5,9 +5,20 @@ import Axios from "axios";
 import { User, UserCredential } from "firebase/auth";
 import { collection, doc, getDoc } from "firebase/firestore";
 
-export const loginUser = async () => {
-    const loginCreds = store.getState().account.loginCreds;
-    const user = (await Axios.post("/api/auth", loginCreds)).data;
+export const loginUser = async (withSaved = false) => {
+    let creds;
+    if (withSaved) {
+        if (!localStorage.getItem("email")) {
+            return;
+        }
+        creds = {
+            email: localStorage.getItem("email"),
+            password: localStorage.getItem("password"),
+        };
+    } else {
+        creds = store.getState().account.loginCreds;
+    }
+    const user = (await Axios.post("/api/auth", creds)).data;
     updateLoginState(user);
 };
 

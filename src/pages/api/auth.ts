@@ -9,13 +9,19 @@ import { fireAuth, fireStore } from "@/firebase/firebase-init";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { getUserFromFBUser } from "@/services/auth_services";
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
     switch (req.method) {
         case "POST":
-            handleUserLogin(req, res);
+            const result = await handleUserLogin(req, res);
+            if (result.userID) {
+                res.status(200).json(result);
+            } else {
+                res.status(400).json(result);
+            }
+
             break;
         default:
             res.status(200).json({ name: "John Doe" });
@@ -36,12 +42,13 @@ const handleUserLogin = async (
         password
     ).catch((err) => {
         error = err;
+        console.log(error);
     });
 
     if (!error) {
         const user = await getUserFromFBUser(userCreds?.user);
-        res.status(200).json(user);
+        return user;
     } else {
-        res.status(400).json(error);
+        return error;
     }
 };

@@ -14,6 +14,11 @@ import {
     IconButton,
     useMediaQuery,
     Stack,
+    Modal,
+    ModalBody,
+    Textarea,
+    ModalContent,
+    ModalOverlay,
 } from "@chakra-ui/react";
 import React, { ReactNode, useEffect, useState } from "react";
 import {
@@ -24,20 +29,26 @@ import {
     MdBookmarkRemove,
     MdIosShare,
     MdMoreHoriz,
+    MdSend,
     MdShare,
 } from "react-icons/md";
 import moment from "moment";
 import Link from "next/link";
 import { deleteLikeItem, isItemLiked, likeItem } from "@/services/item_service";
 import { useSelector } from "react-redux";
+import { sendMessage } from "@/services/message_service";
 
 export const MarkItItemDisplay = (props: {
     item: MarkItItem;
     isPreview: boolean | undefined;
 }) => {
+    const [showMessage, setShowMessage] = useState(false);
     const [selectedImage, setSelectedImage] = useState(0);
     const [useSmallLayout] = useMediaQuery("(max-width: 1100px)");
     const loggedIn = useSelector((state) => state.account.loggedIn);
+    const user = useSelector((state) => state.account.user);
+    const openMessage = () => setShowMessage(true);
+    const closeMessage = () => setShowMessage(false);
     return (
         <Card flex={1} overflow={"hidden"} w={"full"} h={"full"}>
             <Stack
@@ -130,7 +141,7 @@ export const MarkItItemDisplay = (props: {
                             </Tag>
                         )}
                         <HStack my={4} w={"full"}>
-                            {loggedIn && (
+                            {loggedIn && user.userID !== props.item.userID && (
                                 <LikeButton itemID={props.item.itemID} />
                             )}
                             <ShareButton />
@@ -168,22 +179,114 @@ export const MarkItItemDisplay = (props: {
                             </div>
                         )}
                         <Box flex={1} />
-                        <VStack w={"full"}>
-                            <Button
-                                w={"full"}
-                                colorScheme={"messenger"}
-                                isDisabled={props.isPreview}
-                            >
-                                Make an Offer
-                            </Button>
-                            <Button w={"full"} isDisabled={props.isPreview}>
-                                Message Seller
-                            </Button>
-                        </VStack>
+                        {user.userID !== props.item.userID && (
+                            <VStack w={"full"}>
+                                <Button
+                                    w={"full"}
+                                    colorScheme={"messenger"}
+                                    isDisabled={props.isPreview}
+                                >
+                                    Make an Offer
+                                </Button>
+                                <Button
+                                    w={"full"}
+                                    isDisabled={props.isPreview}
+                                    onClick={openMessage}
+                                >
+                                    Message Seller
+                                </Button>
+                                <MessageSellerModal
+                                    visible={showMessage}
+                                    item={props.item}
+                                    close={closeMessage}
+                                />
+                            </VStack>
+                        )}
                     </VStack>
                 </Box>
             </Stack>
         </Card>
+    );
+};
+
+const MessageSellerModal = (props: {
+    visible: boolean;
+    item: MarkItItem;
+    close: any;
+}) => {
+    const [content, setContent] = useState("");
+    const [loading, setLoading] = useState(false);
+    const handleSendMessage = async () => {
+        setLoading(true);
+        const to = props.item.userID;
+        const itemID = props.item.itemID;
+        await sendMessage(to, itemID, content);
+        setLoading(false);
+        props.close();
+    };
+    useEffect(() => {
+        console.log(props.item);
+    }, []);
+    const handleUpdateContent = (e) => {
+        setContent(e.target.value);
+    };
+    return (
+        <Modal isOpen={props.visible} onClose={props.close} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalBody p={0}>
+                    <HStack
+                        p={4}
+                        borderBottom={"1px solid rgba(0,0,0,.05)"}
+                        align={"center"}
+                    >
+                        <Heading size={"md"}>Message</Heading>
+                    </HStack>
+                    <VStack w={"full"} align={"flex-start"} p={4}>
+                        <HStack mb={6}>
+                            <Image
+                                borderRadius={5}
+                                src={props.item.images[0]}
+                                w={"60px"}
+                                objectFit={"cover"}
+                                aspectRatio={1}
+                            />
+                            <VStack align={"flex-start"}>
+                                <Heading size={"sm"}>
+                                    {props.item.title}
+                                </Heading>
+                                <Heading size={"xs"} fontWeight={400}>
+                                    ${props.item.price}
+                                </Heading>
+                            </VStack>
+                        </HStack>
+                        <Textarea
+                            value={content}
+                            onChange={handleUpdateContent}
+                            placeholder={"Type your message..."}
+                        />
+                    </VStack>
+                    <HStack
+                        p={4}
+                        borderTop={"1px solid rgba(0,0,0,.05)"}
+                        align={"center"}
+                        justify={"flex-end"}
+                    >
+                        <Button flex={1}>Cancel</Button>
+                        <Button
+                            onClick={handleSendMessage}
+                            isDisabled={!content || content.trim() === ""}
+                            isLoading={loading}
+                            flex={1}
+                            colorScheme={"messenger"}
+                            rightIcon={<Icon as={MdSend} />}
+                        >
+                            Send message
+                        </Button>
+                    </HStack>
+                </ModalBody>
+            </ModalContent>
+        </Modal>
     );
 };
 
