@@ -41,7 +41,7 @@ import axios from "axios";
 import { MdLocationOn, MdShop, MdShop2, MdStore } from "react-icons/md";
 import * as CryptoJS from "crypto-js";
 const MarkItHeader = () => {
-    const [categories, setCategories] = useState<any[]>([]);
+    const [categories, setCategories] = useState([]);
     const getCategories = async () => {
         const res = await axios.get("/api/category");
         setCategories([...res.data]);
@@ -102,7 +102,7 @@ const MarkItHeader = () => {
     );
 };
 
-const CategoryMenuItem = (props: { href: string }) => {
+const CategoryMenuItem = (props) => {
     return (
         <Link
             as={NextLink}
@@ -160,15 +160,15 @@ const MarkItLogo = () => {
 };
 
 const MarkItMenu = () => {
-    const [menuItems, setMenuItems] = useState<any[]>([]);
-    const user = useSelector<RootState, any>(
-        (state: RootState) => state.account.user
+    const [menuItems, setMenuItems] = useState([]);
+    const user = useSelector(
+        (state) => state.account.user
     );
     const dispatch = useDispatch();
     const handleOpenLogin = () => {
         dispatch(toggleShowLogin());
     };
-    const loggedIn = useSelector<RootState, boolean>(
+    const loggedIn = useSelector(
         (state) => state.account.loggedIn
     );
 
@@ -206,12 +206,8 @@ const MarkItMenu = () => {
     );
 };
 
-const MarkItMenuItem = (props: {
-    label?: string;
-    href?: string;
-    onClick?: () => any;
-}) => {
-    const newLocal = (e: any) => {
+const MarkItMenuItem = () => {
+    const newLocal = (e) => {
         !props.href && e.preventDefault();
         props.onClick && props.onClick();
     };
@@ -235,17 +231,17 @@ const MarkItLoginModal = () => {
     const [canSubmit, setCanSubmit] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saveLogin, setSaveLogin] = useState(false);
-    const loggedIn = useSelector<RootState, boolean>(
+    const loggedIn = useSelector(
         (state) => state.account.loggedIn
     );
-    const user = useSelector<RootState, any>(
-        (state: RootState) => state.account.user
+    const user = useSelector(
+        (state) => state.account.user
     );
-    const showLogin = useSelector<any, boolean>(
-        (state: any) => state.app.showLogin
+    const showLogin = useSelector(
+        (state) => state.app.showLogin
     );
-    const loginCreds = useSelector<RootState, LoginCreds>(
-        (state: RootState) => state.account.loginCreds
+    const loginCreds = useSelector(
+        (state) => state.account.loginCreds
     );
 
     useEffect(() => {
@@ -268,14 +264,18 @@ const MarkItLoginModal = () => {
 
     const handleClose = () => dispatch(toggleShowLogin());
 
-    const handleUpdateUsername = (e: any) =>
+    const handleUpdateUsername = (e) =>
         dispatch(setLoginUsername(e.target.value));
-    const handleUpdatePassword = (e: any) =>
+    const handleUpdatePassword = (e) =>
         dispatch(setLoginPassword(e.target.value));
 
     const handleSaveLogin = () => {
+        const ISSERVER = typeof window === "undefined";
+        if(!ISSERVER){
+
         localStorage.setItem("email", loginCreds.email);
         localStorage.setItem("password", loginCreds.password);
+        }
     };
     const handleLogin = async () => {
         setLoading(true);

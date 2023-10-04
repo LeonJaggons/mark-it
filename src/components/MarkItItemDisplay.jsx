@@ -38,10 +38,7 @@ import { deleteLikeItem, isItemLiked, likeItem } from "@/services/item_service";
 import { useSelector } from "react-redux";
 import { sendMessage } from "@/services/message_service";
 
-export const MarkItItemDisplay = (props: {
-    item: MarkItItem;
-    isPreview: boolean | undefined;
-}) => {
+export const MarkItItemDisplay = (props) => {
     const [showMessage, setShowMessage] = useState(false);
     const [selectedImage, setSelectedImage] = useState(0);
     const [useSmallLayout] = useMediaQuery("(max-width: 1100px)");
@@ -209,11 +206,7 @@ export const MarkItItemDisplay = (props: {
     );
 };
 
-const MessageSellerModal = (props: {
-    visible: boolean;
-    item: MarkItItem;
-    close: any;
-}) => {
+const MessageSellerModal = (props) => {
     const [content, setContent] = useState("");
     const [loading, setLoading] = useState(false);
     const handleSendMessage = async () => {
@@ -290,7 +283,7 @@ const MessageSellerModal = (props: {
     );
 };
 
-const LikeButton = (props: { itemID: string }) => {
+const LikeButton = (props) => {
     const [isLiked, setIsLiked] = useState<boolean | null>(null);
     const loggedIn = useSelector((state) => state.account.loggedIn);
 
@@ -338,13 +331,7 @@ const ShareButton = () => {
 const MoreButton = () => {
     return <ItemActionButton icon={MdMoreHoriz} fit />;
 };
-const ItemActionButton = (props: {
-    active?: boolean;
-    children?: ReactNode | string;
-    icon?: any;
-    onClick?: any;
-    fit?: any;
-}) => {
+const ItemActionButton = (props) => {
     return (
         <Button
             variant={"solid"}

@@ -56,11 +56,11 @@ export const postNewItem = async () => {
 
 export const getAllItems = async () => {
     const res = await axios.get("/api/item");
-    const items: MarkItItem[] = res.data;
+    const items = res.data;
     return items;
 };
 
-export const getItemByID = async (itemID: string) => {
+export const getItemByID = async (itemID) => {
     const res = await axios.get(`/api/item?id=${itemID}`);
     return res.data;
 };
@@ -71,15 +71,15 @@ export const getLikedItems = async () => {
 
     return likedItems.data;
 };
-export const isItemLiked = async (itemID: string) => {
+export const isItemLiked = async (itemID) => {
     const likedItems = await getLikedItems();
-    return likedItems?.map((i: any) => i.itemID).includes(itemID);
+    return likedItems?.map((i) => i.itemID).includes(itemID);
 };
-export const likeItem = async (itemID: string) => {
+export const likeItem = async (itemID) => {
     const userID = store.getState().account.user.userID;
     await axios.post(`/api/favorite?itemID=${itemID}&userID=${userID}`);
 };
-export const deleteLikeItem = async (itemID: string) => {
+export const deleteLikeItem = async (itemID) => {
     const userID = store.getState().account.user.userID;
     await axios.delete(`/api/favorite?itemID=${itemID}&userID=${userID}`);
 };

@@ -1,10 +1,4 @@
-import {
-    EmptyItem,
-    Location,
-    MarkItItem,
-    setPostItem,
-} from "@/redux/reducer/itemSlice";
-import { RootState } from "@/redux/store";
+import { setPostItem } from "@/redux/reducer/itemSlice";
 import {
     Box,
     HStack,
@@ -17,67 +11,22 @@ import {
     SimpleGrid,
     Button,
     Text,
-    Spinner,
-    Divider,
-    IconButton,
+    Spinner, IconButton,
     Textarea,
     Card,
     CardBody,
-    Select,
+    Select
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import {
-    MdAddAPhoto,
-    MdAddToPhotos,
-    MdArrowBack,
-    MdArrowForwardIos,
-    MdCheck,
-    MdCheckBox,
-    MdClose,
-    MdDelete,
-    MdDone,
-    MdHeight,
-    MdLocationOn,
-    MdLocationSearching,
-    MdPublish,
-    MdRemove,
-    MdRemoveDone,
-} from "react-icons/md";
+import { MdAddAPhoto, MdArrowBack, MdClose, MdDone, MdLocationOn, MdPublish } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-
-import Slider from "react-slick";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { postNewItem } from "@/services/item_service";
-import { MarkItItemDisplay } from "../components/MarkItItemDisplay";
-const Post = () => {
-    const dispatch = useDispatch();
-    const loggedIn = useSelector((state) => state.account.loggedIn);
-    const user = useSelector((state) => state.account.user);
-    const router = useRouter();
-    useEffect(() => {
-        if (router.isReady) {
-            if (!loggedIn) {
-                router.push("/");
-            } else {
-                console.log(user);
-            }
-        }
-        return () => {
-            dispatch(setPostItem(EmptyItem));
-        };
-    }, [router.pathname]);
-    return (
-        <HStack spacing={0}>
-            <PostDetailsForm />
-            <PostPreview />
-        </HStack>
-    );
-};
+import { MarkItItemDisplay } from "./MarkItItemDisplay";
 
-const PostPreview = () => {
-    const postItem = useSelector<RootState, MarkItItem>(
+export const PostPreview = () => {
+    const postItem = useSelector(
         (state) => state.item.postItem
     );
     return (
@@ -97,11 +46,10 @@ const PostPreview = () => {
         </Center>
     );
 };
-
 const PostPhotoUpload = () => {
     const dispatch = useDispatch();
-    const [photos, setPhotos] = useState<any[]>([]);
-    const postItem = useSelector<RootState, MarkItItem>(
+    const [photos, setPhotos] = useState([]);
+    const postItem = useSelector(
         (state) => state.item.postItem
     );
     let fileRef = useRef();
@@ -161,26 +109,22 @@ const PostPhotoUpload = () => {
                 ref={fileRef}
                 onChange={handleChange}
                 type={"file"}
-                display={"none"}
-            />
+                display={"none"} />
         </Box>
     );
 };
-const UploadImage = (props: { img: any }) => {
+const UploadImage = (props) => {
     return (
         <Box position={"relative"}>
             <Image
-                fallback={
-                    <Center w={"full"} height={"full"}>
-                        <Spinner color={"blackAlpha.200"} />
-                    </Center>
-                }
+                fallback={<Center w={"full"} height={"full"}>
+                    <Spinner color={"blackAlpha.200"} />
+                </Center>}
                 src={props.img}
                 aspectRatio={1}
                 width={"100%"}
                 borderRadius={5}
-                objectFit={"cover"}
-            />
+                objectFit={"cover"} />
             <Button
                 position={"absolute"}
                 top={1}
@@ -195,13 +139,13 @@ const UploadImage = (props: { img: any }) => {
         </Box>
     );
 };
-const PostDetailsForm = () => {
-    const [categories, setCategories] = useState<any[]>([]);
+export const PostDetailsForm = () => {
+    const [categories, setCategories] = useState([]);
     const dispatch = useDispatch();
-    const postItem = useSelector<RootState, MarkItItem>(
+    const postItem = useSelector(
         (state) => state.item.postItem
     );
-    const user = useSelector<RootState, MarkItItem>(
+    const user = useSelector(
         (state) => state.account.user
     );
     const getCategories = async () => {
@@ -216,7 +160,7 @@ const PostDetailsForm = () => {
     useEffect(() => {
         console.log(postItem);
     }, [postItem]);
-    const updatePostItem = (field: string, newValue: any) => {
+    const updatePostItem = (field, newValue) => {
         const newPostItem = {
             ...postItem,
             [field]: newValue,
@@ -224,12 +168,10 @@ const PostDetailsForm = () => {
         dispatch(setPostItem(newPostItem));
     };
     const updateUserID = () => updatePostItem("userID", user.userID);
-    const updateTitle = (e: any) => updatePostItem("title", e.target.value);
-    const updatePrice = (e: any) => updatePostItem("price", e.target.value);
-    const updateDescription = (e: any) =>
-        updatePostItem("description", e.target.value);
-    const updateCategory = (e: any) =>
-        updatePostItem("category", e.target.value);
+    const updateTitle = (e) => updatePostItem("title", e.target.value);
+    const updatePrice = (e) => updatePostItem("price", e.target.value);
+    const updateDescription = (e) => updatePostItem("description", e.target.value);
+    const updateCategory = (e) => updatePostItem("category", e.target.value);
     return (
         <VStack
             spacing={0}
@@ -249,8 +191,7 @@ const PostDetailsForm = () => {
                     href={"/"}
                     size={"sm"}
                     icon={<Icon as={MdArrowBack} />}
-                    aria-label="Back to home"
-                />
+                    aria-label="Back to home" />
 
                 <Heading size={"md"}>Post New Listing</Heading>
             </HStack>
@@ -330,14 +271,13 @@ const PostDetailsForm = () => {
         </VStack>
     );
 };
-
 const LocationButton = () => {
     const dispatch = useDispatch();
-    const postItem = useSelector<RootState, MarkItItem>(
+    const postItem = useSelector(
         (state) => state.item.postItem
     );
     const [loading, setLoading] = useState(false);
-    const [location, setLocation] = useState<Location | null>(null);
+    const [location, setLocation] = useState < Location | null > (null);
     const requestLocation = () => {
         if ("geolocation" in navigator) {
             setLoading(true);
@@ -375,4 +315,3 @@ const LocationButton = () => {
         </Button>
     );
 };
-export default Post;

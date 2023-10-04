@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
 import { categories } from "@/constants/product_categories.js";
 import {
     addDoc,
@@ -10,14 +9,8 @@ import {
     where,
 } from "firebase/firestore";
 import { fireStore } from "@/firebase/firebase-init";
-type Data = {
-    name: string;
-};
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<any>
-) {
+export default async function handler(req, res) {
     // const cats = Array.from(categories);
     // const catCollection = collection(fireStore, "category");
     // for (let cat of cats) {

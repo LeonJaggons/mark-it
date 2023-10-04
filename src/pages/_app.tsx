@@ -2,7 +2,7 @@ import "@/firebase/firebase-init";
 import "@/styles/app.css";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import MarkItHeader from "./components/MarkItHeader";
+import MarkItHeader from "../components/MarkItHeader";
 import { Provider as ReduxProvider } from "react-redux";
 import { store } from "@/redux/store";
 import { useEffect, useState } from "react";

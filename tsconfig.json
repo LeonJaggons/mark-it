@@ -4,7 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -13,10 +13,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "checkJs": false,
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/constants/product_categories.js", "src/pages/item/index.js", "src/pages/message/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/constants/product_categories.js", "src/pages/item/index.js", "src/pages/message/index.js", "src/pages/api/auth.js", "src/services/item_service.js", "src/pages/post/index.jsx", "src/pages/index.jsx", "src/pages/components/MarkItItemDisplay.jsx", "src/pages/components/MarkItHeader.jsx", "src/pages/api/message.js", "src/pages/api/category.js"],
   "exclude": ["node_modules"]
 }

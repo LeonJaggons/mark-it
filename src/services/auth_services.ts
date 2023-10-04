@@ -8,13 +8,16 @@ import { collection, doc, getDoc } from "firebase/firestore";
 export const loginUser = async (withSaved = false) => {
     let creds;
     if (withSaved) {
-        if (!localStorage.getItem("email")) {
-            return;
+        const ISSERVER = typeof window === "undefined";
+        if (!ISSERVER) {
+            if (!localStorage.getItem("email")) {
+                return;
+            }
+            creds = {
+                email: localStorage.getItem("email"),
+                password: localStorage.getItem("password"),
+            };
         }
-        creds = {
-            email: localStorage.getItem("email"),
-            password: localStorage.getItem("password"),
-        };
     } else {
         creds = store.getState().account.loginCreds;
     }
@@ -30,7 +33,7 @@ export const updateLoginState = (user: any) => {
         store.dispatch(setLoggedIn(false));
     }
 };
-export const getUserFromFBUser = async (user: User | void) => {
+export const getUserFromFBUser = async (user: User) => {
     const userCollection = collection(fireStore, "user");
     const userDoc = doc(userCollection, user?.uid);
     const userDocSnap = await getDoc(userDoc);

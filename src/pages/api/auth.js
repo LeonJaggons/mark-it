@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
 import {
     User,
     UserCredential,
@@ -9,10 +8,7 @@ import { fireAuth, fireStore } from "@/firebase/firebase-init";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { getUserFromFBUser } from "@/services/auth_services";
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<any>
-) {
+export default async function handler(req, res) {
     switch (req.method) {
         case "POST":
             const result = await handleUserLogin(req, res);
@@ -29,10 +25,7 @@ export default async function handler(
     }
 }
 
-const handleUserLogin = async (
-    req: NextApiRequest,
-    res: NextApiResponse<any>
-) => {
+const handleUserLogin = async (req, res) => {
     let error = null;
     const email = req.body.email;
     const password = req.body.password;

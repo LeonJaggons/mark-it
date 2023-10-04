@@ -10,12 +10,8 @@ import {
     where,
 } from "firebase/firestore";
 import { filter, sortBy, uniqBy } from "lodash";
-import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<any>
-) {
+export default async function handler(req, res) {
     const { userID, to, from, itemID, content } = req.query;
     const messageCollection = collection(fireStore, "message");
     switch (req.method) {

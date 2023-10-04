@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getItemByID } from "@/services/item_service";
-import { MarkItItemDisplay } from "../components/MarkItItemDisplay";
+import { MarkItItemDisplay } from "../../components/MarkItItemDisplay";
 import { Box, Center, Spinner } from "@chakra-ui/react";
 const index = () => {
     const router = useRouter();
