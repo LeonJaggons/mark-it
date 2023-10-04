@@ -176,7 +176,7 @@ export const MarkItItemDisplay = (props) => {
                             </div>
                         )}
                         <Box flex={1} />
-                        {user.userID !== props.item.userID && (
+                        {user && user.userID !== props.item.userID && (
                             <VStack w={"full"}>
                                 <Button
                                     w={"full"}

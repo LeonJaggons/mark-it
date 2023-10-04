@@ -14,8 +14,6 @@ import {
     updateLoginState,
 } from "@/services/auth_services";
 import { useRouter } from "next/router";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();

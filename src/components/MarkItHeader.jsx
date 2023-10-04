@@ -120,7 +120,7 @@ const CategoryMenuItem = (props) => {
 };
 
 const MarkItSearch = () => {
-    const [isFocused, setIsFocused] = useState<boolean>(false);
+    const [isFocused, setIsFocused] = useState(false);
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
     return (

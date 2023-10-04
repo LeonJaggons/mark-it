@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import { MarkItItem } from "@/redux/reducer/itemSlice";
 import { getAllItems } from "@/services/item_service";
 import { useSelector } from "react-redux";
-import { BrowseFilters, BrowseItem, PostButton } from "../components/BrowseFilters";
+import { BrowseFilters, PostButton } from "../components/BrowseFilters";
+import { BrowseItem } from "@/components/BrowseItem";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {

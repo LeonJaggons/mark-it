@@ -277,7 +277,7 @@ const LocationButton = () => {
         (state) => state.item.postItem
     );
     const [loading, setLoading] = useState(false);
-    const [location, setLocation] = useState < Location | null > (null);
+    const [location, setLocation] = useState(null);
     const requestLocation = () => {
         if ("geolocation" in navigator) {
             setLoading(true);

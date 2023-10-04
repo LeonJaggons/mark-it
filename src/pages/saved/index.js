@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { getLikedItems } from "../../services/item_service";
-import { BrowseItem } from "../index";
+import { BrowseItem } from "../../components/BrowseItem";
 import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 const Saved = () => {
     const router = useRouter();
