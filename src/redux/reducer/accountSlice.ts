@@ -38,9 +38,19 @@ const accountSlice = createSlice({
                 password: action.payload,
             } as LoginCreds;
         },
+        signOut: (state) => {
+            state.loginCreds = {} as LoginCreds;
+            state.user = null;
+            state.loggedIn = false;
+        },
     },
 });
 
-export const { setUser, setLoginUsername, setLoginPassword, setLoggedIn } =
-    accountSlice.actions;
+export const {
+    setUser,
+    setLoginUsername,
+    setLoginPassword,
+    setLoggedIn,
+    signOut,
+} = accountSlice.actions;
 export default accountSlice.reducer;

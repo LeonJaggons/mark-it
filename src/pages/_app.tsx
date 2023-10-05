@@ -15,6 +15,8 @@ import {
 } from "@/services/auth_services";
 import { useRouter } from "next/router";
 
+import Scrollbars from "react-custom-scrollbars-2";
+
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const [onPost, setOnPost] = useState<boolean>(false);
@@ -45,6 +47,8 @@ export default function App({ Component, pageProps }: AppProps) {
                     <Box id={"mi-content"} padding={"0px !important"}>
                         <Component {...pageProps} />
                     </Box>
+
+                    {/* <Scrollbars></Scrollbars> */}
                 </div>
             </ChakraProvider>
         </ReduxProvider>

@@ -1,16 +1,20 @@
 import {
-    Heading, VStack,
-    Image,
+    Heading,
+    VStack,
+    Image as CkImage,
     Center,
     Spinner,
     Text,
-    Box
+    Box,
+    Card,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export const BrowseItem = (props) => {
     const router = useRouter();
+    const [imgReady, setImgReady] = useState(false);
     const handleClick = () => {
         if (router.isReady) {
             router.replace({
@@ -19,33 +23,57 @@ export const BrowseItem = (props) => {
             });
         }
     };
+    useEffect(() => {
+        if (props.item && props.item.images) {
+            for (let img of props.item.images) {
+                const imgElement = new Image();
+                imgElement.onload = () => {
+                    setImgReady(true);
+                };
+                imgElement.src = img;
+            }
+        }
+    }, []);
     return (
-        <VStack
-            as={Link}
-            href={`/item?id=${props.item.itemID}`}
-            w={"full"}
-            align={"flex-start"}
-            spacing={1}
-            cursor={router.isReady ? "pointer" : "auto"}
-            onClick={handleClick}
+        <Card
+            _hover={{
+                shadow: "md",
+            }}
         >
-            {props.item.images && (
-                <Image
-                    src={props.item.images[0]}
-                    aspectRatio={1}
-                    w={"full"}
-                    objectFit={"cover"}
-                    fallback={
-                        // <Skeleton w={"full"} h={"full"} isLoaded={false} />
-                        <Center w={"full"} height={"full"} aspectRatio={1}>
-                            <Spinner color={"blackAlpha.400"} />
-                        </Center>}
-                    borderRadius={5} />
-            )}
-            <Box>
-                <Heading size={"xs"}>${props.item.price}</Heading>
-                <Text fontSize={"sm"}>{props.item.title}</Text>
-            </Box>
-        </VStack>
+            <VStack
+                as={Link}
+                href={`/item?id=${props.item.itemID}&fromSaved=${props.fromSaved}`}
+                w={"full"}
+                align={"flex-start"}
+                spacing={1}
+                cursor={router.isReady ? "pointer" : "auto"}
+                onClick={handleClick}
+            >
+                {props.item.images && (
+                    <CkImage
+                        src={props.item.images[0]}
+                        aspectRatio={1}
+                        w={"full"}
+                        objectFit={"cover"}
+                        display={""}
+                        fallback={
+                            // <Skeleton w={"full"} h={"full"} isLoaded={false} />
+                            <Center w={"full"} height={"full"} aspectRatio={1}>
+                                <Spinner color={"blackAlpha.400"} />
+                            </Center>
+                        }
+                        loading={!imgReady}
+                        is
+                        borderRadius={5}
+                        borderBottomRadius={0}
+                        borderBottom={"1px solid rgba(0,0,0,.05)"}
+                    />
+                )}
+                <Box p={2} pt={1}>
+                    <Heading size={"xs"}>${props.item.price}</Heading>
+                    <Text fontSize={"sm"}>{props.item.title}</Text>
+                </Box>
+            </VStack>
+        </Card>
     );
 };

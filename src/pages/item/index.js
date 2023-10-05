@@ -9,6 +9,7 @@ const index = () => {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [item, setItem] = useState();
+    const [fromSaved, setFromSaved] = useState(false);
     const loadItem = async (itemID) => {
         setLoading(true);
         console.log("GET ITEM ID: ", itemID);
@@ -20,14 +21,16 @@ const index = () => {
     };
     useEffect(() => {
         if (router.isReady) {
-            const { id } = router.query;
+            const { id, fromSaved } = router.query;
             loadItem(id);
+            console.log("FROM SAVED", fromSaved);
+            setFromSaved(fromSaved);
         }
     }, [router.query]);
     return (
         <Center px={"7vw"} py={"12px"} h={"full"}>
             {item && !loading ? (
-                <MarkItItemDisplay item={item} />
+                <MarkItItemDisplay item={item} fromSaved={fromSaved} />
             ) : (
                 <Spinner size={"lg"} color={"blackAlpha.500"} />
             )}

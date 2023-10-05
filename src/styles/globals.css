@@ -7,6 +7,11 @@
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
 }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 2px;
+}
+
 
 @media (prefers-color-scheme: dark) {
     :root {

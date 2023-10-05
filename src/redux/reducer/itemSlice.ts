@@ -28,11 +28,13 @@ export const EmptyItem: MarkItItem = {
 export interface ItemState {
     postItem: MarkItItem;
     focusedMessage: any;
+    selectedCategory?: string;
 }
 
 const initialState: ItemState = {
     postItem: EmptyItem,
     focusedMessage: null,
+    selectedCategory: null,
 };
 
 const itemSlice = createSlice({
@@ -45,8 +47,12 @@ const itemSlice = createSlice({
         setFocusedMessage: (state, action: PayloadAction<any>) => {
             state.focusedMessage = action.payload;
         },
+        setSelectedCategory: (state, action: PayloadAction<string>) => {
+            state.selectedCategory = action.payload;
+        },
     },
 });
 
-export const { setPostItem, setFocusedMessage } = itemSlice.actions;
+export const { setPostItem, setFocusedMessage, setSelectedCategory } =
+    itemSlice.actions;
 export default itemSlice.reducer;

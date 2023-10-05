@@ -71,7 +71,11 @@ export const MarkItItemDisplay = (props) => {
                     {!props.isPreview && (
                         <IconButton
                             as={Link}
-                            href={"/"}
+                            href={
+                                props.fromSaved && props.fromSaved == "true"
+                                    ? "/saved"
+                                    : "/"
+                            }
                             aria-label="Back to browse"
                             icon={<Icon as={MdArrowBack} />}
                             position={"absolute"}
@@ -284,7 +288,7 @@ const MessageSellerModal = (props) => {
 };
 
 const LikeButton = (props) => {
-    const [isLiked, setIsLiked] = useState<boolean | null>(null);
+    const [isLiked, setIsLiked] = useState(null);
     const loggedIn = useSelector((state) => state.account.loggedIn);
 
     const checkIsLiked = async () => {

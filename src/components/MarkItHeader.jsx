@@ -23,7 +23,12 @@ import {
     InputRightElement,
     IconButton,
     InputRightAddon,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverBody,
 } from "@chakra-ui/react";
+import { signOut as fireSignOut } from "firebase/auth";
 import { IoSearch } from "react-icons/io5";
 import NextLink from "next/link";
 import { ChangeEventHandler, useEffect, useState } from "react";
@@ -34,12 +39,17 @@ import {
     LoginCreds,
     setLoginPassword,
     setLoginUsername,
+    setUser,
+    signOut,
 } from "@/redux/reducer/accountSlice";
 import { RootState } from "@/redux/store";
 import { loginUser } from "@/services/auth_services";
 import axios from "axios";
-import { MdLocationOn, MdShop, MdShop2, MdStore } from "react-icons/md";
+import { MdEdit, MdLocationOn, MdShop, MdShop2, MdStore } from "react-icons/md";
 import * as CryptoJS from "crypto-js";
+import Scrollbars from "react-custom-scrollbars-2";
+import { fireAuth } from "@/firebase/firebase-init";
+import { useRouter } from "next/router";
 const MarkItHeader = () => {
     const [categories, setCategories] = useState([]);
     const getCategories = async () => {
@@ -51,19 +61,21 @@ const MarkItHeader = () => {
         getCategories();
     }, []);
     return (
-        <VStack id={"mark-it-header"} spacing={"14px"} w={"full"}>
+        <VStack id={"mark-it-header"} spacing={"6px"} w={"full"}>
             <HStack w={"full"} spacing={"38px"}>
                 <MarkItLogo />
                 <MarkItSearch />
                 <MarkItMenu />
             </HStack>
-            <HStack w={"100%"} spacing={0} overflow={"hidden"} align={"center"}>
+            <HStack w={"100%"} spacing={0} align={"center"}>
                 <Button
                     variant={"link"}
                     textDecoration={"none !important"}
                     colorScheme="messenger"
                     leftIcon={<Icon as={MdLocationOn} />}
+                    fontSize={14}
                     py={3}
+                    mb={2}
                     // __css={{ textDecor: "none !important" }}
                 >
                     Location
@@ -75,47 +87,64 @@ const MarkItHeader = () => {
                     ml={6}
                     px={0}
                 />
+                {/* <HStack align={"center"} spacing={4} pl={6}> */}
                 <HStack
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        height: "100%",
+                        overflowX: "scroll",
+                        paddingLeft: 12,
+                        paddingTop: 4,
+                    }}
+                    spacing={8}
                     flex={1}
-                    overflowX={"scroll"}
-                    py={3}
-                    align={"center"}
-                    spacing={4}
-                    pl={6}
                 >
                     {categories.map((c) => (
-                        <>
-                            <CategoryMenuItem label={c.name} />
-
-                            <Divider
-                                orientation={"vertical"}
-                                height={"14px"}
-                                borderColor={"white"}
-                                mx={0}
-                                px={0}
-                            />
-                        </>
+                        <CategoryMenuItem
+                            label={c.name}
+                            key={"CAT-" + c.name}
+                        />
                     ))}
                 </HStack>
+                {/* </HStack> */}
             </HStack>
         </VStack>
     );
 };
 
-const CategoryMenuItem = (props) => {
+const CategoryMenuItem = ({ href, label }) => {
+    const router = useRouter();
+    const selectedCategory = useSelector(
+        (state) => state.item.selectedCategory
+    );
+    const handleNav = () => {
+        router.push({
+            pathname: "/browse",
+            query: { category: label },
+        });
+    };
+    useEffect(() => {
+        console.log(selectedCategory);
+    }, [selectedCategory]);
     return (
-        <Link
-            as={NextLink}
-            href={props.href ?? ""}
+        <Box
+            cursor={"pointer"}
+            onClick={handleNav}
             // onClick={newLocal}
+            fontWeight={selectedCategory === label ? 600 : 400}
             _hover={{
                 color: "messenger.500",
             }}
-            fontWeight={500}
-            fontSize={13}
+            fontSize={12}
         >
-            <Text style={{ whiteSpace: "nowrap" }}>{props.label}</Text>
-        </Link>
+            <Text
+                color={selectedCategory === label ? "messenger.500" : "black"}
+                style={{ whiteSpace: "nowrap" }}
+            >
+                {label}
+            </Text>
+        </Box>
     );
 };
 
@@ -124,20 +153,17 @@ const MarkItSearch = () => {
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
     return (
-        <InputGroup height="46px">
-            <InputLeftElement>
-                <Icon
-                    as={IoSearch}
-                    color={isFocused ? "blue.500" : "blackAlpha.500"}
-                    boxSize={5}
-                />
-            </InputLeftElement>
+        <InputGroup>
             <Input
                 variant={"filled"}
                 placeholder={"Search"}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                size={"md"}
+                size={"sm"}
+                borderRadius={5}
+                _hover={{
+                    borderColor: "messenger.500",
+                }}
             />
         </InputGroup>
     );
@@ -161,16 +187,12 @@ const MarkItLogo = () => {
 
 const MarkItMenu = () => {
     const [menuItems, setMenuItems] = useState([]);
-    const user = useSelector(
-        (state) => state.account.user
-    );
+    const user = useSelector((state) => state.account.user);
     const dispatch = useDispatch();
     const handleOpenLogin = () => {
         dispatch(toggleShowLogin());
     };
-    const loggedIn = useSelector(
-        (state) => state.account.loggedIn
-    );
+    const loggedIn = useSelector((state) => state.account.loggedIn);
 
     useEffect(() => {
         const loggedOutMI = [
@@ -182,9 +204,9 @@ const MarkItMenu = () => {
         const loggedInMI = [
             { href: "/", label: "Browse" },
             { href: "/saved", label: "Saved" },
-            { href: "/sell", label: "Selling" },
+            { href: "/sell", label: "Sell" },
             { href: "/notifications", label: "Notifications" },
-            { href: "/message", label: "Messages" },
+            { href: "/message", label: "Message" },
         ];
         setMenuItems(loggedIn ? loggedInMI : loggedOutMI);
     }, [loggedIn]);
@@ -195,18 +217,80 @@ const MarkItMenu = () => {
             {menuItems.map((m) => (
                 <MarkItMenuItem key={m.label + "-menu-item"} {...m} />
             ))}
-            {loggedIn && (
-                <Avatar
-                    size={"sm"}
-                    name={user.firstName + " " + user.lastName}
-                />
-            )}
+            {loggedIn && <UserAvatar />}
             <MarkItLoginModal />
         </HStack>
     );
 };
 
-const MarkItMenuItem = () => {
+const UserAvatar = (props) => {
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const handleSignOut = () => {
+        router.push("/");
+        fireSignOut(fireAuth);
+
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
+        dispatch(signOut());
+    };
+    const user = useSelector((state) => state.account.user);
+    return (
+        <Popover placement="bottom-end">
+            <PopoverTrigger>
+                <Button p={1} variant={"link"}>
+                    <Avatar
+                        cursor={"pointer"}
+                        size={"sm"}
+                        name={user.firstName + " " + user.lastName}
+                    />
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent w={"240px"}>
+                <PopoverBody p={4}>
+                    <VStack w={"full"}>
+                        <Avatar
+                            size={"lg"}
+                            name={user.firstName + " " + user.lastName}
+                            position={"relative"}
+                        >
+                            {/* <IconButton
+                                size={"xs"}
+                                aspectRatio={1}
+                                boxSize={4}
+                                bottom={-1}
+                                right={-1}
+                                position={"absolute"}
+                                icon={<Icon as={MdEdit} boxSize={3} />}
+                            /> */}
+                        </Avatar>
+                        <Heading size="md" mt={1}>
+                            Hi, {user.firstName}!
+                        </Heading>
+                        <Button
+                            onClick={handleSignOut}
+                            w={"full"}
+                            size={"sm"}
+                            variant={"ghost"}
+                            colorScheme={"red"}
+                        >
+                            Sign out
+                        </Button>
+                    </VStack>
+                </PopoverBody>
+            </PopoverContent>
+        </Popover>
+    );
+};
+const MarkItMenuItem = (props) => {
+    const [isActive, setIsActive] = useState(false);
+    const router = useRouter();
+    useEffect(() => {
+        console.log(router.pathname.split("/"));
+        setIsActive(
+            router.pathname.split("/")[1] === props.label.toLowerCase()
+        );
+    }, [router.pathname]);
     const newLocal = (e) => {
         !props.href && e.preventDefault();
         props.onClick && props.onClick();
@@ -216,9 +300,11 @@ const MarkItMenuItem = () => {
             as={NextLink}
             href={props.href ?? ""}
             onClick={newLocal}
+            color={isActive && "messenger.500"}
+            fontWeight={isActive ? 700 : 600}
             className="mark-it-menu-item"
             _hover={{
-                color: "blue.600",
+                color: "messenger.500",
             }}
         >
             <p style={{ whiteSpace: "nowrap" }}>{props.label}</p>
@@ -227,22 +313,15 @@ const MarkItMenuItem = () => {
 };
 
 const MarkItLoginModal = () => {
+    const [readOnly, setReadOnly] = useState(true);
     const dispatch = useDispatch();
     const [canSubmit, setCanSubmit] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saveLogin, setSaveLogin] = useState(false);
-    const loggedIn = useSelector(
-        (state) => state.account.loggedIn
-    );
-    const user = useSelector(
-        (state) => state.account.user
-    );
-    const showLogin = useSelector(
-        (state) => state.app.showLogin
-    );
-    const loginCreds = useSelector(
-        (state) => state.account.loginCreds
-    );
+    const loggedIn = useSelector((state) => state.account.loggedIn);
+    const user = useSelector((state) => state.account.user);
+    const showLogin = useSelector((state) => state.app.showLogin);
+    const loginCreds = useSelector((state) => state.account.loginCreds);
 
     useEffect(() => {
         if (user?.userID !== null) {
@@ -250,6 +329,12 @@ const MarkItLoginModal = () => {
         }
     }, [user]);
 
+    useEffect(() => {
+        if (!showLogin) {
+            dispatch(setLoginUsername(""));
+            dispatch(setLoginPassword(""));
+        }
+    }, [showLogin]);
     useEffect(() => {
         updateCanSubmit();
     }, [loginCreds]);
@@ -271,10 +356,9 @@ const MarkItLoginModal = () => {
 
     const handleSaveLogin = () => {
         const ISSERVER = typeof window === "undefined";
-        if(!ISSERVER){
-
-        localStorage.setItem("email", loginCreds.email);
-        localStorage.setItem("password", loginCreds.password);
+        if (!ISSERVER) {
+            localStorage.setItem("email", loginCreds.email);
+            localStorage.setItem("password", loginCreds.password);
         }
     };
     const handleLogin = async () => {
@@ -292,15 +376,22 @@ const MarkItLoginModal = () => {
                         <Heading size={"md"}>Sign In</Heading>
                         <Stack>
                             <Input
+                                readOnly={readOnly}
                                 placeholder={"Email"}
                                 value={loginCreds.email}
                                 onChange={handleUpdateUsername}
+                                onFocus={() => setReadOnly(false)}
+                                onBlur={() => setReadOnly(true)}
                             />
                             <Input
+                                readOnly={readOnly}
                                 type={"password"}
                                 placeholder={"Password"}
                                 value={loginCreds.password}
                                 onChange={handleUpdatePassword}
+                                onFocus={() => setReadOnly(false)}
+                                onBlur={() => setReadOnly(true)}
+                                autoComplete={"new-password"}
                             />
                             <HStack justify={"space-between"}>
                                 <Checkbox

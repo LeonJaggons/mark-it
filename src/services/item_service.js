@@ -54,8 +54,17 @@ export const postNewItem = async () => {
     }
 };
 
+export const getItemsByCategory = async (category) => {
+    const userID = store.getState().account.user?.userID;
+    const res = await axios.get(`/api/item`, {
+        params: { category: category, userID: userID },
+    });
+    const items = res.data;
+    return items;
+};
 export const getAllItems = async () => {
-    const res = await axios.get("/api/item");
+    const userID = store.getState().account.user?.userID;
+    const res = await axios.get("/api/item", { params: { userID: userID } });
     const items = res.data;
     return items;
 };

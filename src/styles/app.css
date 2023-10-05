@@ -1,6 +1,26 @@
 body {
     overflow: initial !important;
 }
+::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: white; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.15);
+  opacity: 0;
+  border-radius: 8px;
+  cursor: grabbing;
+  transition: opacity .3s linear 2s;
+}
+::-webkit-scrollbar-thumb:hover{
+  opacity: 1;
+
+}
+
 #mark-it-header {
     top: 0px;
     z-index: 999;
@@ -28,6 +48,6 @@ body {
 
 .mark-it-menu-item {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     text-decoration: none !important;
 }
