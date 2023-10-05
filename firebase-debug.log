@@ -1,0 +1,510 @@
+[debug] [2023-10-05T04:28:07.495Z] ----------------------------------------------------------------------
+[debug] [2023-10-05T04:28:07.496Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2023-10-05T04:28:07.496Z] CLI Version:   12.6.1
+[debug] [2023-10-05T04:28:07.496Z] Platform:      darwin
+[debug] [2023-10-05T04:28:07.496Z] Node Version:  v18.17.1
+[debug] [2023-10-05T04:28:07.502Z] Time:          Wed Oct 04 2023 21:28:07 GMT-0700 (Pacific Daylight Time)
+[debug] [2023-10-05T04:28:07.502Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-10-05T04:28:07.538Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-10-05T04:28:07.538Z] > authorizing via signed-in user (leonojaggon@gmail.com)
+[debug] [2023-10-05T04:28:07.538Z] [iam] checking project markit-63b00 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-10-05T04:28:07.539Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions [none]
+[debug] [2023-10-05T04:28:07.539Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:07.542Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-10-05T04:28:07.885Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions 200
+[debug] [2023-10-05T04:28:07.886Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-10-05T04:28:07.887Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 [none]
+[debug] [2023-10-05T04:28:08.344Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 200
+[debug] [2023-10-05T04:28:08.344Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 {"projectId":"markit-63b00","projectNumber":"641710364027","displayName":"MarkIt","name":"projects/markit-63b00","resources":{"hostingSite":"markit-63b00","storageBucket":"markit-63b00.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_c7147e4b-0a4e-40fe-96eb-125635904484"}
+[debug] [2023-10-05T04:28:09.155Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/markit-63b00/sites pageToken=&pageSize=10
+[debug] [2023-10-05T04:28:09.671Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/markit-63b00/sites 200
+[debug] [2023-10-05T04:28:09.671Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/markit-63b00/sites {"sites":[{"name":"projects/markit-63b00/sites/markit-63b00","defaultUrl":"https://markit-63b00.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-10-05T04:28:09.672Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/markit-63b00/sites 
+[debug] [2023-10-05T04:28:10.181Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/markit-63b00/sites 200
+[debug] [2023-10-05T04:28:10.181Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/markit-63b00/sites {"sites":[{"name":"projects/markit-63b00/sites/markit-63b00","defaultUrl":"https://markit-63b00.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-10-05T04:28:10.182Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00/webApps/-/config [none]
+[debug] [2023-10-05T04:28:10.706Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00/webApps/-/config 200
+[debug] [2023-10-05T04:28:10.706Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00/webApps/-/config {"projectId":"markit-63b00","appId":"1:641710364027:web:03b357f69d368dbc25d9de","storageBucket":"markit-63b00.appspot.com","locationId":"us-central","apiKey":"AIzaSyCg3RUV27XtkE4R5DV0-rvQcvAC9MjsCpI","authDomain":"markit-63b00.firebaseapp.com","messagingSenderId":"641710364027"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[info]    Linting and checking validity of types...
+
+[info]    Creating an optimized production build...
+
+[info]  ✓ Compiled successfully
+
+[info]    Collecting page data...
+
+[info]    Generating static pages (0/13)...
+
+[info]    Generating static pages (3/13)
+
+
+[info]    Generating static pages (6/13)
+
+
+[info]    Generating static pages (9/13)
+
+
+[info]  ✓ Generating static pages (13/13)
+
+[info]    Finalizing page optimization...
+
+[info] 
+
+[info] Route (pages)                              Size     First Load JS
+┌ ○ /                                      2.06 kB         363 kB
+├   /_app                                  0 B             358 kB
+├ ○ /404                                   181 B           358 kB
+├ ○ /about                                 257 B           358 kB
+├ λ /api/auth                              0 B             358 kB
+├ λ /api/category                          0 B             358 kB
+├ λ /api/favorite                          0 B             358 kB
+├ λ /api/hello                             0 B             358 kB
+├ λ /api/item                              0 B             358 kB
+├ λ /api/message                           0 B             358 kB
+├ ○ /browse                                3.31 kB         364 kB
+├ ○ /category                              2.77 kB         360 kB
+├ ○ /help                                  256 B           358 kB
+├ ○ /item                                  544 B           394 kB
+├ ○ /message                               9.97 kB         368 kB
+├ ○ /notifications                         261 B           358 kB
+├ ○ /post                                  3.36 kB         397 kB
+├ ○ /saved                                 2.85 kB         360 kB
+└ ○ /sell                                  2.5 kB          360 kB
++ First Load JS shared by all              358 kB
+  ├ chunks/framework-66d32731bdd20e83.js   45.2 kB
+  ├ chunks/main-687002cb6e241599.js        31.6 kB
+  ├ chunks/pages/_app-abe2184e0b18bb80.js  280 kB
+  ├ chunks/webpack-f45e1ff0eb415323.js     1.04 kB
+  └ css/1a976d7944888d47.css               412 B
+
+[info] 
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • non-static route /api/auth
+[info]  • non-static route /api/category
+[info]  • non-static route /api/favorite
+[info]  • non-static route /api/item
+[info]  • non-static route /api/hello
+[debug] [2023-10-05T04:28:19.647Z]  • non-static route /api/message
+[info]  • and 1 other reasons, use --debug to see more
+[info] 
+[debug] [2023-10-05T04:28:25.688Z] [web frameworks] effective firebase.json:  {
+  "hosting": [
+    {
+      "source": ".",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "frameworksBackend": {
+        "region": "us-east1"
+      },
+      "site": "markit-63b00",
+      "rewrites": [
+        {
+          "source": "**",
+          "function": {
+            "functionId": "ssrmarkit63b00",
+            "region": "us-east1",
+            "pinTag": true
+          }
+        }
+      ],
+      "redirects": [],
+      "headers": [
+        {
+          "source": "**/*.[jt]s",
+          "headers": [
+            {
+              "key": "Set-Cookie",
+              "value": "__FIREBASE_DEFAULTS__=eyJjb25maWciOnsicHJvamVjdElkIjoibWFya2l0LTYzYjAwIiwiYXBwSWQiOiIxOjY0MTcxMDM2NDAyNzp3ZWI6MDNiMzU3ZjY5ZDM2OGRiYzI1ZDlkZSIsInN0b3JhZ2VCdWNrZXQiOiJtYXJraXQtNjNiMDAuYXBwc3BvdC5jb20iLCJsb2NhdGlvbklkIjoidXMtY2VudHJhbCIsImFwaUtleSI6IkFJemFTeUNnM1JVVjI3WHRrRTRSNURWMC1ydlFjdkFDOU1qc0NwSSIsImF1dGhEb21haW4iOiJtYXJraXQtNjNiMDAuZmlyZWJhc2VhcHAuY29tIiwibWVzc2FnaW5nU2VuZGVySWQiOiI2NDE3MTAzNjQwMjcifSwiX2F1dGhUb2tlblN5bmNVUkwiOiIvX19zZXNzaW9uIn0; SameSite=Strict; Expires=2025-08-29T15:08:25.688Z; Path=/;"
+            }
+          ]
+        }
+      ],
+      "cleanUrls": true,
+      "trailingSlash": true,
+      "public": ".firebase/markit-63b00/hosting",
+      "webFramework": "next_ssr"
+    }
+  ],
+  "functions": [
+    {
+      "source": ".firebase/markit-63b00/functions",
+      "codebase": "firebase-frameworks-markit-63b00"
+    }
+  ]
+}
+[debug] [2023-10-05T04:28:25.688Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-10-05T04:28:25.688Z] > authorizing via signed-in user (leonojaggon@gmail.com)
+[debug] [2023-10-05T04:28:25.688Z] [iam] checking project markit-63b00 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-10-05T04:28:25.688Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions [none]
+[debug] [2023-10-05T04:28:25.688Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:25.688Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-10-05T04:28:26.000Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions 200
+[debug] [2023-10-05T04:28:26.000Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'markit-63b00'...
+[info] 
+[info] i  deploying functions, hosting 
+[debug] [2023-10-05T04:28:26.002Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 [none]
+[debug] [2023-10-05T04:28:26.289Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 200
+[debug] [2023-10-05T04:28:26.290Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 {"projectId":"markit-63b00","projectNumber":"641710364027","displayName":"MarkIt","name":"projects/markit-63b00","resources":{"hostingSite":"markit-63b00","storageBucket":"markit-63b00.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_c7147e4b-0a4e-40fe-96eb-125635904484"}
+[info] i  functions: preparing codebase firebase-frameworks-markit-63b00 for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-10-05T04:28:26.292Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-10-05T04:28:26.292Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:26.294Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-10-05T04:28:26.294Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:26.295Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com [none]
+[debug] [2023-10-05T04:28:26.295Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:26.297Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com [none]
+[debug] [2023-10-05T04:28:26.297Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:26.877Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com 200
+[debug] [2023-10-05T04:28:26.877Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com [omitted]
+[warn] ⚠  artifactregistry: missing required API artifactregistry.googleapis.com. Enabling now... 
+[debug] [2023-10-05T04:28:26.878Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com:enable [none]
+[debug] [2023-10-05T04:28:26.878Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com:enable x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:26.881Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/runtimeconfig.googleapis.com 200
+[debug] [2023-10-05T04:28:26.881Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-10-05T04:28:26.882Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com 200
+[debug] [2023-10-05T04:28:26.882Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com [omitted]
+[warn] ⚠  functions: missing required API cloudbuild.googleapis.com. Enabling now... 
+[debug] [2023-10-05T04:28:26.882Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com:enable [none]
+[debug] [2023-10-05T04:28:26.882Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com:enable x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:26.886Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudfunctions.googleapis.com 200
+[debug] [2023-10-05T04:28:26.886Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-10-05T04:28:27.691Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com:enable 200
+[debug] [2023-10-05T04:28:27.692Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com:enable [omitted]
+[debug] [2023-10-05T04:28:27.712Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com:enable 200
+[debug] [2023-10-05T04:28:27.712Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com:enable [omitted]
+[debug] [2023-10-05T04:28:37.694Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com [none]
+[debug] [2023-10-05T04:28:37.694Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:37.713Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com [none]
+[debug] [2023-10-05T04:28:37.713Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:38.239Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com 200
+[debug] [2023-10-05T04:28:38.239Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-10-05T04:28:38.241Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com 200
+[debug] [2023-10-05T04:28:38.241Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-10-05T04:28:38.242Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00/adminSdkConfig [none]
+[debug] [2023-10-05T04:28:38.751Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00/adminSdkConfig 200
+[debug] [2023-10-05T04:28:38.751Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00/adminSdkConfig {"projectId":"markit-63b00","storageBucket":"markit-63b00.appspot.com","locationId":"us-central"}
+[debug] [2023-10-05T04:28:38.752Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/markit-63b00/configs [none]
+[debug] [2023-10-05T04:28:39.054Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/markit-63b00/configs 200
+[debug] [2023-10-05T04:28:39.054Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/markit-63b00/configs {}
+[debug] [2023-10-05T04:28:39.056Z] Validating nodejs source
+[debug] [2023-10-05T04:28:39.429Z] > [functions] package.json contents: {
+  "name": "mark-it",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@reduxjs/toolkit": "^1.9.6",
+    "@types/node": "20.6.5",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.16",
+    "axios": "^1.5.1",
+    "crypto-js": "^4.1.1",
+    "firebase": "^10.4.0",
+    "framer-motion": "^10.16.4",
+    "google-map-react": "^2.2.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "next": "13.5.2",
+    "postcss": "8.4.30",
+    "react": "18.2.0",
+    "react-custom-scrollbars-2": "^4.5.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.11.0",
+    "react-redux": "^8.1.2",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2",
+    "firebase-frameworks": "^0.10.4",
+    "firebase-functions": "^4.3.0",
+    "firebase-admin": "^11.0.1"
+  },
+  "main": "server.js",
+  "engines": {
+    "node": "18"
+  }
+}
+[debug] [2023-10-05T04:28:39.429Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase firebase-frameworks-markit-63b00 to determine what to deploy 
+[debug] [2023-10-05T04:28:39.429Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-10-05T04:28:39.435Z] Found firebase-functions binary at '/Users/leonjaggon/Projects/mark-it/.firebase/markit-63b00/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8351
+
+[debug] [2023-10-05T04:28:39.728Z] Got response from /__/functions.yaml {"endpoints":{"ssrmarkit63b00":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["us-east1"],"labels":{},"httpsTrigger":{},"entryPoint":"ssrmarkit63b00"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[info] shutdown requested via /__/quitquitquit
+
+[info] i  functions: Loaded environment variables from .env. 
+[info] i  functions: preparing .firebase/markit-63b00/functions directory for uploading... 
+[info] i  functions: packaged /Users/leonjaggon/Projects/mark-it/.firebase/markit-63b00/functions (141.14 MB) for uploading 
+[debug] [2023-10-05T04:28:43.743Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/markit-63b00/locations/-/functions [none]
+[debug] [2023-10-05T04:28:44.301Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/markit-63b00/locations/-/functions 200
+[debug] [2023-10-05T04:28:44.301Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/markit-63b00/locations/-/functions {}
+[debug] [2023-10-05T04:28:44.302Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2023-10-05T04:28:44.996Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/-/functions 200
+[debug] [2023-10-05T04:28:44.997Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/-/functions {}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[debug] [2023-10-05T04:28:45.001Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com [none]
+[debug] [2023-10-05T04:28:45.001Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:45.003Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com [none]
+[debug] [2023-10-05T04:28:45.003Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:45.004Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/pubsub.googleapis.com [none]
+[debug] [2023-10-05T04:28:45.005Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/pubsub.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:45.006Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/storage.googleapis.com [none]
+[debug] [2023-10-05T04:28:45.006Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/storage.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:45.513Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/storage.googleapis.com 200
+[debug] [2023-10-05T04:28:45.513Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/storage.googleapis.com [omitted]
+[info] ✔  functions: required API storage.googleapis.com is enabled 
+[debug] [2023-10-05T04:28:45.514Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com 200
+[debug] [2023-10-05T04:28:45.514Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com [omitted]
+[warn] ⚠  functions: missing required API eventarc.googleapis.com. Enabling now... 
+[debug] [2023-10-05T04:28:45.514Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com:enable [none]
+[debug] [2023-10-05T04:28:45.514Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com:enable x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:45.517Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com 200
+[debug] [2023-10-05T04:28:45.517Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com [omitted]
+[warn] ⚠  functions: missing required API run.googleapis.com. Enabling now... 
+[debug] [2023-10-05T04:28:45.518Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com:enable [none]
+[debug] [2023-10-05T04:28:45.518Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com:enable x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:45.520Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/pubsub.googleapis.com 200
+[debug] [2023-10-05T04:28:45.520Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/pubsub.googleapis.com [omitted]
+[info] ✔  functions: required API pubsub.googleapis.com is enabled 
+[debug] [2023-10-05T04:28:46.331Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com:enable 200
+[debug] [2023-10-05T04:28:46.331Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com:enable [omitted]
+[debug] [2023-10-05T04:28:46.332Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com:enable 200
+[debug] [2023-10-05T04:28:46.332Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com:enable [omitted]
+[debug] [2023-10-05T04:28:56.333Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com [none]
+[debug] [2023-10-05T04:28:56.333Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:56.336Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com [none]
+[debug] [2023-10-05T04:28:56.336Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:56.809Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com 200
+[debug] [2023-10-05T04:28:56.810Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/eventarc.googleapis.com [omitted]
+[info] ✔  functions: required API eventarc.googleapis.com is enabled 
+[debug] [2023-10-05T04:28:56.853Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com 200
+[debug] [2023-10-05T04:28:56.853Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/markit-63b00/services/run.googleapis.com [omitted]
+[info] ✔  functions: required API run.googleapis.com is enabled 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2023-10-05T04:28:56.855Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/641710364027/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2023-10-05T04:28:56.856Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/641710364027/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2023-10-05T04:28:57.491Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/641710364027/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2023-10-05T04:28:57.491Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/641710364027/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-641710364027@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"108330490819621810978"}}
+[debug] [2023-10-05T04:28:57.898Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/641710364027/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2023-10-05T04:28:57.898Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/641710364027/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-641710364027@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"113205904133551885045"}}
+[debug] [2023-10-05T04:28:57.899Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 [none]
+[debug] [2023-10-05T04:28:58.179Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 200
+[debug] [2023-10-05T04:28:58.179Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/markit-63b00 {"projectId":"markit-63b00","projectNumber":"641710364027","displayName":"MarkIt","name":"projects/markit-63b00","resources":{"hostingSite":"markit-63b00","storageBucket":"markit-63b00.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_c7147e4b-0a4e-40fe-96eb-125635904484"}
+[debug] [2023-10-05T04:28:58.180Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/markit-63b00/versions [none]
+[debug] [2023-10-05T04:28:58.180Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/markit-63b00/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase","firebase-web-framework":"next_ssr"}}
+[debug] [2023-10-05T04:28:58.923Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/markit-63b00/versions 200
+[debug] [2023-10-05T04:28:58.923Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/markit-63b00/versions {"name":"projects/641710364027/sites/markit-63b00/versions/40097331669271f6","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase","firebase-web-framework":"next_ssr"}}
+[debug] [2023-10-05T04:28:58.925Z] [functions] found 1 new HTTP functions, testing setIamPolicy permission...
+[debug] [2023-10-05T04:28:58.925Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions [none]
+[debug] [2023-10-05T04:28:58.925Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions x-goog-quota-user=projects/markit-63b00
+[debug] [2023-10-05T04:28:58.925Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions {"permissions":["cloudfunctions.functions.setIamPolicy"]}
+[debug] [2023-10-05T04:28:59.243Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions 200
+[debug] [2023-10-05T04:28:59.243Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/markit-63b00:testIamPermissions {"permissions":["cloudfunctions.functions.setIamPolicy"]}
+[debug] [2023-10-05T04:28:59.244Z] [functions] found setIamPolicy permission, proceeding with deploy
+[debug] [2023-10-05T04:28:59.245Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/us-east1/functions:generateUploadUrl [none]
+[debug] [2023-10-05T04:29:01.280Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/us-east1/functions:generateUploadUrl 200
+[debug] [2023-10-05T04:29:01.280Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/us-east1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-641710364027-us-east1/b742e649-441a-482f-94e5-f4dff3c6dfe4.zip?GoogleAccessId=service-641710364027@gcf-admin-robot.iam.gserviceaccount.com&Expires=1696481941&Signature=Cr56x7VFAbjfQDaevix0B62XYtjQdrotrc27zU2z0x8BbQOix0lI1RSg%2F4nk1xJPSyY48%2Fz5UaiKsX49Mno8uTdFABqVrYeVVwVz8Q0w4dkYOKAeusPU1HA7vmjXfdv0Rtwd9JvhApK5pFV%2F0zsLhxG5f06lTAChSxo%2FkyXTA4i096DnJUJy0J8I7y4FdhiRpkZ610ajI%2BwH2TzEx2LsWHYlagFcydKIkiSP9YVjRUVbIKju1nKszzdfXTb9ih%2BIGfRlT%2B%2FBkiZCCLC5CNn75u8X8LLZbmGN6%2FodDQYj2QHLZ5ZyLRSTJVLfDZL%2FDYFo%2B1F4yGEdw638IvaRY1ubEw%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-641710364027-us-east1","object":"b742e649-441a-482f-94e5-f4dff3c6dfe4.zip"}}
+[debug] [2023-10-05T04:29:01.283Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-641710364027-us-east1/b742e649-441a-482f-94e5-f4dff3c6dfe4.zip GoogleAccessId=service-641710364027%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1696481941&Signature=Cr56x7VFAbjfQDaevix0B62XYtjQdrotrc27zU2z0x8BbQOix0lI1RSg%2F4nk1xJPSyY48%2Fz5UaiKsX49Mno8uTdFABqVrYeVVwVz8Q0w4dkYOKAeusPU1HA7vmjXfdv0Rtwd9JvhApK5pFV%2F0zsLhxG5f06lTAChSxo%2FkyXTA4i096DnJUJy0J8I7y4FdhiRpkZ610ajI%2BwH2TzEx2LsWHYlagFcydKIkiSP9YVjRUVbIKju1nKszzdfXTb9ih%2BIGfRlT%2B%2FBkiZCCLC5CNn75u8X8LLZbmGN6%2FodDQYj2QHLZ5ZyLRSTJVLfDZL%2FDYFo%2B1F4yGEdw638IvaRY1ubEw%3D%3D
+[debug] [2023-10-05T04:29:01.283Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-641710364027-us-east1/b742e649-441a-482f-94e5-f4dff3c6dfe4.zip [stream]
+[debug] [2023-10-05T04:29:38.945Z] <<< [apiv2][status] PUT https://storage.googleapis.com/gcf-v2-uploads-641710364027-us-east1/b742e649-441a-482f-94e5-f4dff3c6dfe4.zip 200
+[debug] [2023-10-05T04:29:38.946Z] <<< [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-641710364027-us-east1/b742e649-441a-482f-94e5-f4dff3c6dfe4.zip [omitted]
+[info] ✔  functions: .firebase/markit-63b00/functions folder uploaded successfully 
+[info] i  hosting[markit-63b00]: beginning deploy... 
+[info] i  hosting[markit-63b00]: found 44 files in .firebase/markit-63b00/hosting 
+[debug] [2023-10-05T04:29:38.958Z] [hosting] uploading with 200 concurrency
+[debug] [2023-10-05T04:29:38.959Z] [hosting] hash cache [LmZpcmViYXNlL21hcmtpdC02M2IwMC9ob3N0aW5n] not populated
+[debug] [2023-10-05T04:29:39.007Z] > refreshing access token with scopes: []
+[debug] [2023-10-05T04:29:39.008Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-10-05T04:29:39.008Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-10-05T04:29:39.010Z] [hosting] hash cache [LmZpcmViYXNlL21hcmtpdC02M2IwMC9ob3N0aW5n] stored for 44 files
+[debug] [2023-10-05T04:29:39.010Z] [hosting][hash queue][FINAL] {"max":45,"min":15,"avg":16.477272727272727,"active":0,"complete":44,"success":44,"errored":0,"retried":0,"total":44,"elapsed":49}
+[debug] [2023-10-05T04:29:39.209Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-10-05T04:29:39.209Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-10-05T04:29:39.222Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/641710364027/sites/markit-63b00/versions/40097331669271f6:populateFiles [none]
+[debug] [2023-10-05T04:29:39.222Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/641710364027/sites/markit-63b00/versions/40097331669271f6:populateFiles {"files":{"/message.html":"025fbab8bb18ae3962b9bc4c26ccbb7f35adb1141e881e8c218e8c3c13bb36e8","/category.html":"126c210df256c34fc73f17f58dbcf88e4da98aa1487a63b8d35201b8f1fee5cc","/item.html":"9a11a0f163f262f98c730fc5587695375d80561b5e42716a09684d2351d44869","/index.html":"4999b44edd6b37ab6f76484812468d9e42899abd9241dc9580a62730555ad5e6","/404.html":"723136577baeeea499670acd0d739a01ef0aa000684b144a7a0b9c443b473041","/notifications.html":"2dedf043d38bb30e15416c9cb9b3801b940075af9aff4c72f4df9eaf0f6ce753","/browse.html":"c4589be9ee386fb3fcc3f861d68b67cff6103dea319028676bb23a2915e9fab0","/help.html":"42a614d19799a8c6d88f45a89a110756d12df824dc99657c5d8436bb6a92d9a4","/saved.html":"99856e62339a7845b12dc5f58487d2be057a7c42dc02f8a79967ae4f0c7363ff","/sell.html":"d1c481b12a083759495508cf4370f5d1baf886a1ef285caf0dceb1ce54246f6e","/_next/static/chunks/467-5a0cf7da2bd40b9e.js":"2c985d605ba308937747ac21df81625982160e493e20dd8cca60c9da0e85314d","/_next/static/chunks/786-a8195240573c7951.js":"85d62f2cc2ea1bc5dd8550422877161da654513d8452a1b29af871775a257353","/_next/static/chunks/709-b55a028e70f16b9e.js":"b4e22074913700b31dd8a1ea5ba5b066e795e65ee199d110f77f67b8772b5e98","/_next/static/chunks/994-5afdac332868005c.js":"25500ab962b04ed8b29ac001b7478dccbb706224a643b52905bdd7c44681f284","/_next/static/chunks/pages/about-c90dc4efac3f3f7b.js":"e1028fa216d9d235400c6c9e22ba0485ddfa1cb7c0a6e58894a77832675ecf10","/_next/static/chunks/pages/_error-08a9db0f433628d8.js":"8bb548e5443deb31a9cafe7577c6444f9ba861ea5366555b6d0f86e3d12978c5","/_next/static/chunks/webpack-f45e1ff0eb415323.js":"1ebe2ee3e0597fc231f06f60fab9c3e276677e19972b6c8cd2a33961ec8a8967","/_next/static/chunks/pages/help-4ece6ab2ab2b34b9.js":"d5547f349e041ae4f7a2f564231157853bcab3881008fb639ded6df35275d2b1","/_next/static/chunks/pages/browse-03c7a217affc17af.js":"f687e849b4711e8e03131daa4509d987a5604c42f59300eef32230dd0ac76315","/_next/static/chunks/pages/item-0a9aead02cd5f50f.js":"ae7c4b334b4bec258d059f4ae5fda320a010db8d0ec392b6bfea0907e1fc43a6","/_next/static/chunks/pages/message-fba5ae874142c72c.js":"5e831acc92f9fd74e247f2a62e63cc6716f0319aed56a003c9ee191fd650d947","/_next/static/chunks/pages/index-46db97e213dd7653.js":"e511c38a0c6d2f405d062e4c3fe86c59e7617a205bd3c81856f59fd3e963055c","/_next/static/css/1a976d7944888d47.css":"383a7ddacc09cb12f9c0e7cc64ba34c4739e8864c557bfc6bb27c50cac74ef05","/_next/static/chunks/pages/notifications-706f5c67a2f749df.js":"34b0147f9f3df00f1fc05bc89d1b2b0409829a1af6ef2cc13c454ce7ebce4317","/_next/static/chunks/pages/category-416d4e0806902f07.js":"e8cf70372d7fd8ab4bfb583eb21ef72d63dcf824e91464290643f6d82738bb20","/_next/static/chunks/pages/sell-468efcdc217a2ad7.js":"afacb192b6943eb89354ad60589d1db4426b7da0064a58008dd0dd0370208e4f","/_next/static/media/05a31a2ca4975f99-s.woff2":"6efe3c10c8cf8d8db389af700f8e6dd56ef3734c59159ae26bea5e9f3b05d919","/_next/static/chunks/pages/saved-2095d013afcd4d6d.js":"41a6c6ab33dc9282efe437d0e02224d7fe24aee52707b1c4faf55991972621de","/_next/static/chunks/pages/post-d68c2d41b1dcd3b7.js":"8d4c0e935324de205c5c73ecfb2829e37529c86add325fca9861d5f98e5f84f0","/_next/static/media/fd4db3eb5472fc27-s.woff2":"b62a5c48aa2a5c1f795d9f0e040eb59387eb7527523ebf1a2a37a0b80ed8afda","/_next/static/ne9kDv6YfajTGH9kuN6wk/_ssgManifest.js":"5c126729f9831113842c425975615db312fa26d39f3a9e1baa47d4ad65ac2f90","/_next/static/ne9kDv6YfajTGH9kuN6wk/_buildManifest.js":"f4f0faf5926d0bd81329b63086d730eb891ba25b3ce7da3386e4ff7a617ad37e","/about.html":"77a7ef55c3d8db10a59960c9c8cb13f2c8e4f2455243de8523774f12962176da","/post.html":"c4e32cd7d36b9e01b3f9391eb0516ca9a95234339e611b9756d71a240b2a1d92","/_next/static/chunks/75fc9c18-2770ff1c6253d91c.js":"9a5cffd180c6d188ba290c098325b479c321233253592afff8ad22cf0aa42b28","/_next/static/media/513657b02c5c193f-s.woff2":"8b5a45c3bd722485651de5e4530c0c65ef99b9aa3aebc54b079c9bae0a7def02","/_next/static/media/51ed15f9841b9f9d-s.woff2":"2927be27379e00d478cc64e43c4adeecf5ed5d55297881374fcf2990cb0ddf3c","/_next/static/media/ec159349637c90ad-s.woff2":"4a49c759ac3815adbc833e94127861326c24ded349fe158c813e6f47ea5d4d3c","/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js":"aba23275a3c1380bfc8d467fd921b0c209e7182dbdaa02611c3a496b0b3b34ec","/_next/static/chunks/main-687002cb6e241599.js":"73e3a944327c328cb9be5f11895c517b0ff7123304bc2f38fbca6bed49b2975d","/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2":"8c00c2079fc090e1a9585b9331fc39921d2ce6223064bf5cf0b0758946d8ce92","/_next/static/media/d6b16ce4a6175f26-s.woff2":"fae9474624ed0c86860a0b0e7e11872c3c41eb450929ab9461102e4993688aa9","/_next/static/chunks/framework-66d32731bdd20e83.js":"9fb8ded934cd5b75e80a8f735312c7b140276a511f3b3bf12a490841cdca108d","/_next/static/chunks/pages/_app-abe2184e0b18bb80.js":"6b6ca2aa799a5e1a51a9470a8c3a4aa4e2cdb64097308161df9da08074f203db"}}
+[debug] [2023-10-05T04:29:39.884Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/641710364027/sites/markit-63b00/versions/40097331669271f6:populateFiles 200
+[debug] [2023-10-05T04:29:39.884Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/641710364027/sites/markit-63b00/versions/40097331669271f6:populateFiles {"uploadRequiredHashes":["723136577baeeea499670acd0d739a01ef0aa000684b144a7a0b9c443b473041","025fbab8bb18ae3962b9bc4c26ccbb7f35adb1141e881e8c218e8c3c13bb36e8","4999b44edd6b37ab6f76484812468d9e42899abd9241dc9580a62730555ad5e6","42a614d19799a8c6d88f45a89a110756d12df824dc99657c5d8436bb6a92d9a4","c4589be9ee386fb3fcc3f861d68b67cff6103dea319028676bb23a2915e9fab0","126c210df256c34fc73f17f58dbcf88e4da98aa1487a63b8d35201b8f1fee5cc","d1c481b12a083759495508cf4370f5d1baf886a1ef285caf0dceb1ce54246f6e","77a7ef55c3d8db10a59960c9c8cb13f2c8e4f2455243de8523774f12962176da","9a11a0f163f262f98c730fc5587695375d80561b5e42716a09684d2351d44869","2dedf043d38bb30e15416c9cb9b3801b940075af9aff4c72f4df9eaf0f6ce753","99856e62339a7845b12dc5f58487d2be057a7c42dc02f8a79967ae4f0c7363ff","c4e32cd7d36b9e01b3f9391eb0516ca9a95234339e611b9756d71a240b2a1d92"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files"}
+[debug] [2023-10-05T04:29:39.887Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/723136577baeeea499670acd0d739a01ef0aa000684b144a7a0b9c443b473041 [none]
+[debug] [2023-10-05T04:29:39.887Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/723136577baeeea499670acd0d739a01ef0aa000684b144a7a0b9c443b473041 [stream]
+[debug] [2023-10-05T04:29:39.889Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/025fbab8bb18ae3962b9bc4c26ccbb7f35adb1141e881e8c218e8c3c13bb36e8 [none]
+[debug] [2023-10-05T04:29:39.889Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/025fbab8bb18ae3962b9bc4c26ccbb7f35adb1141e881e8c218e8c3c13bb36e8 [stream]
+[debug] [2023-10-05T04:29:39.890Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/4999b44edd6b37ab6f76484812468d9e42899abd9241dc9580a62730555ad5e6 [none]
+[debug] [2023-10-05T04:29:39.890Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/4999b44edd6b37ab6f76484812468d9e42899abd9241dc9580a62730555ad5e6 [stream]
+[debug] [2023-10-05T04:29:39.891Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/42a614d19799a8c6d88f45a89a110756d12df824dc99657c5d8436bb6a92d9a4 [none]
+[debug] [2023-10-05T04:29:39.891Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/42a614d19799a8c6d88f45a89a110756d12df824dc99657c5d8436bb6a92d9a4 [stream]
+[debug] [2023-10-05T04:29:39.892Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4589be9ee386fb3fcc3f861d68b67cff6103dea319028676bb23a2915e9fab0 [none]
+[debug] [2023-10-05T04:29:39.892Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4589be9ee386fb3fcc3f861d68b67cff6103dea319028676bb23a2915e9fab0 [stream]
+[debug] [2023-10-05T04:29:39.893Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/126c210df256c34fc73f17f58dbcf88e4da98aa1487a63b8d35201b8f1fee5cc [none]
+[debug] [2023-10-05T04:29:39.893Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/126c210df256c34fc73f17f58dbcf88e4da98aa1487a63b8d35201b8f1fee5cc [stream]
+[debug] [2023-10-05T04:29:39.894Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/d1c481b12a083759495508cf4370f5d1baf886a1ef285caf0dceb1ce54246f6e [none]
+[debug] [2023-10-05T04:29:39.894Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/d1c481b12a083759495508cf4370f5d1baf886a1ef285caf0dceb1ce54246f6e [stream]
+[debug] [2023-10-05T04:29:39.895Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/77a7ef55c3d8db10a59960c9c8cb13f2c8e4f2455243de8523774f12962176da [none]
+[debug] [2023-10-05T04:29:39.895Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/77a7ef55c3d8db10a59960c9c8cb13f2c8e4f2455243de8523774f12962176da [stream]
+[debug] [2023-10-05T04:29:39.896Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/9a11a0f163f262f98c730fc5587695375d80561b5e42716a09684d2351d44869 [none]
+[debug] [2023-10-05T04:29:39.896Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/9a11a0f163f262f98c730fc5587695375d80561b5e42716a09684d2351d44869 [stream]
+[debug] [2023-10-05T04:29:39.897Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/2dedf043d38bb30e15416c9cb9b3801b940075af9aff4c72f4df9eaf0f6ce753 [none]
+[debug] [2023-10-05T04:29:39.897Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/2dedf043d38bb30e15416c9cb9b3801b940075af9aff4c72f4df9eaf0f6ce753 [stream]
+[debug] [2023-10-05T04:29:39.898Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/99856e62339a7845b12dc5f58487d2be057a7c42dc02f8a79967ae4f0c7363ff [none]
+[debug] [2023-10-05T04:29:39.898Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/99856e62339a7845b12dc5f58487d2be057a7c42dc02f8a79967ae4f0c7363ff [stream]
+[debug] [2023-10-05T04:29:39.899Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4e32cd7d36b9e01b3f9391eb0516ca9a95234339e611b9756d71a240b2a1d92 [none]
+[debug] [2023-10-05T04:29:39.899Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4e32cd7d36b9e01b3f9391eb0516ca9a95234339e611b9756d71a240b2a1d92 [stream]
+[debug] [2023-10-05T04:29:39.899Z] [hosting][populate queue][FINAL] {"max":880,"min":880,"avg":880,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":892}
+[debug] [2023-10-05T04:29:39.899Z] [hosting] uploads queued: 12
+[debug] [2023-10-05T04:29:40.494Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/4999b44edd6b37ab6f76484812468d9e42899abd9241dc9580a62730555ad5e6 200
+[debug] [2023-10-05T04:29:40.495Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/4999b44edd6b37ab6f76484812468d9e42899abd9241dc9580a62730555ad5e6 [stream]
+[debug] [2023-10-05T04:29:40.496Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/126c210df256c34fc73f17f58dbcf88e4da98aa1487a63b8d35201b8f1fee5cc 200
+[debug] [2023-10-05T04:29:40.496Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/126c210df256c34fc73f17f58dbcf88e4da98aa1487a63b8d35201b8f1fee5cc [stream]
+[debug] [2023-10-05T04:29:40.497Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4589be9ee386fb3fcc3f861d68b67cff6103dea319028676bb23a2915e9fab0 200
+[debug] [2023-10-05T04:29:40.497Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4589be9ee386fb3fcc3f861d68b67cff6103dea319028676bb23a2915e9fab0 [stream]
+[debug] [2023-10-05T04:29:40.497Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/723136577baeeea499670acd0d739a01ef0aa000684b144a7a0b9c443b473041 200
+[debug] [2023-10-05T04:29:40.497Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/723136577baeeea499670acd0d739a01ef0aa000684b144a7a0b9c443b473041 [stream]
+[debug] [2023-10-05T04:29:40.497Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/d1c481b12a083759495508cf4370f5d1baf886a1ef285caf0dceb1ce54246f6e 200
+[debug] [2023-10-05T04:29:40.498Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/d1c481b12a083759495508cf4370f5d1baf886a1ef285caf0dceb1ce54246f6e [stream]
+[debug] [2023-10-05T04:29:40.498Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/9a11a0f163f262f98c730fc5587695375d80561b5e42716a09684d2351d44869 200
+[debug] [2023-10-05T04:29:40.498Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/9a11a0f163f262f98c730fc5587695375d80561b5e42716a09684d2351d44869 [stream]
+[debug] [2023-10-05T04:29:40.498Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/025fbab8bb18ae3962b9bc4c26ccbb7f35adb1141e881e8c218e8c3c13bb36e8 200
+[debug] [2023-10-05T04:29:40.498Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/025fbab8bb18ae3962b9bc4c26ccbb7f35adb1141e881e8c218e8c3c13bb36e8 [stream]
+[debug] [2023-10-05T04:29:40.498Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/77a7ef55c3d8db10a59960c9c8cb13f2c8e4f2455243de8523774f12962176da 200
+[debug] [2023-10-05T04:29:40.498Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/77a7ef55c3d8db10a59960c9c8cb13f2c8e4f2455243de8523774f12962176da [stream]
+[debug] [2023-10-05T04:29:40.499Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/42a614d19799a8c6d88f45a89a110756d12df824dc99657c5d8436bb6a92d9a4 200
+[debug] [2023-10-05T04:29:40.499Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/42a614d19799a8c6d88f45a89a110756d12df824dc99657c5d8436bb6a92d9a4 [stream]
+[debug] [2023-10-05T04:29:40.499Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4e32cd7d36b9e01b3f9391eb0516ca9a95234339e611b9756d71a240b2a1d92 200
+[debug] [2023-10-05T04:29:40.499Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/c4e32cd7d36b9e01b3f9391eb0516ca9a95234339e611b9756d71a240b2a1d92 [stream]
+[debug] [2023-10-05T04:29:40.499Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/2dedf043d38bb30e15416c9cb9b3801b940075af9aff4c72f4df9eaf0f6ce753 200
+[debug] [2023-10-05T04:29:40.499Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/2dedf043d38bb30e15416c9cb9b3801b940075af9aff4c72f4df9eaf0f6ce753 [stream]
+[debug] [2023-10-05T04:29:40.500Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/99856e62339a7845b12dc5f58487d2be057a7c42dc02f8a79967ae4f0c7363ff 200
+[debug] [2023-10-05T04:29:40.500Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/markit-63b00/versions/40097331669271f6/files/99856e62339a7845b12dc5f58487d2be057a7c42dc02f8a79967ae4f0c7363ff [stream]
+[debug] [2023-10-05T04:29:40.500Z] [hosting][upload queue][FINAL] {"max":613,"min":609,"avg":611.5833333333334,"active":0,"complete":12,"success":12,"errored":0,"retried":0,"total":12,"elapsed":616}
+[info] ✔  hosting[markit-63b00]: file upload complete 
+[debug] [2023-10-05T04:29:40.501Z] [hosting] deploy completed after 1553ms
+[info] i  functions: creating Node.js 18 (2nd Gen) function firebase-frameworks-markit-63b00:ssrmarkit63b00(us-east1)... 
+[debug] [2023-10-05T04:29:40.504Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/us-east1/functions functionId=ssrmarkit63b00
+[debug] [2023-10-05T04:29:40.504Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/us-east1/functions {"name":"projects/markit-63b00/locations/us-east1/functions/ssrmarkit63b00","buildConfig":{"runtime":"nodejs18","entryPoint":"ssrmarkit63b00","source":{"storageSource":{"bucket":"gcf-v2-uploads-641710364027-us-east1","object":"b742e649-441a-482f-94e5-f4dff3c6dfe4.zip"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}},"serviceConfig":{"environmentVariables":{"__FIREBASE_FRAMEWORKS_ENTRY__":"next.js","__FIREBASE_DEFAULTS__":"{\"config\":{\"projectId\":\"markit-63b00\",\"appId\":\"1:641710364027:web:03b357f69d368dbc25d9de\",\"storageBucket\":\"markit-63b00.appspot.com\",\"locationId\":\"us-central\",\"apiKey\":\"AIzaSyCg3RUV27XtkE4R5DV0-rvQcvAC9MjsCpI\",\"authDomain\":\"markit-63b00.firebaseapp.com\",\"messagingSenderId\":\"641710364027\"},\"_authTokenSyncURL\":\"/__session\"}","FIREBASE_CONFIG":"{\"projectId\":\"markit-63b00\",\"storageBucket\":\"markit-63b00.appspot.com\",\"locationId\":\"us-central\"}","GCLOUD_PROJECT":"markit-63b00","EVENTARC_CLOUD_EVENT_SOURCE":"projects/markit-63b00/locations/us-east1/services/ssrmarkit63b00","FUNCTION_TARGET":"ssrmarkit63b00"},"ingressSettings":null,"timeoutSeconds":null,"serviceAccountEmail":null,"availableMemory":"256Mi","minInstanceCount":null,"maxInstanceCount":null,"maxInstanceRequestConcurrency":80,"availableCpu":"1","vpcConnector":null,"vpcConnectorEgressSettings":null},"labels":{"deployment-tool":"cli-firebase","firebase-functions-codebase":"firebase-frameworks-markit-63b00","firebase-functions-hash":"1b200fa78f8ebc7d4a6eeaee1988724221d80b8e"}}
+[debug] [2023-10-05T04:29:41.740Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/us-east1/functions 400
+[debug] [2023-10-05T04:29:41.740Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/markit-63b00/locations/us-east1/functions {"error":{"code":400,"message":"Could not create Cloud Run service ssrmarkit63b00. spec.template.spec.containers.resources.limits.cpu: Invalid value specified for cpu. For the specified value, maxScale may not exceed 10.\nConsider running your workload in a region with greater capacity, decreasing your requested cpu-per-instance, or requesting an increase in quota for this region if you are seeing sustained usage near this limit, see https://cloud.google.com/run/quotas. Your project may gain access to further scaling by adding billing information to your account.","status":"INVALID_ARGUMENT"}}
+[warn] ⚠  functions: Your current project quotas don't allow for the current max instances setting of 100. Either reduce this function's maximum instances, or request a quota increase on the underlying Cloud Run service at https://cloud.google.com/run/quotas. 
+[warn] ⚠  functions: You can adjust the max instances value in your function's runtime options:
+	setGlobalOptions({maxInstances: 10}) 
+[error] Failed to create function projects/markit-63b00/locations/us-east1/functions/ssrmarkit63b00
+[debug] [2023-10-05T04:29:41.745Z] Total Function Deployment time: 1241
+[debug] [2023-10-05T04:29:41.745Z] 1 Functions Deployed
+[debug] [2023-10-05T04:29:41.745Z] 1 Functions Errored
+[debug] [2023-10-05T04:29:41.745Z] 0 Function Deployments Aborted
+[debug] [2023-10-05T04:29:41.745Z] Average Function Deployment time: 1241
+[info] 
+[info] Functions deploy had errors with the following functions:
+	firebase-frameworks-markit-63b00:ssrmarkit63b00(us-east1)
+[debug] [2023-10-05T04:29:41.746Z] Not printing URL for HTTPS function. Typically this means it didn't match a filter or we failed deployment
+[info] i  functions: cleaning up build files... 
+[debug] [2023-10-05T04:29:41.747Z] >>> [apiv2][query] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/markit-63b00/locations/us-east1/repositories/gcf-artifacts/packages/ssrmarkit63b00 [none]
+[debug] [2023-10-05T04:29:41.749Z] >>> [apiv2][query] GET https://us.gcr.io/v2/markit-63b00/gcf/us-east1/tags/list [none]
+[debug] [2023-10-05T04:29:42.372Z] <<< [apiv2][status] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/markit-63b00/locations/us-east1/repositories/gcf-artifacts/packages/ssrmarkit63b00 404
+[debug] [2023-10-05T04:29:42.373Z] <<< [apiv2][body] DELETE https://artifactregistry.googleapis.com/v1beta2/projects/markit-63b00/locations/us-east1/repositories/gcf-artifacts/packages/ssrmarkit63b00 {"error":{"code":404,"message":"Package \"projects/markit-63b00/locations/us-east1/repositories/gcf-artifacts/packages/ssrmarkit63b00\" was not found.","status":"NOT_FOUND"}}
+[debug] [2023-10-05T04:29:42.854Z] <<< [apiv2][status] GET https://us.gcr.io/v2/markit-63b00/gcf/us-east1/tags/list 200
+[debug] [2023-10-05T04:29:42.854Z] <<< [apiv2][body] GET https://us.gcr.io/v2/markit-63b00/gcf/us-east1/tags/list {"child":[],"manifest":{},"name":"markit-63b00/gcf/us-east1","tags":[]}
+[debug] [2023-10-05T04:29:42.855Z] Could not find image for function projects/markit-63b00/locations/us-east1/functions/ssrmarkit63b00
+[debug] [2023-10-05T04:29:42.855Z] Functions deploy failed.
+[debug] [2023-10-05T04:29:42.855Z] {
+  "endpoint": {
+    "id": "ssrmarkit63b00",
+    "project": "markit-63b00",
+    "region": "us-east1",
+    "entryPoint": "ssrmarkit63b00",
+    "platform": "gcfv2",
+    "runtime": "nodejs18",
+    "httpsTrigger": {},
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "serviceAccount": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "concurrency": 80,
+    "vpc": null,
+    "environmentVariables": {
+      "__FIREBASE_FRAMEWORKS_ENTRY__": "next.js",
+      "__FIREBASE_DEFAULTS__": "{\"config\":{\"projectId\":\"markit-63b00\",\"appId\":\"1:641710364027:web:03b357f69d368dbc25d9de\",\"storageBucket\":\"markit-63b00.appspot.com\",\"locationId\":\"us-central\",\"apiKey\":\"AIzaSyCg3RUV27XtkE4R5DV0-rvQcvAC9MjsCpI\",\"authDomain\":\"markit-63b00.firebaseapp.com\",\"messagingSenderId\":\"641710364027\"},\"_authTokenSyncURL\":\"/__session\"}",
+      "FIREBASE_CONFIG": "{\"projectId\":\"markit-63b00\",\"storageBucket\":\"markit-63b00.appspot.com\",\"locationId\":\"us-central\"}",
+      "GCLOUD_PROJECT": "markit-63b00",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/markit-63b00/locations/us-east1/services/ssrmarkit63b00"
+    },
+    "codebase": "firebase-frameworks-markit-63b00",
+    "cpu": 1,
+    "targetedByOnly": false,
+    "hash": "1b200fa78f8ebc7d4a6eeaee1988724221d80b8e"
+  },
+  "op": "create",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "context": {
+      "function": "projects/markit-63b00/locations/us-east1/functions/ssrmarkit63b00"
+    },
+    "exit": 1,
+    "message": "Failed to create function projects/markit-63b00/locations/us-east1/functions/ssrmarkit63b00",
+    "original": {
+      "name": "FirebaseError",
+      "children": [],
+      "context": {
+        "body": {
+          "error": {
+            "code": 400,
+            "message": "Could not create Cloud Run service ssrmarkit63b00. spec.template.spec.containers.resources.limits.cpu: Invalid value specified for cpu. For the specified value, maxScale may not exceed 10.\nConsider running your workload in a region with greater capacity, decreasing your requested cpu-per-instance, or requesting an increase in quota for this region if you are seeing sustained usage near this limit, see https://cloud.google.com/run/quotas. Your project may gain access to further scaling by adding billing information to your account.",
+            "status": "INVALID_ARGUMENT"
+          }
+        },
+        "response": {
+          "statusCode": 400
+        }
+      },
+      "exit": 1,
+      "message": "HTTP Error: 400, Could not create Cloud Run service ssrmarkit63b00. spec.template.spec.containers.resources.limits.cpu: Invalid value specified for cpu. For the specified value, maxScale may not exceed 10.\nConsider running your workload in a region with greater capacity, decreasing your requested cpu-per-instance, or requesting an increase in quota for this region if you are seeing sustained usage near this limit, see https://cloud.google.com/run/quotas. Your project may gain access to further scaling by adding billing information to your account.",
+      "status": 400
+    },
+    "status": 400,
+    "code": 400
+  }
+}
+[debug] [2023-10-05T04:29:42.856Z] Error: Failed to create function ssrmarkit63b00 in region us-east1
+    at /usr/local/lib/node_modules/firebase-tools/lib/deploy/functions/release/fabricator.js:291:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Fabricator.createV2Function (/usr/local/lib/node_modules/firebase-tools/lib/deploy/functions/release/fabricator.js:277:30)
+    at async Fabricator.createEndpoint (/usr/local/lib/node_modules/firebase-tools/lib/deploy/functions/release/fabricator.js:136:13)
+    at async handle (/usr/local/lib/node_modules/firebase-tools/lib/deploy/functions/release/fabricator.js:88:17)
+[error] 
+[error] Error: There was an error deploying functions

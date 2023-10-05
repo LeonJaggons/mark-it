@@ -45,7 +45,14 @@ import {
 import { RootState } from "@/redux/store";
 import { loginUser } from "@/services/auth_services";
 import axios from "axios";
-import { MdEdit, MdLocationOn, MdShop, MdShop2, MdStore } from "react-icons/md";
+import {
+    MdApps,
+    MdEdit,
+    MdLocationOn,
+    MdShop,
+    MdShop2,
+    MdStore,
+} from "react-icons/md";
 import * as CryptoJS from "crypto-js";
 import Scrollbars from "react-custom-scrollbars-2";
 import { fireAuth } from "@/firebase/firebase-init";
@@ -67,15 +74,19 @@ const MarkItHeader = () => {
                 <MarkItSearch />
                 <MarkItMenu />
             </HStack>
-            <HStack w={"100%"} spacing={0} align={"center"}>
+            <HStack
+                w={"100%"}
+                spacing={0}
+                align={"center"}
+                // justify={"space-between"}
+            >
                 <Button
                     variant={"link"}
                     textDecoration={"none !important"}
-                    colorScheme="messenger"
+                    colorScheme={"black"}
                     leftIcon={<Icon as={MdLocationOn} />}
                     fontSize={14}
                     py={3}
-                    mb={2}
                     // __css={{ textDecor: "none !important" }}
                 >
                     Location
@@ -88,25 +99,45 @@ const MarkItHeader = () => {
                     px={0}
                 />
                 {/* <HStack align={"center"} spacing={4} pl={6}> */}
-                <HStack
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        height: "100%",
-                        overflowX: "scroll",
-                        paddingLeft: 12,
-                        paddingTop: 4,
-                    }}
-                    spacing={8}
-                    flex={1}
-                >
-                    {categories.map((c) => (
-                        <CategoryMenuItem
-                            label={c.name}
-                            key={"CAT-" + c.name}
-                        />
-                    ))}
-                </HStack>
+                <Popover trigger={"hover"} placement={"bottom-start"}>
+                    <PopoverTrigger>
+                        <Button
+                            variant={"link"}
+                            textDecoration={"none !important"}
+                            colorScheme="black"
+                            leftIcon={<Icon as={MdApps} />}
+                            fontSize={14}
+                            py={3}
+                            // __css={{ textDecor: "none !important" }}
+                        >
+                            Categories
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                        height={"300px"}
+                        w={"220px"}
+                        overflowY={"scroll"}
+                    >
+                        <PopoverBody p={0}>
+                            <VStack
+                                style={{
+                                    display: "flex",
+                                    alignItems: "flex-start",
+                                    height: "100%",
+                                }}
+                                spacing={0}
+                                flex={1}
+                            >
+                                {categories.map((c) => (
+                                    <CategoryMenuItem
+                                        label={c.name}
+                                        key={"CAT-" + c.name}
+                                    />
+                                ))}
+                            </VStack>
+                        </PopoverBody>
+                    </PopoverContent>
+                </Popover>
                 {/* </HStack> */}
             </HStack>
         </VStack>
@@ -128,23 +159,20 @@ const CategoryMenuItem = ({ href, label }) => {
         console.log(selectedCategory);
     }, [selectedCategory]);
     return (
-        <Box
+        <Button
             cursor={"pointer"}
+            variant={selectedCategory === label ? "solid" : "ghost"}
+            colorScheme={"messenger"}
+            w={"full"}
+            color={selectedCategory === label ? "white" : "black"}
+            justifyContent={"space-between"}
             onClick={handleNav}
-            // onClick={newLocal}
             fontWeight={selectedCategory === label ? 600 : 400}
-            _hover={{
-                color: "messenger.500",
-            }}
             fontSize={12}
+            borderRadius={0}
         >
-            <Text
-                color={selectedCategory === label ? "messenger.500" : "black"}
-                style={{ whiteSpace: "nowrap" }}
-            >
-                {label}
-            </Text>
-        </Box>
+            {label}
+        </Button>
     );
 };
 
