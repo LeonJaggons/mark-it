@@ -300,7 +300,7 @@ const MarkItMenuItem = (props) => {
             as={NextLink}
             href={props.href ?? ""}
             onClick={newLocal}
-            color={isActive && "messenger.500"}
+            color={isActive ? "messenger.500" : "gray.700"}
             fontWeight={isActive ? 700 : 500}
             className="mark-it-menu-item"
             _hover={{
