@@ -177,9 +177,16 @@ const MarkItLogo = () => {
             cursor={"pointer"}
             textDecoration={"none !important"}
         >
-            <HStack spacing={1}>
+            <HStack
+                spacing={".5px"}
+                _hover={{
+                    color: "gray.600",
+                }}
+            >
                 <Icon as={MdStore} boxSize={7} />
-                <Heading size={"lg"}>MarkIt</Heading>
+                <Heading fontSize={30} fontWeight={800} letterSpacing={-1}>
+                    MarkIt
+                </Heading>
             </HStack>
         </Link>
     );
@@ -215,7 +222,12 @@ const MarkItMenu = () => {
     return (
         <HStack spacing={8} flex={1}>
             {menuItems.map((m) => (
-                <MarkItMenuItem key={m.label + "-menu-item"} {...m} />
+                <MarkItMenuItem
+                    key={m.label + "-menu-item"}
+                    href={m.href ?? null}
+                    label={m.label}
+                    onClick={m.onClick}
+                />
             ))}
             {loggedIn && <UserAvatar />}
             <MarkItLoginModal />
@@ -282,23 +294,24 @@ const UserAvatar = (props) => {
         </Popover>
     );
 };
-const MarkItMenuItem = (props) => {
+const MarkItMenuItem = ({ label, onClick, href }) => {
     const [isActive, setIsActive] = useState(false);
     const router = useRouter();
     useEffect(() => {
         console.log(router.pathname.split("/"));
         setIsActive(
-            router.pathname.split("/")[1] === props.label.toLowerCase()
+            router.pathname.split("/").length !== 0 &&
+                router.pathname.split("/")[1] === label.toLowerCase()
         );
     }, [router.pathname]);
     const newLocal = (e) => {
-        !props.href && e.preventDefault();
-        props.onClick && props.onClick();
+        !href && e.preventDefault();
+        onClick && onClick();
     };
     return (
         <Link
             as={NextLink}
-            href={props.href ?? ""}
+            href={href ? href : "/"}
             onClick={newLocal}
             color={isActive ? "messenger.500" : "gray.700"}
             fontWeight={isActive ? 700 : 500}
@@ -307,7 +320,7 @@ const MarkItMenuItem = (props) => {
                 color: "messenger.500",
             }}
         >
-            <p style={{ whiteSpace: "nowrap" }}>{props.label}</p>
+            <p style={{ whiteSpace: "nowrap" }}>{label}</p>
         </Link>
     );
 };
@@ -425,6 +438,9 @@ const MarkItLoginModal = () => {
                         </Text>
                         <Divider />
                     </HStack>
+                    <Button w={"full"} colorScheme={"messenger"}>
+                        Sign Up
+                    </Button>
                 </ModalBody>
             </ModalContent>
         </Modal>

@@ -33,6 +33,20 @@ export default async function handler(
                 };
             })
         );
+    } else if (userID) {
+        const userItemQry = query(
+            itemCollection,
+            where("userID", "==", userID)
+        );
+        const itemDocs = await getDocs(userItemQry);
+        res.status(200).json(
+            itemDocs.docs.map((itemDc) => {
+                return {
+                    ...itemDc.data(),
+                    itemID: itemDc.id,
+                };
+            })
+        );
     } else if (itemID) {
         const itemDoc = await getDoc(doc(fireStore, "item", itemID));
         const item = {

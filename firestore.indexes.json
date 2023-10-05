@@ -1,6 +1,20 @@
 {
   "indexes": [
     {
+      "collectionGroup": "item",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "category",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "userID",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "message",
       "queryScope": "COLLECTION",
       "fields": [

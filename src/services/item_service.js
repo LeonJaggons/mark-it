@@ -62,6 +62,15 @@ export const getItemsByCategory = async (category) => {
     const items = res.data;
     return items;
 };
+export const getUserItems = async () => {
+    const userID = store.getState().account.user?.userID;
+    const res = await axios.get(`/api/item`, {
+        params: { userID: userID },
+    });
+    const items = res.data;
+    return items;
+};
+
 export const getAllItems = async () => {
     const userID = store.getState().account.user?.userID;
     const res = await axios.get("/api/item", { params: { userID: userID } });

@@ -35,8 +35,9 @@ import {
 import moment from "moment";
 import Link from "next/link";
 import { deleteLikeItem, isItemLiked, likeItem } from "@/services/item_service";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "@/services/message_service";
+import { toggleShowLogin } from "@/redux/reducer/appSlice";
 
 export const MarkItItemDisplay = (props) => {
     const [showMessage, setShowMessage] = useState(false);
@@ -142,9 +143,7 @@ export const MarkItItemDisplay = (props) => {
                             </Tag>
                         )}
                         <HStack my={4} w={"full"}>
-                            {loggedIn && user.userID !== props.item.userID && (
-                                <LikeButton itemID={props.item.itemID} />
-                            )}
+                            <LikeButton itemID={props.item.itemID} />
                             <ShareButton />
                             <MoreButton />
                         </HStack>
@@ -182,17 +181,18 @@ export const MarkItItemDisplay = (props) => {
                         <Box flex={1} />
                         {user && user.userID !== props.item.userID && (
                             <VStack w={"full"}>
-                                <Button
+                                {/* <Button
                                     w={"full"}
                                     colorScheme={"messenger"}
                                     isDisabled={props.isPreview}
                                 >
                                     Make an Offer
-                                </Button>
+                                </Button> */}
                                 <Button
                                     w={"full"}
                                     isDisabled={props.isPreview}
                                     onClick={openMessage}
+                                    colorScheme={"messenger"}
                                 >
                                     Message Seller
                                 </Button>
@@ -290,7 +290,8 @@ const MessageSellerModal = (props) => {
 const LikeButton = (props) => {
     const [isLiked, setIsLiked] = useState(null);
     const loggedIn = useSelector((state) => state.account.loggedIn);
-
+    const user = useSelector((state) => state.account.user);
+    const dispatch = useDispatch();
     const checkIsLiked = async () => {
         const initLiked = await isItemLiked(props.itemID);
         setIsLiked(initLiked);
@@ -300,8 +301,12 @@ const LikeButton = (props) => {
     }, [props.itemID, loggedIn]);
 
     const handleLike = async () => {
-        setIsLiked(true);
-        await likeItem(props.itemID);
+        if (user) {
+            setIsLiked(true);
+            await likeItem(props.itemID);
+        } else {
+            dispatch(toggleShowLogin());
+        }
     };
     const handleDislike = async () => {
         setIsLiked(false);
@@ -343,7 +348,7 @@ const ItemActionButton = (props) => {
             leftIcon={<Icon as={props.icon} />}
             colorScheme={props.active ? "messenger" : "gray"}
             flex={!props.fit ? 1 : 0}
-            size={"md"}
+            size={"sm"}
         >
             {props.children}
         </Button>

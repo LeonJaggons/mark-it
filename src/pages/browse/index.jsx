@@ -11,7 +11,7 @@ import {
     Icon,
     Button,
 } from "@chakra-ui/react";
-import { MdSearchOff } from "react-icons/md";
+import { MdArrowBackIos, MdSearchOff } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { setSelectedCategory } from "@/redux/reducer/itemSlice";
 import { getAllItems, getItemsByCategory } from "@/services/item_service";
@@ -62,6 +62,8 @@ export default function Home() {
         }
         return () => {
             setItems(null);
+            setCategory(null);
+            dispatch(setSelectedCategory());
         };
     }, []);
     const user = useSelector((state) => state.account.user);
@@ -78,6 +80,7 @@ export default function Home() {
 
     useEffect(() => {
         if (category) {
+            setItems(null);
             dispatch(setSelectedCategory(category));
 
             loadItems(category);
@@ -94,7 +97,8 @@ export default function Home() {
                 align={"flex-start"}
                 style={{ padding: "18px 7vw", height: "100%" }}
                 position={"relative"}
-                spacing={4}
+                spacing={6}
+                mt={2}
             >
                 {items && items.length > 0 && (
                     <Box flex={"0 1 280px"} h={"full"} position={"relative"}>
@@ -102,49 +106,19 @@ export default function Home() {
                     </Box>
                 )}
                 {loading ? (
-                    <Center flex={1} height={"full"}>
-                        <Spinner />
-                    </Center>
-                ) : items && items.length > 0 ? (
-                    <Box flex={1}>
-                        {items && category && (
-                            <Heading size={"lg"} mb={4}>
-                                {category}
-                            </Heading>
-                        )}
-                        <SimpleGrid columns={[1, 2, 4, 5]} spacing={4}>
-                            {items.map((i) => (
-                                <BrowseItem item={i} fromSaved={false} />
-                            ))}
-                        </SimpleGrid>
-                    </Box>
+                    <LoadingScreen />
                 ) : (
-                    <VStack
-                        alignItems={"flex-start"}
-                        flex={1}
-                        w={"full"}
-                        h={"full"}
-                    >
-                        {items && category && (
-                            <Heading size={"lg"} mb={4}>
+                    <VStack h={"full"} flex={1} align={"flex-start"}>
+                        {category && (
+                            <Heading size={"lg"} mb={2}>
                                 {category}
                             </Heading>
                         )}
-                        <Center flex={1} w={"full"} pb={"150px"}>
-                            <VStack>
-                                <Icon as={MdSearchOff} boxSize={20} />
-                                <Heading>No search results</Heading>
-                                <Button
-                                    onClick={() => router.push("/browse")}
-                                    mt={2}
-                                    variant={"link"}
-                                    size={"lg"}
-                                    colorScheme="messenger"
-                                >
-                                    Back to browse
-                                </Button>
-                            </VStack>
-                        </Center>
+                        {items && items.length > 0 ? (
+                            <ItemsGrid items={items} />
+                        ) : (
+                            <NoResultsScreen />
+                        )}
                     </VStack>
                 )}
                 {loggedIn && <PostButton />}
@@ -152,3 +126,70 @@ export default function Home() {
         </>
     );
 }
+
+// {items && category && (
+//     <Heading size={"lg"} mb={4}>
+//         {category}
+//     </Heading>
+// )}
+
+const ItemsGrid = ({ items }) => {
+    return (
+        <Box flex={1}>
+            <SimpleGrid columns={[1, 2, 4, 5]} spacing={4}>
+                {items.map((i) => (
+                    <BrowseItem item={i} fromSaved={false} />
+                ))}
+            </SimpleGrid>
+        </Box>
+    );
+};
+
+const NoResultsScreen = ({}) => {
+    const router = useRouter();
+    return (
+        <VStack alignItems={"flex-start"} flex={1} w={"full"}>
+            <Center flex={1} w={"full"} pb={"150px"}>
+                <VStack>
+                    <Center
+                        w={"200px"}
+                        aspectRatio={1}
+                        bg={"gray.100"}
+                        mb={8}
+                        borderRadius={"100px"}
+                    >
+                        <Icon
+                            as={MdSearchOff}
+                            boxSize={"130px"}
+                            color={"gray.500"}
+                        />
+                    </Center>
+                    <VStack spacing={4}>
+                        <Heading fontWeight={600}>No results found</Heading>
+                        <Heading size={"sm"} fontWeight={400}>
+                            Try adjusting your search or filter to find what
+                            you're looking for.
+                        </Heading>
+                        <Button
+                            onClick={() => router.push("/browse")}
+                            mt={2}
+                            leftIcon={<Icon as={MdArrowBackIos} />}
+                            variant={"link"}
+                            size={"md"}
+                            colorScheme="messenger"
+                        >
+                            Back to Browse
+                        </Button>
+                    </VStack>
+                </VStack>
+            </Center>
+        </VStack>
+    );
+};
+const LoadingScreen = () => {
+    return (
+        <Center flex={1} height={"full"}>
+            <Spinner />
+        </Center>
+    );
+};
