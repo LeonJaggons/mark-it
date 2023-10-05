@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { getLikedItems } from "../../services/item_service";
 import { BrowseItem } from "../../components/BrowseItem";
 import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
+import Head from "next/head";
 const Saved = () => {
     const router = useRouter();
     const isLoggedIn = useSelector((state) => state.account.loggedIn);
@@ -23,18 +24,23 @@ const Saved = () => {
         !isLoggedIn && router.push("/");
     }, [isLoggedIn]);
     return (
-        isLoggedIn && (
-            <Box px={"7vw"} py={"12px"}>
-                <Heading size={"lg"} mb={4}>
-                    Saved
-                </Heading>
-                <SimpleGrid columns={4} spacing={4}>
-                    {likedItems.map((i) => (
-                        <BrowseItem item={i} fromSaved />
-                    ))}
-                </SimpleGrid>
-            </Box>
-        )
+        <>
+            <Head>
+                <title>Saved</title>
+            </Head>
+            {isLoggedIn && (
+                <Box px={"7vw"} py={"12px"}>
+                    <Heading size={"lg"} mb={4}>
+                        Saved
+                    </Heading>
+                    <SimpleGrid columns={4} spacing={4}>
+                        {likedItems.map((i) => (
+                            <BrowseItem item={i} fromSaved />
+                        ))}
+                    </SimpleGrid>
+                </Box>
+            )}
+        </>
     );
 };
 

@@ -301,7 +301,7 @@ const MarkItMenuItem = (props) => {
             href={props.href ?? ""}
             onClick={newLocal}
             color={isActive && "messenger.500"}
-            fontWeight={isActive ? 700 : 600}
+            fontWeight={isActive ? 700 : 500}
             className="mark-it-menu-item"
             _hover={{
                 color: "messenger.500",

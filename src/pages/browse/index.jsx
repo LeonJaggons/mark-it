@@ -20,6 +20,7 @@ import { BrowseFilters, PostButton } from "@/components/BrowseFilters";
 import { BrowseItem } from "@/components/BrowseItem";
 import { setAppLocation } from "@/redux/reducer/appSlice";
 import { useRouter } from "next/router";
+import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -83,64 +84,71 @@ export default function Home() {
         }
     }, [category]);
     return (
-        <HStack
-            align={"flex-start"}
-            style={{ padding: "18px 7vw", height: "100%" }}
-            position={"relative"}
-            spacing={4}
-        >
-            {items && items.length > 0 && (
-                <Box flex={"0 1 280px"} h={"full"} position={"relative"}>
-                    <BrowseFilters />
-                </Box>
-            )}
-            {loading ? (
-                <Center flex={1} height={"full"}>
-                    <Spinner />
-                </Center>
-            ) : items && items.length > 0 ? (
-                <Box flex={1}>
-                    {items && category && (
-                        <Heading size={"lg"} mb={4}>
-                            {category}
-                        </Heading>
-                    )}
-                    <SimpleGrid columns={[1, 2, 4, 5]} spacing={4}>
-                        {items.map((i) => (
-                            <BrowseItem item={i} fromSaved={false} />
-                        ))}
-                    </SimpleGrid>
-                </Box>
-            ) : (
-                <VStack
-                    alignItems={"flex-start"}
-                    flex={1}
-                    w={"full"}
-                    h={"full"}
-                >
-                    {items && category && (
-                        <Heading size={"lg"} mb={4}>
-                            {category}
-                        </Heading>
-                    )}
-                    <Center flex={1} w={"full"} pb={"150px"}>
-                        <VStack>
-                            <Icon as={MdSearchOff} boxSize={20} />
-                            <Heading>No search results</Heading>
-                            <Button
-                                onClick={() => router.push("/browse")}
-                                mt={2}
-                                variant={"link"}
-                                size={"lg"}
-                                colorScheme="messenger"
-                            >
-                                Back to browse
-                            </Button>
-                        </VStack>
+        <>
+            <Head>
+                <title>
+                    Browse {category && "•"} {category}
+                </title>
+            </Head>
+            <HStack
+                align={"flex-start"}
+                style={{ padding: "18px 7vw", height: "100%" }}
+                position={"relative"}
+                spacing={4}
+            >
+                {items && items.length > 0 && (
+                    <Box flex={"0 1 280px"} h={"full"} position={"relative"}>
+                        <BrowseFilters />
+                    </Box>
+                )}
+                {loading ? (
+                    <Center flex={1} height={"full"}>
+                        <Spinner />
                     </Center>
-                </VStack>
-            )}
-            {loggedIn && <PostButton />}
-        </HStack>
+                ) : items && items.length > 0 ? (
+                    <Box flex={1}>
+                        {items && category && (
+                            <Heading size={"lg"} mb={4}>
+                                {category}
+                            </Heading>
+                        )}
+                        <SimpleGrid columns={[1, 2, 4, 5]} spacing={4}>
+                            {items.map((i) => (
+                                <BrowseItem item={i} fromSaved={false} />
+                            ))}
+                        </SimpleGrid>
+                    </Box>
+                ) : (
+                    <VStack
+                        alignItems={"flex-start"}
+                        flex={1}
+                        w={"full"}
+                        h={"full"}
+                    >
+                        {items && category && (
+                            <Heading size={"lg"} mb={4}>
+                                {category}
+                            </Heading>
+                        )}
+                        <Center flex={1} w={"full"} pb={"150px"}>
+                            <VStack>
+                                <Icon as={MdSearchOff} boxSize={20} />
+                                <Heading>No search results</Heading>
+                                <Button
+                                    onClick={() => router.push("/browse")}
+                                    mt={2}
+                                    variant={"link"}
+                                    size={"lg"}
+                                    colorScheme="messenger"
+                                >
+                                    Back to browse
+                                </Button>
+                            </VStack>
+                        </Center>
+                    </VStack>
+                )}
+                {loggedIn && <PostButton />}
+            </HStack>
+        </>
     );
 }
