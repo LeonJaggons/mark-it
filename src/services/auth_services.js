@@ -67,7 +67,7 @@ export const loginUser = async (withSaved = false) => {
     updateLoginState(user);
 };
 
-export const updateLoginState = (user: any) => {
+export const updateLoginState = (user) => {
     if (user.userID !== null) {
         store.dispatch(setUser(user));
         store.dispatch(setLoggedIn(true));
@@ -75,7 +75,7 @@ export const updateLoginState = (user: any) => {
         store.dispatch(setLoggedIn(false));
     }
 };
-export const getUserFromFBUser = async (user: User) => {
+export const getUserFromFBUser = async (user) => {
     const userCollection = collection(fireStore, "user");
     const userDoc = doc(userCollection, user?.uid);
     const userDocSnap = await getDoc(userDoc);
