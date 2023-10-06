@@ -95,15 +95,15 @@ export default function Home() {
             </Head>
             <HStack
                 align={"flex-start"}
-                style={{ padding: "18px 7vw", height: "100%" }}
+                style={{ padding: "30px 7vw", height: "100%" }}
                 position={"relative"}
                 spacing={6}
-                mt={2}
+                w={"full"}
             >
                 {items && items.length > 0 && (
-                    <Box flex={"0 1 280px"} h={"full"} position={"relative"}>
-                        <BrowseFilters />
-                    </Box>
+                    // <Box flex={"0 1 280px"} h={"full"} position={"relative"}>
+                    <BrowseFilters />
+                    // </Box>
                 )}
                 {loading ? (
                     <LoadingScreen />
@@ -115,7 +115,9 @@ export default function Home() {
                             </Heading>
                         )}
                         {items && items.length > 0 ? (
-                            <ItemsGrid items={items} />
+                            <Box overflow={"scroll"} flex={1}>
+                                <ItemsGrid items={items} />
+                            </Box>
                         ) : (
                             <NoResultsScreen />
                         )}
@@ -135,8 +137,8 @@ export default function Home() {
 
 const ItemsGrid = ({ items }) => {
     return (
-        <Box flex={1}>
-            <SimpleGrid columns={[1, 2, 4, 5]} spacing={4}>
+        <Box flex={1} w={"full"}>
+            <SimpleGrid columns={[1, 2, 4, 5]} spacing={4} w={"full"}>
                 {items.map((i) => (
                     <BrowseItem item={i} fromSaved={false} />
                 ))}

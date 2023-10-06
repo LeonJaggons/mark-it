@@ -4,16 +4,24 @@ export type LoginCreds = {
     email: string;
     password: string;
 };
+export type NewUserCreds = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+};
 export interface AccountState {
     loggedIn: boolean;
     user: any;
     loginCreds: LoginCreds;
+    newUserCreds: NewUserCreds;
 }
 
 const initialState: AccountState = {
     loggedIn: false,
     user: null,
     loginCreds: {} as LoginCreds,
+    newUserCreds: {} as NewUserCreds,
 };
 
 const accountSlice = createSlice({
@@ -38,6 +46,30 @@ const accountSlice = createSlice({
                 password: action.payload,
             } as LoginCreds;
         },
+        setNewUserEmail: (state, action: PayloadAction<string>) => {
+            state.newUserCreds = {
+                ...state.newUserCreds,
+                email: action.payload,
+            } as NewUserCreds;
+        },
+        setNewUserPassword: (state, action: PayloadAction<string>) => {
+            state.newUserCreds = {
+                ...state.newUserCreds,
+                password: action.payload,
+            } as NewUserCreds;
+        },
+        setNewUserFirstName: (state, action: PayloadAction<string>) => {
+            state.newUserCreds = {
+                ...state.newUserCreds,
+                firstName: action.payload,
+            } as NewUserCreds;
+        },
+        setNewUserLastName: (state, action: PayloadAction<string>) => {
+            state.newUserCreds = {
+                ...state.newUserCreds,
+                lastName: action.payload,
+            } as NewUserCreds;
+        },
         signOut: (state) => {
             state.loginCreds = {} as LoginCreds;
             state.user = null;
@@ -52,5 +84,9 @@ export const {
     setLoginPassword,
     setLoggedIn,
     signOut,
+    setNewUserEmail,
+    setNewUserPassword,
+    setNewUserFirstName,
+    setNewUserLastName,
 } = accountSlice.actions;
 export default accountSlice.reducer;

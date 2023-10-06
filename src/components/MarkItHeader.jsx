@@ -27,11 +27,22 @@ import {
     PopoverTrigger,
     PopoverContent,
     PopoverBody,
+    Slider,
+    SliderTrack,
+    SliderThumb,
+    SliderFilledTrack,
+    SliderMark,
+    Select,
+    Tabs,
+    TabList,
+    TabPanels,
+    TabPanel,
+    Tab,
 } from "@chakra-ui/react";
 import { signOut as fireSignOut } from "firebase/auth";
 import { IoSearch } from "react-icons/io5";
 import NextLink from "next/link";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState, toggleShowLogin } from "@/redux/reducer/appSlice";
 import {
@@ -39,36 +50,55 @@ import {
     LoginCreds,
     setLoginPassword,
     setLoginUsername,
+    setNewUserEmail,
+    setNewUserFirstName,
+    setNewUserLastName,
+    setNewUserPassword,
     setUser,
     signOut,
 } from "@/redux/reducer/accountSlice";
 import { RootState } from "@/redux/store";
-import { loginUser } from "@/services/auth_services";
+import { createAccount, loginUser } from "@/services/auth_services";
 import axios from "axios";
 import {
     MdApps,
     MdEdit,
     MdLocationOn,
+    MdLocationSearching,
     MdShop,
     MdShop2,
+    MdShuffle,
     MdStore,
+    MdUpload,
 } from "react-icons/md";
 import * as CryptoJS from "crypto-js";
 import Scrollbars from "react-custom-scrollbars-2";
 import { fireAuth } from "@/firebase/firebase-init";
 import { useRouter } from "next/router";
+import { setSelectedCategory } from "@/redux/reducer/itemSlice";
+import BoringAvatar from "boring-avatars";
 const MarkItHeader = () => {
+    const router = useRouter();
     const [categories, setCategories] = useState([]);
+    const [catSelected, setCatSelected] = useState(false);
     const getCategories = async () => {
         const res = await axios.get("/api/category");
         setCategories([...res.data]);
     };
 
     useEffect(() => {
+        const selectedCat = router.query.category;
+        setCatSelected(selectedCat != null);
+    }, [router]);
+    useEffect(() => {
         getCategories();
     }, []);
+    const labelStyles = {
+        mt: 2,
+        fontSize: "sm",
+    };
     return (
-        <VStack id={"mark-it-header"} spacing={"6px"} w={"full"}>
+        <VStack id={"mark-it-header"} spacing={"18px"} w={"full"}>
             <HStack w={"full"} spacing={"38px"}>
                 <MarkItLogo />
                 <MarkItSearch />
@@ -76,28 +106,49 @@ const MarkItHeader = () => {
             </HStack>
             <HStack
                 w={"100%"}
-                spacing={0}
+                spacing={12}
                 align={"center"}
                 // justify={"space-between"}
             >
-                <Button
-                    variant={"link"}
-                    textDecoration={"none !important"}
-                    colorScheme={"black"}
-                    leftIcon={<Icon as={MdLocationOn} />}
-                    fontSize={14}
-                    py={3}
-                    // __css={{ textDecor: "none !important" }}
-                >
-                    Location
-                </Button>
-                <Divider
-                    orientation={"vertical"}
-                    height={"14px"}
-                    borderColor={"gray.300"}
-                    ml={6}
-                    px={0}
-                />
+                <Popover placement={"bottom-start"}>
+                    <PopoverTrigger>
+                        <Button
+                            variant={"link"}
+                            textDecoration={"none !important"}
+                            colorScheme={"black"}
+                            leftIcon={<Icon as={MdLocationOn} />}
+                            fontSize={16}
+                            // __css={{ textDecor: "none !important" }}
+                        >
+                            Location
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
+                            <Heading size={"sm"}>Location</Heading>
+                        </Box>
+                        <Box p={4}>
+                            <Stack>
+                                <Stack>
+                                    <Heading size={"xs"}>Distance</Heading>
+                                    <Select size={"sm"}>
+                                        <option>5 mi</option>
+                                    </Select>
+                                </Stack>
+                            </Stack>
+                        </Box>
+                        <Box p={4} borderTop={"1px solid rgba(0,0,0,.1)"}>
+                            <Button
+                                size={"sm"}
+                                w={"full"}
+                                colorScheme={"messenger"}
+                                variant={"outline"}
+                            >
+                                Apply
+                            </Button>
+                        </Box>
+                    </PopoverContent>
+                </Popover>
                 {/* <HStack align={"center"} spacing={4} pl={6}> */}
                 <Popover trigger={"hover"} placement={"bottom-start"}>
                     <PopoverTrigger>
@@ -106,8 +157,8 @@ const MarkItHeader = () => {
                             textDecoration={"none !important"}
                             colorScheme="black"
                             leftIcon={<Icon as={MdApps} />}
-                            fontSize={14}
-                            py={3}
+                            fontSize={16}
+                            color={catSelected && "messenger.500"}
                             // __css={{ textDecor: "none !important" }}
                         >
                             Categories
@@ -128,6 +179,10 @@ const MarkItHeader = () => {
                                 spacing={0}
                                 flex={1}
                             >
+                                <CategoryMenuItem
+                                    label={"All"}
+                                    key={"CAT-ALL"}
+                                />
                                 {categories.map((c) => (
                                     <CategoryMenuItem
                                         label={c.name}
@@ -149,11 +204,17 @@ const CategoryMenuItem = ({ href, label }) => {
     const selectedCategory = useSelector(
         (state) => state.item.selectedCategory
     );
+    const dispatch = useDispatch();
     const handleNav = () => {
-        router.push({
-            pathname: "/browse",
-            query: { category: label },
-        });
+        if (label === "All") {
+            router.push("/browse");
+            dispatch(setSelectedCategory(null));
+        } else {
+            router.push({
+                pathname: "/browse",
+                query: { category: label },
+            });
+        }
     };
     useEffect(() => {
         console.log(selectedCategory);
@@ -353,16 +414,33 @@ const MarkItMenuItem = ({ label, onClick, href }) => {
     );
 };
 
+function generateRandomHexColors(length) {
+    const colors = [];
+
+    for (let i = 0; i < length; i++) {
+        const randomColor =
+            "#" + Math.floor(Math.random() * 16777215).toString(16);
+        colors.push(randomColor);
+    }
+
+    return colors;
+}
+
 const MarkItLoginModal = () => {
     const [readOnly, setReadOnly] = useState(true);
     const dispatch = useDispatch();
     const [canSubmit, setCanSubmit] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saveLogin, setSaveLogin] = useState(false);
+    const [newUserPhoto, setNewUserPhoto] = useState();
+    const [randomColors, setRandomColors] = useState(
+        generateRandomHexColors(5)
+    );
     const loggedIn = useSelector((state) => state.account.loggedIn);
     const user = useSelector((state) => state.account.user);
     const showLogin = useSelector((state) => state.app.showLogin);
     const loginCreds = useSelector((state) => state.account.loginCreds);
+    const newUserCreds = useSelector((state) => state.account.newUserCreds);
 
     useEffect(() => {
         if (user?.userID !== null) {
@@ -379,6 +457,8 @@ const MarkItLoginModal = () => {
     useEffect(() => {
         updateCanSubmit();
     }, [loginCreds]);
+
+    const genNewColors = () => setRandomColors(generateRandomHexColors(5));
 
     const updateCanSubmit = () => {
         const hasEmail =
@@ -408,67 +488,193 @@ const MarkItLoginModal = () => {
         saveLogin && handleSaveLogin();
         setLoading(false);
     };
+
+    const handleUpdateNewUserFirstName = (e) =>
+        dispatch(setNewUserFirstName(e.target.value));
+    const handleUpdateNewUserLastName = (e) =>
+        dispatch(setNewUserLastName(e.target.value));
+    const handleUpdateNewUserEmail = (e) =>
+        dispatch(setNewUserEmail(e.target.value));
+    const handleUpdateNewUserPassword = (e) =>
+        dispatch(setNewUserPassword(e.target.value));
+
+    const inputRef = useRef();
+    const handleChange = (e) => {
+        const file = e.target.files[0];
+
+        file && setNewUserPhoto(URL.createObjectURL(file));
+    };
+
+    const handleSignUp = async () => {
+        if (newUserPhoto) {
+            setLoading(true);
+            await createAccount(newUserPhoto);
+            setLoading(false);
+            dispatch(toggleShowLogin());
+        }
+    };
     return (
         <Modal isOpen={!loggedIn && showLogin} onClose={handleClose} isCentered>
             <ModalOverlay />
-            <ModalContent>
-                <ModalBody padding={6}>
-                    <Stack spacing={4}>
-                        <Heading size={"md"}>Sign In</Heading>
-                        <Stack>
-                            <Input
-                                readOnly={readOnly}
-                                placeholder={"Email"}
-                                value={loginCreds.email}
-                                onChange={handleUpdateUsername}
-                                onFocus={() => setReadOnly(false)}
-                                onBlur={() => setReadOnly(true)}
-                            />
-                            <Input
-                                readOnly={readOnly}
-                                type={"password"}
-                                placeholder={"Password"}
-                                value={loginCreds.password}
-                                onChange={handleUpdatePassword}
-                                onFocus={() => setReadOnly(false)}
-                                onBlur={() => setReadOnly(true)}
-                                autoComplete={"new-password"}
-                            />
-                            <HStack justify={"space-between"}>
-                                <Checkbox
-                                    onChange={(e) =>
-                                        setSaveLogin(e.target.checked)
-                                    }
+            <ModalContent
+                minH={"320px"}
+                borderRadius={5}
+                overflow={"hidden"}
+                borderWidth={0}
+            >
+                <ModalBody p={0}>
+                    <Tabs
+                        isFitted
+                        variant={"enclosed-colored"}
+                        colorScheme={"messenger"}
+                    >
+                        <TabList>
+                            <Tab borderTopWidth={4}>Sign In</Tab>
+                            <Tab borderTopWidth={4}>Sign Up</Tab>
+                        </TabList>
+                        <TabPanels>
+                            <TabPanel>
+                                <Stack spacing={6}>
+                                    <Heading size={"md"} mb={2}>
+                                        Sign In
+                                    </Heading>
+                                    <Stack spacing={4}>
+                                        <Input
+                                            readOnly={readOnly}
+                                            placeholder={"Email"}
+                                            value={loginCreds.email}
+                                            onChange={handleUpdateUsername}
+                                            onFocus={() => setReadOnly(false)}
+                                            onBlur={() => setReadOnly(true)}
+                                            size={"sm"}
+                                        />
+                                        <Input
+                                            readOnly={readOnly}
+                                            type={"password"}
+                                            placeholder={"Password"}
+                                            value={loginCreds.password}
+                                            onChange={handleUpdatePassword}
+                                            onFocus={() => setReadOnly(false)}
+                                            onBlur={() => setReadOnly(true)}
+                                            autoComplete={"new-password"}
+                                            size={"sm"}
+                                        />
+                                        <HStack justify={"space-between"}>
+                                            <Checkbox
+                                                onChange={(e) =>
+                                                    setSaveLogin(
+                                                        e.target.checked
+                                                    )
+                                                }
+                                            >
+                                                Remember me
+                                            </Checkbox>
+                                            <Button
+                                                variant={"link"}
+                                                size={"sm"}
+                                            >
+                                                Forgot password?
+                                            </Button>
+                                        </HStack>
+                                    </Stack>
+                                    <Button
+                                        onClick={handleLogin}
+                                        isLoading={loading}
+                                        isDisabled={!canSubmit}
+                                        colorScheme={"messenger"}
+                                    >
+                                        Continue
+                                    </Button>
+                                </Stack>
+                            </TabPanel>
+                            <TabPanel>
+                                <Stack spacing={6} mb={6}>
+                                    <Heading size={"md"} mb={2}>
+                                        Sign Up
+                                    </Heading>
+                                    <Stack spacing={4}>
+                                        <VStack>
+                                            <Avatar
+                                                src={newUserPhoto}
+                                                size={"2xl"}
+                                            />
+                                            <Input
+                                                display={"none"}
+                                                type={"file"}
+                                                ref={inputRef}
+                                                onChange={handleChange}
+                                            />
+                                            <HStack>
+                                                <Button
+                                                    variant={"ghost"}
+                                                    leftIcon={
+                                                        <Icon as={MdShuffle} />
+                                                    }
+                                                    size={"sm"}
+                                                    onClick={genNewColors}
+                                                >
+                                                    Random
+                                                </Button>
+                                                <Button
+                                                    onClick={() =>
+                                                        inputRef?.current?.click()
+                                                    }
+                                                    variant={"ghost"}
+                                                    leftIcon={
+                                                        <Icon as={MdUpload} />
+                                                    }
+                                                    size={"sm"}
+                                                >
+                                                    Upload photo
+                                                </Button>
+                                            </HStack>
+                                        </VStack>
+                                        <HStack spacing={4}>
+                                            <Input
+                                                placeholder={"First Name"}
+                                                value={newUserCreds.firstName}
+                                                onChange={
+                                                    handleUpdateNewUserFirstName
+                                                }
+                                                size={"sm"}
+                                            />
+                                            <Input
+                                                placeholder={"Last Name"}
+                                                value={newUserCreds.lastName}
+                                                onChange={
+                                                    handleUpdateNewUserLastName
+                                                }
+                                                size={"sm"}
+                                            />
+                                        </HStack>
+                                        <Input
+                                            placeholder={"Email"}
+                                            value={newUserCreds.email}
+                                            onChange={handleUpdateNewUserEmail}
+                                            size={"sm"}
+                                        />
+                                        <Input
+                                            type={"password"}
+                                            placeholder={"Password"}
+                                            value={newUserCreds.password}
+                                            onChange={
+                                                handleUpdateNewUserPassword
+                                            }
+                                            size={"sm"}
+                                        />
+                                    </Stack>
+                                </Stack>
+                                <Button
+                                    w={"full"}
+                                    colorScheme={"messenger"}
+                                    onClick={handleSignUp}
+                                    isLoading={loading}
                                 >
-                                    Remember me
-                                </Checkbox>
-                                <Button variant={"link"} size={"sm"}>
-                                    Forgot password?
+                                    Sign Up
                                 </Button>
-                            </HStack>
-                        </Stack>
-                        <Button
-                            onClick={handleLogin}
-                            isLoading={loading}
-                            isDisabled={!canSubmit}
-                        >
-                            Continue
-                        </Button>
-                    </Stack>
-                    <HStack spacing={4} my={6}>
-                        <Divider />
-                        <Text
-                            fontSize={"sm"}
-                            fontWeight={"bold"}
-                            color={"blackAlpha.500"}
-                        >
-                            OR
-                        </Text>
-                        <Divider />
-                    </HStack>
-                    <Button w={"full"} colorScheme={"messenger"}>
-                        Sign Up
-                    </Button>
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
                 </ModalBody>
             </ModalContent>
         </Modal>

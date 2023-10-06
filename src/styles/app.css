@@ -27,7 +27,7 @@ body {
     background-color: white;
     position: sticky;
     justify-content: space-between;
-    padding: 12px 7vw;
+    padding: 15px 7vw;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 #mi-app-container {

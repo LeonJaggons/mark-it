@@ -21,13 +21,15 @@ export const BrowseFilters = () => {
     return (
         <Card
             borderWidth={0.5}
+            shadow={"none"}
             borderColor={"rgba(0,0,0,.1)"}
             position={"sticky"}
             top={"140px"}
-            maxH={"calc(100vh - 160px)"}
-            h={"calc(100vh - 160px)"}
+            flex={"0 1 300px"}
+            maxH={"calc(100vh - 170px)"}
+            h={"calc(100vh - 170px)"}
         >
-            <Box p={4} borderBottom={"1px solid rgba(0,0,0,.05)"}>
+            <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
                 <Heading size={"md"}>Filters</Heading>
             </Box>
             <Box overflowY={"scroll"} flex={1}>
@@ -83,7 +85,7 @@ export const BrowseFilters = () => {
                     </Box>
                 </VStack>
             </Box>
-            <Box w={"full"} p={4} borderTop={"1px solid rgba(0,0,0,.05)"}>
+            <Box w={"full"} p={4} borderTop={"1px solid rgba(0,0,0,.1)"}>
                 <Button
                     w={"full"}
                     colorScheme={"messenger"}

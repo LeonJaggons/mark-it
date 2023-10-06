@@ -65,7 +65,7 @@ export const getItemsByCategory = async (category) => {
 export const getUserItems = async () => {
     const userID = store.getState().account.user?.userID;
     const res = await axios.get(`/api/item`, {
-        params: { userID: userID },
+        params: { userID: userID, onlyUser: "true" },
     });
     const items = res.data;
     return items;
@@ -85,7 +85,11 @@ export const getItemByID = async (itemID) => {
 
 export const getLikedItems = async () => {
     const userID = store.getState().account.user.userID;
-    const likedItems = await axios.get(`api/favorite?userID=${userID}`);
+    const likedItems = await axios.get(`/api/favorite`, {
+        params: {
+            userID: userID,
+        },
+    });
 
     return likedItems.data;
 };
@@ -95,7 +99,12 @@ export const isItemLiked = async (itemID) => {
 };
 export const likeItem = async (itemID) => {
     const userID = store.getState().account.user.userID;
-    await axios.post(`/api/favorite?itemID=${itemID}&userID=${userID}`);
+    await axios.post(`/api/favorite?itemID=${itemID}&userID=${userID}`, {
+        params: {
+            itemID: itemID,
+            userID: userID,
+        },
+    });
 };
 export const deleteLikeItem = async (itemID) => {
     const userID = store.getState().account.user.userID;

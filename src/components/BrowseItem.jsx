@@ -36,8 +36,10 @@ export const BrowseItem = (props) => {
     }, []);
     return (
         <Card
+            shadow={"none"}
+            border={"1px solid rgba(0,0,0,.1)"}
             _hover={{
-                shadow: "md",
+                shadow: "sm",
             }}
         >
             <VStack
@@ -51,6 +53,7 @@ export const BrowseItem = (props) => {
             >
                 {props.item.images && (
                     <CkImage
+                        opacity={0.2}
                         src={props.item.images[0]}
                         aspectRatio={1}
                         w={"full"}
