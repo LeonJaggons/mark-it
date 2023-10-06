@@ -1,10 +1,5 @@
-import {
-    EmptyItem,
-    setPostItem,
-} from "@/redux/reducer/itemSlice";
-import {
-    HStack,
-    } from "@chakra-ui/react";
+import { EmptyItem, setPostItem } from "@/redux/reducer/itemSlice";
+import { HStack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,7 +15,7 @@ const Post = () => {
             if (!loggedIn) {
                 router.push("/");
             } else {
-                console.log(user);
+                user;
             }
         }
         return () => {

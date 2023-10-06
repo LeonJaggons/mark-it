@@ -26,11 +26,9 @@ export const createAccount = async (img) => {
     const firebaseID = userCreds.user.uid;
     let profileImgURL;
     const imgRef = ref(fireStorage, `user/${firebaseID}/profile_pic.jpg`);
-    const imgRes = await fetch(img).catch((err) => console.log(err));
+    const imgRes = await fetch(img).catch((err) => err);
     const imgBlob = await imgRes.blob();
-    const imgStoreRef = await uploadBytes(imgRef, imgBlob).catch((err) =>
-        console.log(err)
-    );
+    const imgStoreRef = await uploadBytes(imgRef, imgBlob).catch((err) => err);
     if (imgStoreRef) {
         const dlURL = await getDownloadURL(imgStoreRef.ref);
         profileImgURL = dlURL;

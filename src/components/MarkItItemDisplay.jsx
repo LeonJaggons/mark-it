@@ -229,7 +229,7 @@ const MessageSellerModal = (props) => {
         props.close();
     };
     useEffect(() => {
-        console.log(props.item);
+        props.item;
     }, []);
     const handleUpdateContent = (e) => {
         setContent(e.target.value);

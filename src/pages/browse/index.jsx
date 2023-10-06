@@ -38,14 +38,14 @@ export default function Home() {
         } else {
             newItems = await getAllItems();
         }
-        console.log(newItems);
+        newItems;
         setItems([...newItems]);
         setLoading(false);
     };
     const requestLocation = () => {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((pos) => {
-                console.log(pos);
+                pos;
                 dispatch(
                     setAppLocation({
                         latitude: pos.coords.latitude,

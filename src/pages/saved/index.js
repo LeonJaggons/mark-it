@@ -14,7 +14,7 @@ const Saved = () => {
     const [likedItems, setLikedItems] = useState([]);
     const loadLikedItems = async () => {
         const liked = await getLikedItems();
-        console.log(liked);
+        liked;
         setLikedItems([...liked]);
     };
     useEffect(() => {

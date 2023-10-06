@@ -11,24 +11,30 @@ import {
     SimpleGrid,
     Button,
     Text,
-    Spinner, IconButton,
+    Spinner,
+    IconButton,
     Textarea,
     Card,
     CardBody,
-    Select
+    Select,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { MdAddAPhoto, MdArrowBack, MdClose, MdDone, MdLocationOn, MdPublish } from "react-icons/md";
+import {
+    MdAddAPhoto,
+    MdArrowBack,
+    MdClose,
+    MdDone,
+    MdLocationOn,
+    MdPublish,
+} from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { postNewItem } from "@/services/item_service";
 import { MarkItItemDisplay } from "./MarkItItemDisplay";
 
 export const PostPreview = () => {
-    const postItem = useSelector(
-        (state) => state.item.postItem
-    );
+    const postItem = useSelector((state) => state.item.postItem);
     return (
         <Center flex={3} height={"100vh"} bg={"gray.100"}>
             <Card shadow={"lg"} w={"90%"} height={"80%"}>
@@ -49,9 +55,7 @@ export const PostPreview = () => {
 const PostPhotoUpload = () => {
     const dispatch = useDispatch();
     const [photos, setPhotos] = useState([]);
-    const postItem = useSelector(
-        (state) => state.item.postItem
-    );
+    const postItem = useSelector((state) => state.item.postItem);
     let fileRef = useRef();
 
     const handleClick = () => {
@@ -109,7 +113,8 @@ const PostPhotoUpload = () => {
                 ref={fileRef}
                 onChange={handleChange}
                 type={"file"}
-                display={"none"} />
+                display={"none"}
+            />
         </Box>
     );
 };
@@ -117,14 +122,17 @@ const UploadImage = (props) => {
     return (
         <Box position={"relative"}>
             <Image
-                fallback={<Center w={"full"} height={"full"}>
-                    <Spinner color={"blackAlpha.200"} />
-                </Center>}
+                fallback={
+                    <Center w={"full"} height={"full"}>
+                        <Spinner color={"blackAlpha.200"} />
+                    </Center>
+                }
                 src={props.img}
                 aspectRatio={1}
                 width={"100%"}
                 borderRadius={5}
-                objectFit={"cover"} />
+                objectFit={"cover"}
+            />
             <Button
                 position={"absolute"}
                 top={1}
@@ -142,23 +150,19 @@ const UploadImage = (props) => {
 export const PostDetailsForm = () => {
     const [categories, setCategories] = useState([]);
     const dispatch = useDispatch();
-    const postItem = useSelector(
-        (state) => state.item.postItem
-    );
-    const user = useSelector(
-        (state) => state.account.user
-    );
+    const postItem = useSelector((state) => state.item.postItem);
+    const user = useSelector((state) => state.account.user);
     const getCategories = async () => {
         const res = await axios.get("/api/category");
         setCategories([...res.data]);
     };
 
     useEffect(() => {
-        updateUserID();
+        D();
         getCategories();
     }, []);
     useEffect(() => {
-        console.log(postItem);
+        postItem;
     }, [postItem]);
     const updatePostItem = (field, newValue) => {
         const newPostItem = {
@@ -170,7 +174,8 @@ export const PostDetailsForm = () => {
     const updateUserID = () => updatePostItem("userID", user.userID);
     const updateTitle = (e) => updatePostItem("title", e.target.value);
     const updatePrice = (e) => updatePostItem("price", e.target.value);
-    const updateDescription = (e) => updatePostItem("description", e.target.value);
+    const updateDescription = (e) =>
+        updatePostItem("description", e.target.value);
     const updateCategory = (e) => updatePostItem("category", e.target.value);
     return (
         <VStack
@@ -191,7 +196,8 @@ export const PostDetailsForm = () => {
                     href={"/"}
                     size={"sm"}
                     icon={<Icon as={MdArrowBack} />}
-                    aria-label="Back to home" />
+                    aria-label="Back to home"
+                />
 
                 <Heading size={"md"}>Post New Listing</Heading>
             </HStack>
@@ -273,16 +279,14 @@ export const PostDetailsForm = () => {
 };
 const LocationButton = () => {
     const dispatch = useDispatch();
-    const postItem = useSelector(
-        (state) => state.item.postItem
-    );
+    const postItem = useSelector((state) => state.item.postItem);
     const [loading, setLoading] = useState(false);
     const [location, setLocation] = useState(null);
-    const requestLocation = () => {
+    const reques () => {
         if ("geolocation" in navigator) {
             setLoading(true);
             navigator.geolocation.getCurrentPosition((pos) => {
-                console.log(pos);
+                pos;
                 setLocation({
                     latitude: pos.coords.latitude,
                     longitude: pos.coords.longitude,

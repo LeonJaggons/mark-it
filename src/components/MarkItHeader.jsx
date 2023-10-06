@@ -302,7 +302,7 @@ const MarkItMenuItem = ({ label, onClick, href, icon }) => {
     const [isActive, setIsActive] = useState(false);
     const router = useRouter();
     useEffect(() => {
-        console.log(router.pathname.split("/"));
+        (router.pathname.split("/"));
         setIsActive(
             router.pathname.split("/").length !== 0 &&
                 router.pathname.split("/")[1] === label.toLowerCase()

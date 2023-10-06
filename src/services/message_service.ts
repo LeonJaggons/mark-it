@@ -25,7 +25,7 @@ export const getInboxMessages = async () => {
             }
         }
     }
-    console.log(inboxMessages);
+    inboxMessages;
     return inboxMessages;
 };
 export const getFocusedMessages = async () => {
@@ -33,14 +33,14 @@ export const getFocusedMessages = async () => {
     const res = await axios.get(
         `/api/message?to=${to}&from=${from}&itemID=${itemID}`
     );
-    console.log(res.data);
+    res.data;
     return res.data;
 };
 export const getMessages = async () => {
     const userID = store.getState().account.user.userID;
-    console.log(userID);
+    userID;
     const res = await axios.get(`/api/message?userID=${userID}`);
-    console.log(res.data);
+    res.data;
     return res.data;
 };
 export const sendMessage = async (

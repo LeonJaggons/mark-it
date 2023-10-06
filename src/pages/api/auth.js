@@ -35,7 +35,7 @@ const handleUserLogin = async (req, res) => {
         password
     ).catch((err) => {
         error = err;
-        console.log(error);
+        
     });
 
     if (!error) {

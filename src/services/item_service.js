@@ -12,16 +12,14 @@ export const postNewItem = async () => {
     const images = postItem.images;
 
     delete postItem.images;
-    console.log(postItem);
+    postItem;
     for (let key of Object.keys(postItem)) {
         if (postItem[key] === undefined) {
             delete postItem[key];
         }
     }
     const itemCollection = collection(fireStore, "item");
-    const itemDoc = await addDoc(itemCollection, postItem).catch((err) =>
-        console.log(err)
-    );
+    const itemDoc = await addDoc(itemCollection, postItem).catch((err) => err);
     if (itemDoc) {
         const newItemID = itemDoc.id;
         const dlURLs = [];
@@ -33,12 +31,10 @@ export const postNewItem = async () => {
                     fireStorage,
                     `item/${newItemID}/imgs/img-${i}.jpg`
                 );
-                const imgRes = await fetch(img).catch((err) =>
-                    console.log(err)
-                );
+                const imgRes = await fetch(img).catch((err) => err);
                 const imgBlob = await imgRes.blob();
                 const imgStoreRef = await uploadBytes(imgRef, imgBlob).catch(
-                    (err) => console.log(err)
+                    (err) => err
                 );
                 if (imgStoreRef) {
                     const dlURL = await getDownloadURL(imgStoreRef.ref);

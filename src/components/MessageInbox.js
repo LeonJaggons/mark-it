@@ -252,7 +252,7 @@ const InboxItem = (props) => {
     const [focused, setFocused] = useState(false);
     const loadItem = async () => {
         const itemData = await getItemByID(props.message.itemID);
-        console.log(itemData);
+        itemData;
         setItem({ ...itemData });
     };
     const user = useSelector((state) => state.account.user);

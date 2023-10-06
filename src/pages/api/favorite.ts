@@ -39,7 +39,7 @@ export default async function handler(
             break;
         case "DELETE":
             if (itemID) {
-                console.log(itemID);
+                itemID;
                 updateDoc(userDoc, {
                     likedItems: arrayRemove(itemID),
                 });
@@ -49,7 +49,7 @@ export default async function handler(
             break;
         case "POST":
             if (itemID) {
-                console.log(itemID);
+                itemID;
                 updateDoc(userDoc, {
                     likedItems: arrayUnion(itemID),
                 });

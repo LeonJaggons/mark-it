@@ -21,7 +21,7 @@ export default async function handler(
     const itemCollection = collection(fireStore, "item");
     let items;
     if (category) {
-        console.log("RUN 1");
+        ("RUN 1");
         const catQuery = query(
             itemCollection,
             where("category", "==", category),
@@ -35,7 +35,7 @@ export default async function handler(
             };
         });
     } else if (userID && !onlyUser && onlyUser !== "true") {
-        console.log("RUN 2");
+        ("RUN 2");
         const userItemQry = query(
             itemCollection,
             where("userID", "!=", userID)
@@ -48,7 +48,7 @@ export default async function handler(
             };
         });
     } else if (itemID) {
-        console.log("RUN 3");
+        ("RUN 3");
         const itemDoc = await getDoc(doc(fireStore, "item", itemID));
         const item = {
             ...itemDoc.data(),
@@ -57,7 +57,7 @@ export default async function handler(
 
         res.status(200).json(item);
     } else {
-        console.log("RUN 4");
+        ("RUN 4");
         const itemsQry = query(itemCollection, where("userID", "==", userID));
         const itemDocs = await getDocs(itemsQry);
         items = itemDocs.docs.map((itemDc) => {

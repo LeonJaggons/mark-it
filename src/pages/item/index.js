@@ -12,10 +12,10 @@ const index = () => {
     const [fromSaved, setFromSaved] = useState(false);
     const loadItem = async (itemID) => {
         setLoading(true);
-        console.log("GET ITEM ID: ", itemID);
+        "GET ITEM ID: ", itemID;
 
         const i = await getItemByID(itemID);
-        console.log(i);
+        i;
         setItem(i);
         setLoading(false);
     };
@@ -23,7 +23,7 @@ const index = () => {
         if (router.isReady) {
             const { id, fromSaved } = router.query;
             loadItem(id);
-            console.log("FROM SAVED", fromSaved);
+            "FROM SAVED", fromSaved;
             setFromSaved(fromSaved);
         }
     }, [router.query]);

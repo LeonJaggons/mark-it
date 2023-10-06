@@ -50,7 +50,7 @@ const Sell = () => {
                     <Card
                     // as={Link} href={`/item?id=${item.itemID}`}
                     >
-                        {console.log(item)}
+                        {item}
                         <HStack p={4} spacing={4}>
                             <Image
                                 src={item.images[0]}

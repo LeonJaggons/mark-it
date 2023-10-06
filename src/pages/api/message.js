@@ -23,7 +23,7 @@ export default async function handler(req, res) {
                     orderBy("createdDate", "desc")
                 );
                 const msgDocs = await getDocs(msgQry);
-                console.log(msgDocs.docs.length);
+                s.length;
                 const msgDocSnap = msgDocs.docs.map((i) => {
                     return { ...i.data(), messageID: i.id };
                 });
