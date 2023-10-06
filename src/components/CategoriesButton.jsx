@@ -9,6 +9,7 @@ import {
     Box,
     HStack,
     Center,
+    Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,12 +48,14 @@ import { setSelectedCategory } from "@/redux/reducer/itemSlice";
 
 export const CategoriesList = () => {
     const router = useRouter();
-
+    const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [catSelected, setCatSelected] = useState(false);
     const getCategories = async () => {
+        setLoading(true);
         const res = await axios.get("/api/category");
         setCategories([...res.data]);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -65,9 +68,20 @@ export const CategoriesList = () => {
     return (
         <VStack w={"full"} spacing={1}>
             <CategoryMenuItem label={"All"} key={"CAT-ALL"} />
-            {categories.map((c) => (
-                <CategoryMenuItem label={c.name} key={"CAT-" + c.name} />
-            ))}
+            {loading ? (
+                <Center w={"full"}>
+                    <Spinner size={"md"} color="gray.500" />
+                </Center>
+            ) : (
+                <>
+                    {categories.map((c) => (
+                        <CategoryMenuItem
+                            label={c.name}
+                            key={"CAT-" + c.name}
+                        />
+                    ))}
+                </>
+            )}
         </VStack>
     );
 };
