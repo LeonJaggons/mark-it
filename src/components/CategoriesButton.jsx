@@ -64,6 +64,7 @@ export const CategoriesList = () => {
     }, []);
     return (
         <VStack w={"full"} spacing={1}>
+            <CategoryMenuItem label={"All"} key={"CAT-ALL"} />
             {categories.map((c) => (
                 <CategoryMenuItem label={c.name} key={"CAT-" + c.name} />
             ))}
@@ -93,6 +94,7 @@ const CategoryMenuItem = ({ href, label }) => {
     }, [router.pathname]);
 
     const categoryIcon = {
+        All: MdApps,
         "Animals & Pet Supplies": MdPets,
         "Apparel & Accessories": MdCheckroom,
         "Arts & Entertainment": MdPalette,
