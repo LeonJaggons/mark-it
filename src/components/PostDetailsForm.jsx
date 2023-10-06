@@ -158,7 +158,7 @@ export const PostDetailsForm = () => {
     };
 
     useEffect(() => {
-        D();
+        updateUserID();
         getCategories();
     }, []);
     useEffect(() => {
@@ -282,7 +282,7 @@ const LocationButton = () => {
     const postItem = useSelector((state) => state.item.postItem);
     const [loading, setLoading] = useState(false);
     const [location, setLocation] = useState(null);
-    const reques () => {
+    const requestLocation = () => {
         if ("geolocation" in navigator) {
             setLoading(true);
             navigator.geolocation.getCurrentPosition((pos) => {
