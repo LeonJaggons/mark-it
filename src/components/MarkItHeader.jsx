@@ -59,40 +59,32 @@ import {
 } from "@/redux/reducer/accountSlice";
 import { RootState } from "@/redux/store";
 import { createAccount, loginUser } from "@/services/auth_services";
-import axios from "axios";
 import {
-    MdApps,
     MdEdit,
     MdLocationOn,
     MdLocationSearching,
     MdShop,
     MdShop2,
+    MdSearch,
     MdShuffle,
     MdStore,
     MdUpload,
+    MdFavorite,
+    MdOutlineFavorite,
+    MdOutlineShoppingBag,
+    MdOutlineNotifications,
+    MdOutlineChatBubble,
+    MdOutlineChatBubbleOutline,
+    MdOutlineFavoriteBorder,
+    MdAdd,
 } from "react-icons/md";
 import * as CryptoJS from "crypto-js";
 import Scrollbars from "react-custom-scrollbars-2";
 import { fireAuth } from "@/firebase/firebase-init";
 import { useRouter } from "next/router";
-import { setSelectedCategory } from "@/redux/reducer/itemSlice";
 import BoringAvatar from "boring-avatars";
+import { CategoriesList } from "./CategoriesButton";
 const MarkItHeader = () => {
-    const router = useRouter();
-    const [categories, setCategories] = useState([]);
-    const [catSelected, setCatSelected] = useState(false);
-    const getCategories = async () => {
-        const res = await axios.get("/api/category");
-        setCategories([...res.data]);
-    };
-
-    useEffect(() => {
-        const selectedCat = router.query.category;
-        setCatSelected(selectedCat != null);
-    }, [router]);
-    useEffect(() => {
-        getCategories();
-    }, []);
     const labelStyles = {
         mt: 2,
         fontSize: "sm",
@@ -104,139 +96,60 @@ const MarkItHeader = () => {
                 <MarkItSearch />
                 <MarkItMenu />
             </HStack>
-            <HStack
+            {/* <HStack
                 w={"100%"}
                 spacing={12}
                 align={"center"}
-                // justify={"space-between"}
             >
-                <Popover placement={"bottom-start"}>
-                    <PopoverTrigger>
-                        <Button
-                            variant={"link"}
-                            textDecoration={"none !important"}
-                            colorScheme={"black"}
-                            leftIcon={<Icon as={MdLocationOn} />}
-                            fontSize={16}
-                            // __css={{ textDecor: "none !important" }}
-                        >
-                            Location
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
-                            <Heading size={"sm"}>Location</Heading>
-                        </Box>
-                        <Box p={4}>
-                            <Stack>
-                                <Stack>
-                                    <Heading size={"xs"}>Distance</Heading>
-                                    <Select size={"sm"}>
-                                        <option>5 mi</option>
-                                    </Select>
-                                </Stack>
-                            </Stack>
-                        </Box>
-                        <Box p={4} borderTop={"1px solid rgba(0,0,0,.1)"}>
-                            <Button
-                                size={"sm"}
-                                w={"full"}
-                                colorScheme={"messenger"}
-                                variant={"outline"}
-                            >
-                                Apply
-                            </Button>
-                        </Box>
-                    </PopoverContent>
-                </Popover>
-                {/* <HStack align={"center"} spacing={4} pl={6}> */}
-                <Popover trigger={"hover"} placement={"bottom-start"}>
-                    <PopoverTrigger>
-                        <Button
-                            variant={"link"}
-                            textDecoration={"none !important"}
-                            colorScheme="black"
-                            leftIcon={<Icon as={MdApps} />}
-                            fontSize={16}
-                            color={catSelected && "messenger.500"}
-                            // __css={{ textDecor: "none !important" }}
-                        >
-                            Categories
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                        height={"300px"}
-                        w={"220px"}
-                        overflowY={"scroll"}
-                    >
-                        <PopoverBody p={0}>
-                            <VStack
-                                style={{
-                                    display: "flex",
-                                    alignItems: "flex-start",
-                                    height: "100%",
-                                }}
-                                spacing={0}
-                                flex={1}
-                            >
-                                <CategoryMenuItem
-                                    label={"All"}
-                                    key={"CAT-ALL"}
-                                />
-                                {categories.map((c) => (
-                                    <CategoryMenuItem
-                                        label={c.name}
-                                        key={"CAT-" + c.name}
-                                    />
-                                ))}
-                            </VStack>
-                        </PopoverBody>
-                    </PopoverContent>
-                </Popover>
-                {/* </HStack> */}
-            </HStack>
+                <LocationButton />
+            </HStack> */}
         </VStack>
     );
 };
 
-const CategoryMenuItem = ({ href, label }) => {
-    const router = useRouter();
-    const selectedCategory = useSelector(
-        (state) => state.item.selectedCategory
-    );
-    const dispatch = useDispatch();
-    const handleNav = () => {
-        if (label === "All") {
-            router.push("/browse");
-            dispatch(setSelectedCategory(null));
-        } else {
-            router.push({
-                pathname: "/browse",
-                query: { category: label },
-            });
-        }
-    };
-    useEffect(() => {
-        console.log(selectedCategory);
-    }, [selectedCategory]);
+const LocationButton = () => {
     return (
-        <Button
-            cursor={"pointer"}
-            variant={selectedCategory === label ? "solid" : "ghost"}
-            colorScheme={"messenger"}
-            w={"full"}
-            color={selectedCategory === label ? "white" : "black"}
-            justifyContent={"space-between"}
-            onClick={handleNav}
-            fontWeight={selectedCategory === label ? 600 : 400}
-            fontSize={12}
-            borderRadius={0}
-        >
-            {label}
-        </Button>
+        <Popover placement={"bottom-start"}>
+            <PopoverTrigger>
+                <Button
+                    variant={"link"}
+                    textDecoration={"none !important"}
+                    colorScheme={"black"}
+                    leftIcon={<Icon as={MdLocationOn} />}
+                    fontSize={14}
+                    // __css={{ textDecor: "none !important" }}
+                >
+                    Location
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+                <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
+                    <Heading size={"sm"}>Location</Heading>
+                </Box>
+                <Box p={4}>
+                    <Stack>
+                        <Stack>
+                            <Heading size={"xs"}>Distance</Heading>
+                            <Select size={"sm"}>
+                                <option>5 mi</option>
+                            </Select>
+                        </Stack>
+                    </Stack>
+                </Box>
+                <Box p={4} borderTop={"1px solid rgba(0,0,0,.1)"}>
+                    <Button
+                        size={"sm"}
+                        w={"full"}
+                        colorScheme={"messenger"}
+                        variant={"outline"}
+                    >
+                        Apply
+                    </Button>
+                </Box>
+            </PopoverContent>
+        </Popover>
     );
 };
-
 const MarkItSearch = () => {
     const [isFocused, setIsFocused] = useState(false);
     const handleFocus = () => setIsFocused(true);
@@ -292,17 +205,23 @@ const MarkItMenu = () => {
 
     useEffect(() => {
         const loggedOutMI = [
-            { href: "/", label: "Browse" },
             { href: "/about", label: "About" },
             { href: "/help", label: "Help" },
             { label: "Sign In", onClick: handleOpenLogin },
         ];
         const loggedInMI = [
-            { href: "/", label: "Browse" },
-            { href: "/saved", label: "Saved" },
-            { href: "/sell", label: "Sell" },
-            { href: "/notifications", label: "Notifications" },
-            { href: "/message", label: "Message" },
+            { href: "/sell", label: "Sell", icon: MdOutlineShoppingBag },
+            { href: "/saved", label: "Saved", icon: MdOutlineFavoriteBorder },
+            {
+                href: "/notifications",
+                label: "Notifications",
+                icon: MdOutlineNotifications,
+            },
+            {
+                href: "/message",
+                label: "Message",
+                icon: MdOutlineChatBubbleOutline,
+            },
         ];
         setMenuItems(loggedIn ? loggedInMI : loggedOutMI);
     }, [loggedIn]);
@@ -310,12 +229,25 @@ const MarkItMenu = () => {
     // { href: "/notifications", label: "Notifications" },
     return (
         <HStack spacing={8} flex={1}>
+            {loggedIn && (
+                <Button
+                    leftIcon={<Icon as={MdAdd} />}
+                    as={NextLink}
+                    href={"/post"}
+                    size={"sm"}
+                    fontSize={12}
+                    colorScheme={"messenger"}
+                >
+                    Post an Item
+                </Button>
+            )}
             {menuItems.map((m) => (
                 <MarkItMenuItem
                     key={m.label + "-menu-item"}
                     href={m.href ?? null}
                     label={m.label}
                     onClick={m.onClick}
+                    icon={m.icon}
                 />
             ))}
             {loggedIn && <UserAvatar />}
@@ -383,7 +315,7 @@ const UserAvatar = (props) => {
         </Popover>
     );
 };
-const MarkItMenuItem = ({ label, onClick, href }) => {
+const MarkItMenuItem = ({ label, onClick, href, icon }) => {
     const [isActive, setIsActive] = useState(false);
     const router = useRouter();
     useEffect(() => {
@@ -403,13 +335,17 @@ const MarkItMenuItem = ({ label, onClick, href }) => {
             href={href ? href : "/"}
             onClick={newLocal}
             color={isActive ? "messenger.500" : "gray.700"}
-            fontWeight={isActive ? 700 : 500}
+            fontWeight={isActive ? 700 : 600}
             className="mark-it-menu-item"
             _hover={{
                 color: "messenger.500",
             }}
         >
-            <p style={{ whiteSpace: "nowrap" }}>{label}</p>
+            <VStack spacing={0}>
+                {/* <Icon as={icon} boxSize={"24px"} /> */}
+
+                <p style={{ whiteSpace: "nowrap", fontSize: 12 }}>{label}</p>
+            </VStack>
         </Link>
     );
 };

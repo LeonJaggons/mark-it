@@ -28,7 +28,7 @@ const index = () => {
         }
     }, [router.query]);
     return (
-        <Center px={"7vw"} py={"12px"} h={"full"}>
+        <Center h={"full"}>
             {item && !loading ? (
                 <MarkItItemDisplay item={item} fromSaved={fromSaved} />
             ) : (

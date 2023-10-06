@@ -48,7 +48,14 @@ export const MarkItItemDisplay = (props) => {
     const openMessage = () => setShowMessage(true);
     const closeMessage = () => setShowMessage(false);
     return (
-        <Card flex={1} overflow={"hidden"} w={"full"} h={"full"}>
+        <Card
+            flex={1}
+            overflow={"hidden"}
+            w={"full"}
+            h={"full"}
+            border={"1px solid rgba(0,0,0,.1)"}
+            shadow={"none"}
+        >
             <Stack
                 direction={useSmallLayout ? "column" : "row"}
                 flex={2}

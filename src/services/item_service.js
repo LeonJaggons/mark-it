@@ -73,7 +73,9 @@ export const getUserItems = async () => {
 
 export const getAllItems = async () => {
     const userID = store.getState().account.user?.userID;
-    const res = await axios.get("/api/item", { params: { userID: userID } });
+    const res = await axios.get("/api/item", {
+        params: { userID: userID ?? "none" },
+    });
     const items = res.data;
     return items;
 };

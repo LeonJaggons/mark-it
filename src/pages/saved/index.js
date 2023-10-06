@@ -33,7 +33,7 @@ const Saved = () => {
                     <Heading size={"lg"} mb={4}>
                         Saved
                     </Heading>
-                    <SimpleGrid columns={4} spacing={4}>
+                    <SimpleGrid columns={6} spacing={4}>
                         {likedItems.map((i) => (
                             <BrowseItem item={i} fromSaved />
                         ))}

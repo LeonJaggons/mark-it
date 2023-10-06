@@ -1,8 +1,8 @@
 import "@/firebase/firebase-init";
 import "@/styles/app.css";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, HStack, Stack } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import MarkItHeader from "../components/MarkItHeader";
+import MarkItHeader from "@/components/MarkItHeader";
 import { Provider as ReduxProvider } from "react-redux";
 import { store } from "@/redux/store";
 import { useEffect, useState } from "react";
@@ -16,10 +16,12 @@ import {
 import { useRouter } from "next/router";
 
 import Scrollbars from "react-custom-scrollbars-2";
+import { BrowseFilters } from "@/components/BrowseFilters";
 
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const [onPost, setOnPost] = useState<boolean>(false);
+    const [onBrowse, setOnBrowse] = useState<boolean>(false);
     useEffect(() => {
         // loginUser(true);
         onAuthStateChanged(fireAuth, (fbUser) => {
@@ -37,6 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
     useEffect(() => {
         if (router.isReady) {
             setOnPost(router.pathname.includes("post"));
+            setOnBrowse(router.pathname.includes("browse"));
         }
     }, [router]);
     return (
@@ -44,10 +47,21 @@ export default function App({ Component, pageProps }: AppProps) {
             <ChakraProvider>
                 <div id={"mi-app-container"}>
                     {!onPost && <MarkItHeader />}
-                    <Box id={"mi-content"} padding={"0px !important"}>
-                        <Component {...pageProps} />
-                    </Box>
-
+                    <Stack
+                        direction={onBrowse ? "row" : "column"}
+                        px={"7vw"}
+                        py={"12px"}
+                        height={"calc(100vh - 68px)"}
+                    >
+                        {onBrowse && <BrowseFilters></BrowseFilters>}
+                        <Box
+                            id={"mi-content"}
+                            padding={"0px !important"}
+                            overflowY={"scroll"}
+                        >
+                            <Component {...pageProps} />
+                        </Box>
+                    </Stack>
                     {/* <Scrollbars></Scrollbars> */}
                 </div>
             </ChakraProvider>

@@ -13,46 +13,53 @@ import {
     Radio,
     CheckboxGroup,
     Checkbox,
+    Collapse,
 } from "@chakra-ui/react";
 import { MdAdd } from "react-icons/md";
 import Link from "next/link";
+import { CategoriesList } from "./CategoriesButton";
 
 export const BrowseFilters = () => {
     return (
         <Card
-            borderWidth={0.5}
             shadow={"none"}
-            borderColor={"rgba(0,0,0,.1)"}
+            border={"1px solid rgba(0,0,0,.1)"}
             position={"sticky"}
-            top={"140px"}
+            top={"86px"}
             flex={"0 1 300px"}
-            maxH={"calc(100vh - 170px)"}
-            h={"calc(100vh - 170px)"}
+            borderRadius={5}
+            overflow={"hidden"}
+            // maxH={"calc(100vh - 170px)"}
+            // h={"calc(100vh - 170px)"}
+            h={"calc(100vh - 96px)"}
         >
-            <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
+            {/* <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
                 <Heading size={"md"}>Filters</Heading>
-            </Box>
+            </Box> */}
             <Box overflowY={"scroll"} flex={1}>
                 <VStack
+                    p={2}
                     align={"flex-start"}
-                    p={4}
                     spacing={1}
                     h={"full"}
                     overflowY={"scroll"}
                 >
+                    <Heading size={"sm"} py={2} pl={2}>
+                        Categories
+                    </Heading>
+                    <CategoriesList />
                     <Box>
-                        <Heading size={"xs"} mb={2}>
+                        <Heading size={"xs"} p={2} pr={0}>
                             Price Range
                         </Heading>
-                        <HStack>
+                        <HStack px={4}>
                             <Input flex={1} />
                             <Text>to</Text>
                             <Input flex={1} />
                         </HStack>
                     </Box>
-                    <Divider my={2} />
                     <Box>
-                        <Heading size={"xs"} mb={2}>
+                        <Heading size={"xs"} p={2} pr={0}>
                             Delivery Method
                         </Heading>
                         <VStack>
@@ -67,12 +74,11 @@ export const BrowseFilters = () => {
                         </VStack>
                     </Box>
 
-                    <Divider my={2} />
                     <Box>
-                        <Heading size={"xs"} mb={2}>
+                        <Heading size={"xs"} p={2} pr={0}>
                             Conditions
                         </Heading>
-                        <VStack pl={2}>
+                        <VStack px={6}>
                             <CheckboxGroup value="0" size={"sm"}>
                                 <VStack align={"flex-start"}>
                                     <Checkbox>New</Checkbox>

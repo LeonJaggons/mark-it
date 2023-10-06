@@ -14,8 +14,11 @@ import {
     Center,
     InputGroup,
     InputLeftElement,
+    Skeleton,
+    SkeletonCircle,
+    SkeletonText,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
     getFocusedMessages,
     getInboxMessages,
@@ -31,11 +34,13 @@ import Link from "next/link";
 
 export const Messager = () => {
     const [loading, setLoading] = useState(false);
+    const [sendingMessage, setSendingMessage] = useState(false);
     const [item, setItem] = useState();
     const [messages, setMessages] = useState([]);
     const [content, setContent] = useState("");
     const user = useSelector((state) => state.account.user);
     const focusedMessage = useSelector((state) => state.item.focusedMessage);
+    const bottomRef = useRef();
     const loadFocusedMessages = async () => {
         setLoading(true);
         const newMsgs = await getFocusedMessages();
@@ -50,30 +55,50 @@ export const Messager = () => {
         focusedMessage && loadFocusedMessages();
     }, [focusedMessage]);
     const handleSendMessage = async () => {
+        setSendingMessage(true);
+        const messageContent = content;
+        setContent("");
         const to = filter(
             messages[0].participants,
             (e) => e !== user.userID
         )[0];
         const itemID = messages[0].itemID;
-        const newMessage = await sendMessage(to, itemID, content);
+        const newMessage = await sendMessage(to, itemID, messageContent);
         setMessages([...messages, newMessage]);
-        setContent("");
+        setSendingMessage(false);
     };
     const handleUpdateContent = (e) => setContent(e.target.value);
+
+    const scrollToBottom = () => {
+        bottomRef?.current?.scrollIntoView({ behavior: "smooth" });
+    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [bottomRef.current]);
     return loading ? (
-        <Card height={"full"} flex={1}>
+        <Card
+            height={"full"}
+            flex={1}
+            border={"1px solid rgba(0,0,0,.1)"}
+            shadow={"none"}
+        >
             <Center flex={1} h={"full"}>
                 <Spinner />
             </Center>
         </Card>
     ) : (
         <Box flex={1} h={"full"}>
-            <Card height={"full"} w={"full"}>
+            <Card
+                shadow={"none"}
+                height={"full"}
+                w={"full"}
+                border={"1px solid rgba(0,0,0,.1)"}
+            >
                 <VStack w={"full"} h={"full"} align={"flex-start"} spacing={0}>
                     <Box
                         p={4}
                         w={"full"}
-                        borderBottom={"1px solid rgba(0,0,0,.05)"}
+                        borderBottom={"1px solid rgba(0,0,0,.1)"}
                     >
                         <HStack align={"center"} justify={"space-between"}>
                             {item && (
@@ -120,21 +145,24 @@ export const Messager = () => {
                                 <Chatbox message={m} key={m.messageID} />
                             ))}
                         </VStack>
+                        <Box ref={bottomRef} />
                     </Box>
                     <Box
                         p={4}
                         py={1}
                         w={"full"}
-                        borderTop={"1px solid rgba(0,0,0,.05)"}
+                        borderTop={"1px solid rgba(0,0,0,.1)"}
                     >
                         <HStack>
                             <Input
+                                isDisabled={sendingMessage}
                                 value={content}
                                 onChange={handleUpdateContent}
                                 variant={"unstyled"}
                                 placeholder="Type your message.."
                             />
                             <IconButton
+                                isDisabled={sendingMessage}
                                 variant={"ghost"}
                                 colorScheme={"messenger"}
                                 icon={<Icon as={MdSend} />}
@@ -179,7 +207,13 @@ export const MessageInbox = () => {
         loadMessages();
     }, []);
     return (
-        <Card height={"full"} padding={0} w={"300px"}>
+        <Card
+            height={"full"}
+            padding={0}
+            w={"300px"}
+            shadow={"none"}
+            border={"1px solid rgba(0,0,0,.1)"}
+        >
             <Box w={"full"} p={4} align={"flex-start"} pb={0}>
                 <HStack justify={"space-between"} w={"full"}>
                     <Heading size={"md"}>Messages</Heading>
@@ -296,9 +330,22 @@ const InboxItem = (props) => {
                     </VStack>
                 </HStack>
             ) : (
-                <VStack h={"48px"}>
-                    <Spinner color={"gray.400"} />
-                </VStack>
+                <HStack
+                    h={"48px"}
+                    justify={"center"}
+                    align={"center"}
+                    w={"full"}
+                >
+                    <SkeletonCircle size={"50px"} />
+                    <VStack flex={1}>
+                        <SkeletonText
+                            w={"full"}
+                            skeletonHeight={"2"}
+                            spacing={"2"}
+                            noOfLines={2}
+                        />
+                    </VStack>
+                </HStack>
             )}
         </Box>
     );

@@ -53,7 +53,7 @@ export const BrowseItem = (props) => {
             >
                 {props.item.images && (
                     <CkImage
-                        opacity={0.2}
+                        // opacity={0.2}
                         src={props.item.images[0]}
                         aspectRatio={1}
                         w={"full"}

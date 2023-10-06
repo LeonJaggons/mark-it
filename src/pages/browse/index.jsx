@@ -93,18 +93,7 @@ export default function Home() {
                     Browse {category && "•"} {category}
                 </title>
             </Head>
-            <HStack
-                align={"flex-start"}
-                style={{ padding: "30px 7vw", height: "100%" }}
-                position={"relative"}
-                spacing={6}
-                w={"full"}
-            >
-                {items && items.length > 0 && (
-                    // <Box flex={"0 1 280px"} h={"full"} position={"relative"}>
-                    <BrowseFilters />
-                    // </Box>
-                )}
+            <Box ml={4} pt={0}>
                 {loading ? (
                     <LoadingScreen />
                 ) : (
@@ -115,7 +104,7 @@ export default function Home() {
                             </Heading>
                         )}
                         {items && items.length > 0 ? (
-                            <Box overflow={"scroll"} flex={1}>
+                            <Box flex={1}>
                                 <ItemsGrid items={items} />
                             </Box>
                         ) : (
@@ -124,7 +113,7 @@ export default function Home() {
                     </VStack>
                 )}
                 {loggedIn && <PostButton />}
-            </HStack>
+            </Box>
         </>
     );
 }
