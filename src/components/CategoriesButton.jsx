@@ -47,6 +47,7 @@ import { setSelectedCategory } from "@/redux/reducer/itemSlice";
 
 export const CategoriesList = () => {
     const router = useRouter();
+
     const [categories, setCategories] = useState([]);
     const [catSelected, setCatSelected] = useState(false);
     const getCategories = async () => {
@@ -88,8 +89,8 @@ const CategoryMenuItem = ({ href, label }) => {
         }
     };
     useEffect(() => {
-        console.log(selectedCategory);
-    }, [selectedCategory]);
+        dispatch(setSelectedCategory(router.query.category));
+    }, [router.pathname]);
 
     const categoryIcon = {
         "Animals & Pet Supplies": MdPets,
@@ -122,7 +123,7 @@ const CategoryMenuItem = ({ href, label }) => {
                 px={2}
                 leftIcon={
                     <Center
-                        w={"40px"}
+                        w={"36px"}
                         borderRadius={"20px"}
                         mr={2}
                         bg={"gray.300"}
@@ -130,7 +131,7 @@ const CategoryMenuItem = ({ href, label }) => {
                     >
                         <Icon
                             as={categoryIcon[label]}
-                            boxSize={"26px"}
+                            boxSize={"22px"}
                             color={"black"}
                         />
                     </Center>

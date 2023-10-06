@@ -8,7 +8,6 @@ import {
     Heading,
     Icon,
     Input,
-    InputGroup,
     InputLeftElement,
     Link,
     Modal,
@@ -84,6 +83,7 @@ import { fireAuth } from "@/firebase/firebase-init";
 import { useRouter } from "next/router";
 import BoringAvatar from "boring-avatars";
 import { CategoriesList } from "./CategoriesButton";
+import { MarkItSearch } from "./MarkItSearch";
 const MarkItHeader = () => {
     const labelStyles = {
         mt: 2,
@@ -91,9 +91,13 @@ const MarkItHeader = () => {
     };
     return (
         <VStack id={"mark-it-header"} spacing={"18px"} w={"full"}>
-            <HStack w={"full"} spacing={"38px"}>
+            <HStack
+                w={"full"}
+                justify-content={"space-between"}
+                spacing={"38px"}
+            >
                 <MarkItLogo />
-                <MarkItSearch />
+                <Box flex={1}></Box>
                 <MarkItMenu />
             </HStack>
             {/* <HStack
@@ -150,27 +154,6 @@ const LocationButton = () => {
         </Popover>
     );
 };
-const MarkItSearch = () => {
-    const [isFocused, setIsFocused] = useState(false);
-    const handleFocus = () => setIsFocused(true);
-    const handleBlur = () => setIsFocused(false);
-    return (
-        <InputGroup>
-            <Input
-                variant={"filled"}
-                placeholder={"Search"}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                size={"sm"}
-                borderRadius={5}
-                _hover={{
-                    borderColor: "messenger.500",
-                }}
-            />
-        </InputGroup>
-    );
-};
-
 const MarkItLogo = () => {
     return (
         <Link
@@ -228,7 +211,7 @@ const MarkItMenu = () => {
 
     // { href: "/notifications", label: "Notifications" },
     return (
-        <HStack spacing={8} flex={1}>
+        <HStack spacing={8}>
             {loggedIn && (
                 <Button
                     leftIcon={<Icon as={MdAdd} />}

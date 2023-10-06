@@ -18,15 +18,24 @@ import {
 import { MdAdd } from "react-icons/md";
 import Link from "next/link";
 import { CategoriesList } from "./CategoriesButton";
+import { MarkItSearch } from "./MarkItSearch";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 
 export const BrowseFilters = () => {
+    const router = useRouter();
+    const [catSelected, setCatSelected] = useState();
+    useEffect(() => {
+        const selectedCat = router.query.category;
+        setCatSelected(selectedCat ?? "");
+    }, [router]);
     return (
         <Card
             shadow={"none"}
             border={"1px solid rgba(0,0,0,.1)"}
             position={"sticky"}
             top={"86px"}
-            flex={"0 1 300px"}
+            flex={"0 1 340px"}
             borderRadius={5}
             overflow={"hidden"}
             // maxH={"calc(100vh - 170px)"}
@@ -36,6 +45,12 @@ export const BrowseFilters = () => {
             {/* <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
                 <Heading size={"md"}>Filters</Heading>
             </Box> */}
+            <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
+                <Heading fontSize={"1.5rem"} mb={2}>
+                    {catSelected}
+                </Heading>
+                <MarkItSearch />
+            </Box>
             <Box overflowY={"scroll"} flex={1}>
                 <VStack
                     p={2}
@@ -44,7 +59,7 @@ export const BrowseFilters = () => {
                     h={"full"}
                     overflowY={"scroll"}
                 >
-                    <Heading size={"sm"} py={2} pl={2}>
+                    <Heading size={"xs"} py={2} pl={2}>
                         Categories
                     </Heading>
                     <CategoriesList />
@@ -91,7 +106,7 @@ export const BrowseFilters = () => {
                     </Box>
                 </VStack>
             </Box>
-            <Box w={"full"} p={4} borderTop={"1px solid rgba(0,0,0,.1)"}>
+            <Box w={"full"} p={2} borderTop={"1px solid rgba(0,0,0,.1)"}>
                 <Button
                     w={"full"}
                     colorScheme={"messenger"}

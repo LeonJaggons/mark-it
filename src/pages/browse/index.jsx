@@ -93,16 +93,16 @@ export default function Home() {
                     Browse {category && "•"} {category}
                 </title>
             </Head>
-            <Box ml={4} pt={0}>
+            <Box ml={4} pt={0} h={"full"}>
                 {loading ? (
                     <LoadingScreen />
                 ) : (
                     <VStack h={"full"} flex={1} align={"flex-start"}>
-                        {category && (
+                        {/* {category && (
                             <Heading size={"lg"} mb={2}>
                                 {category}
                             </Heading>
-                        )}
+                        )} */}
                         {items && items.length > 0 ? (
                             <Box flex={1}>
                                 <ItemsGrid items={items} />
@@ -112,7 +112,6 @@ export default function Home() {
                         )}
                     </VStack>
                 )}
-                {loggedIn && <PostButton />}
             </Box>
         </>
     );
@@ -140,7 +139,7 @@ const NoResultsScreen = ({}) => {
     const router = useRouter();
     return (
         <VStack alignItems={"flex-start"} flex={1} w={"full"}>
-            <Center flex={1} w={"full"} pb={"150px"}>
+            <Center flex={1} w={"full"} pb={"10px"}>
                 <VStack>
                     <Center
                         w={"200px"}
