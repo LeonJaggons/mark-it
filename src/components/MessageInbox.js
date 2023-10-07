@@ -1,36 +1,33 @@
+import { setFocusedMessage } from "@/redux/reducer/itemSlice";
 import {
     Box,
+    Button,
     Card,
+    Center,
     HStack,
     Heading,
-    VStack,
-    Text,
-    Spinner,
+    Icon,
+    IconButton,
     Image,
     Input,
-    Button,
-    IconButton,
-    Icon,
-    Center,
     InputGroup,
-    InputLeftElement,
-    Skeleton,
     SkeletonCircle,
     SkeletonText,
+    Spinner,
+    Text,
+    VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useState, useRef } from "react";
+import { filter } from "lodash";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { MdMoreHoriz, MdSend } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { getItemByID } from "../services/item_service";
 import {
     getFocusedMessages,
     getInboxMessages,
     sendMessage,
 } from "../services/message_service";
-import { getItemByID } from "../services/item_service";
-import { useDispatch, useSelector } from "react-redux";
-import { MdMoreHoriz, MdSearch, MdSend } from "react-icons/md";
-import { setFocusedMessage } from "@/redux/reducer/itemSlice";
-import { filter } from "lodash";
-import Scrollbars from "react-custom-scrollbars-2";
-import Link from "next/link";
 
 export const Messager = () => {
     const [loading, setLoading] = useState(false);
