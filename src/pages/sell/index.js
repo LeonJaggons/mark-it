@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { getUserItems } from "@/services/item_service";
 import {
     Box,
@@ -13,19 +11,16 @@ import {
     Text,
     VStack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import {
     MdDone,
     MdFavorite,
-    MdMouse,
-    MdPassword,
     MdRocketLaunch,
     MdShare,
-    MdShoppingCartCheckout,
-    MdViewList,
     MdVisibility,
 } from "react-icons/md";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import { useSelector } from "react-redux";
 const Sell = () => {
     const router = useRouter();
     const user = useSelector((state) => state.account.user);
@@ -43,14 +38,16 @@ const Sell = () => {
         }
     }, [user]);
     return (
-        <Box px={"7vw"} py={"18px"}>
+        <Box>
             <Heading mb={4}>Selling</Heading>
             <SimpleGrid columns={[1, null, 2, null]} spacing={[4, 4]}>
                 {items?.map((item) => (
                     <Card
-                    // as={Link} href={`/item?id=${item.itemID}`}
+                        border={"1px solid rgba(0,0,0,.1)"}
+                        shadow={"none"}
+                        // as={Link} href={`/item?id=${item.itemID}`}
                     >
-                        {item}
+                        {/* {item} */}
                         <HStack p={4} spacing={4}>
                             <Image
                                 src={item.images[0]}

@@ -8,12 +8,10 @@ import {
     Box,
     HStack,
     Card,
-    Divider,
     RadioGroup,
     Radio,
     CheckboxGroup,
     Checkbox,
-    Collapse,
 } from "@chakra-ui/react";
 import { MdAdd } from "react-icons/md";
 import Link from "next/link";
@@ -27,7 +25,7 @@ export const BrowseFilters = () => {
     const [catSelected, setCatSelected] = useState();
     useEffect(() => {
         const selectedCat = router.query.category;
-        setCatSelected(selectedCat ?? "");
+        setCatSelected(selectedCat ?? "Marketplace");
     }, [router]);
     return (
         <Card

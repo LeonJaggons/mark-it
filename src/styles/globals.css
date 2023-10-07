@@ -8,10 +8,9 @@
     --background-end-rgb: 255, 255, 255;
 }
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 2px;
+    width: 10px;
+    height: 2px;
 }
-
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -19,8 +18,4 @@
         --background-start-rgb: 0, 0, 0;
         --background-end-rgb: 0, 0, 0;
     }
-}
-
-body {
-    overflow: initial !important;
 }

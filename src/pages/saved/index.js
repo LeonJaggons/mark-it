@@ -1,12 +1,11 @@
-import { useRouter } from "next/router";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { getLikedItems } from "../../services/item_service";
-import { BrowseItem } from "../../components/BrowseItem";
 import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { BrowseItem } from "../../components/BrowseItem";
+import { getLikedItems } from "../../services/item_service";
+
 const Saved = () => {
     const router = useRouter();
     const isLoggedIn = useSelector((state) => state.account.loggedIn);
@@ -29,11 +28,9 @@ const Saved = () => {
                 <title>Saved</title>
             </Head>
             {isLoggedIn && (
-                <Box px={"7vw"} py={"12px"}>
-                    <Heading size={"lg"} mb={4}>
-                        Saved
-                    </Heading>
-                    <SimpleGrid columns={6} spacing={4}>
+                <Box>
+                    <Heading mb={4}>Saved</Heading>
+                    <SimpleGrid columns={[2, 2, 3, 4]} spacing={4}>
                         {likedItems.map((i) => (
                             <BrowseItem item={i} fromSaved />
                         ))}

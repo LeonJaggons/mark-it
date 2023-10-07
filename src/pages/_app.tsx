@@ -1,21 +1,16 @@
-import "@/firebase/firebase-init";
-import "@/styles/app.css";
-import { Box, ChakraProvider, HStack, Stack } from "@chakra-ui/react";
-import type { AppProps } from "next/app";
 import MarkItHeader from "@/components/MarkItHeader";
-import { Provider as ReduxProvider } from "react-redux";
-import { store } from "@/redux/store";
-import { useEffect, useState } from "react";
-import { User, onAuthStateChanged } from "firebase/auth";
+import "@/firebase/firebase-init";
 import { fireAuth } from "@/firebase/firebase-init";
-import {
-    getUserFromFBUser,
-    loginUser,
-    updateLoginState,
-} from "@/services/auth_services";
+import { store } from "@/redux/store";
+import { getUserFromFBUser, updateLoginState } from "@/services/auth_services";
+import "@/styles/app.css";
+import { Box, ChakraProvider, Stack } from "@chakra-ui/react";
+import { onAuthStateChanged } from "firebase/auth";
+import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Provider as ReduxProvider } from "react-redux";
 
-import Scrollbars from "react-custom-scrollbars-2";
 import { BrowseFilters } from "@/components/BrowseFilters";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -49,20 +44,21 @@ export default function App({ Component, pageProps }: AppProps) {
                     {!onPost && <MarkItHeader />}
                     <Stack
                         direction={onBrowse ? "row" : "column"}
-                        px={"7vw"}
-                        py={"12px"}
-                        height={"calc(100vh - 68px)"}
+                        px={!onPost && "5vw"}
+                        py={!onPost && "16px"}
+                        height={!onPost ? "fit-content" : "100vh"}
                     >
                         {onBrowse && <BrowseFilters></BrowseFilters>}
                         <Box
                             id={"mi-content"}
-                            padding={"0px !important"}
-                            overflowY={"scroll"}
+                            // overflowY={"scroll"}
                         >
                             <Component {...pageProps} />
                         </Box>
                     </Stack>
-                    {/* <Scrollbars></Scrollbars> */}
+                    {/* <Box bg={"messenger.500"} px={"5vw"} py={"12px"}>
+                        <Heading>Footer</Heading>
+                    </Box> */}
                 </div>
             </ChakraProvider>
         </ReduxProvider>

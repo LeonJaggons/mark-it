@@ -1,3 +1,8 @@
+html,
+body {
+    overscroll-behavior-x: none !important;
+    overscroll-behavior-y: none !important;
+}
 body {
     overflow: initial !important;
 }
@@ -6,19 +11,18 @@ body {
     height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background-color: rgba(255,255,255.5); 
+    background-color: rgba(255, 255, 255.5);
 }
- 
-::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,.15);
-  opacity: 0;
-  border-radius: 8px;
-  cursor: grabbing;
-  transition: opacity .3s linear 2s;
-}
-::-webkit-scrollbar-thumb:hover{
-  opacity: 1;
 
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    border-radius: 8px;
+    cursor: grabbing;
+    transition: opacity 0.3s linear 2s;
+}
+::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
 }
 
 #mark-it-header {
@@ -27,18 +31,17 @@ body {
     background-color: white;
     position: sticky;
     justify-content: space-between;
-    padding: 15px 7vw;
+    padding: 16px 5vw;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 #mi-app-container {
-    height: 100vh;
     display: flex;
+    min-height: 100vh;
     flex-flow: column nowrap;
 }
 #mi-content {
     position: relative;
     flex: 1;
-    padding: 16px 7vw;
 }
 #mi-post-btn {
     position: absolute;

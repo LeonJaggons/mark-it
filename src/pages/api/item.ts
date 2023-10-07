@@ -1,5 +1,4 @@
 import { fireStore } from "@/firebase/firebase-init";
-import { store } from "@/redux/store";
 import {
     collection,
     doc,
@@ -35,7 +34,6 @@ export default async function handler(
             };
         });
     } else if (userID && !onlyUser && onlyUser !== "true") {
-        ("RUN 2");
         const userItemQry = query(
             itemCollection,
             where("userID", "!=", userID)

@@ -1,36 +1,17 @@
-import {
-    Button,
-    Icon,
-    VStack,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    PopoverBody,
-    Box,
-    HStack,
-    Center,
-    Spinner,
-} from "@chakra-ui/react";
+import { Button, Icon, VStack, Box, Center, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
     MdAdfScanner,
     MdApps,
-    MdBedroomBaby,
-    MdCamera,
     MdCameraAlt,
-    MdCameraRear,
-    MdCarRental,
     MdCarRepair,
     MdCheckroom,
     MdConstruction,
     MdDevices,
     MdDomain,
     MdFavorite,
-    MdGamepad,
-    MdHealthAndSafety,
-    MdHome,
     MdHouse,
     MdLuggage,
     MdPalette,
@@ -41,7 +22,6 @@ import {
     MdTempleBuddhist,
     MdToys,
     MdVideoChat,
-    MdYard,
 } from "react-icons/md";
 import { useRouter } from "next/router";
 import { setSelectedCategory } from "@/redux/reducer/itemSlice";

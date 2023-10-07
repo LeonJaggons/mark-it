@@ -4,9 +4,9 @@ import {
     addDoc,
     collection,
     getDocs,
+    orderBy,
     query,
     updateDoc,
-    orderBy,
     where,
 } from "firebase/firestore";
 import { filter, sortBy, uniqBy } from "lodash";
@@ -23,7 +23,6 @@ export default async function handler(req, res) {
                     orderBy("createdDate", "desc")
                 );
                 const msgDocs = await getDocs(msgQry);
-                s.length;
                 const msgDocSnap = msgDocs.docs.map((i) => {
                     return { ...i.data(), messageID: i.id };
                 });

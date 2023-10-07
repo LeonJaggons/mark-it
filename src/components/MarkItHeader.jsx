@@ -15,22 +15,12 @@ import {
     ModalContent,
     ModalOverlay,
     Stack,
-    Text,
     Avatar,
     VStack,
-    Tag,
-    InputRightElement,
-    IconButton,
-    InputRightAddon,
     Popover,
     PopoverTrigger,
     PopoverContent,
     PopoverBody,
-    Slider,
-    SliderTrack,
-    SliderThumb,
-    SliderFilledTrack,
-    SliderMark,
     Select,
     Tabs,
     TabList,
@@ -39,51 +29,32 @@ import {
     Tab,
 } from "@chakra-ui/react";
 import { signOut as fireSignOut } from "firebase/auth";
-import { IoSearch } from "react-icons/io5";
 import NextLink from "next/link";
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppState, toggleShowLogin } from "@/redux/reducer/appSlice";
+import { toggleShowLogin } from "@/redux/reducer/appSlice";
 import {
-    AccountState,
-    LoginCreds,
     setLoginPassword,
     setLoginUsername,
     setNewUserEmail,
     setNewUserFirstName,
     setNewUserLastName,
     setNewUserPassword,
-    setUser,
     signOut,
 } from "@/redux/reducer/accountSlice";
-import { RootState } from "@/redux/store";
 import { createAccount, loginUser } from "@/services/auth_services";
 import {
-    MdEdit,
     MdLocationOn,
-    MdLocationSearching,
-    MdShop,
-    MdShop2,
-    MdSearch,
-    MdShuffle,
     MdStore,
     MdUpload,
-    MdFavorite,
-    MdOutlineFavorite,
     MdOutlineShoppingBag,
     MdOutlineNotifications,
-    MdOutlineChatBubble,
     MdOutlineChatBubbleOutline,
     MdOutlineFavoriteBorder,
     MdAdd,
 } from "react-icons/md";
-import * as CryptoJS from "crypto-js";
-import Scrollbars from "react-custom-scrollbars-2";
 import { fireAuth } from "@/firebase/firebase-init";
 import { useRouter } from "next/router";
-import BoringAvatar from "boring-avatars";
-import { CategoriesList } from "./CategoriesButton";
-import { MarkItSearch } from "./MarkItSearch";
 const MarkItHeader = () => {
     const labelStyles = {
         mt: 2,
@@ -100,13 +71,6 @@ const MarkItHeader = () => {
                 <Box flex={1}></Box>
                 <MarkItMenu />
             </HStack>
-            {/* <HStack
-                w={"100%"}
-                spacing={12}
-                align={"center"}
-            >
-                <LocationButton />
-            </HStack> */}
         </VStack>
     );
 };
@@ -121,7 +85,6 @@ const LocationButton = () => {
                     colorScheme={"black"}
                     leftIcon={<Icon as={MdLocationOn} />}
                     fontSize={14}
-                    // __css={{ textDecor: "none !important" }}
                 >
                     Location
                 </Button>
@@ -169,7 +132,7 @@ const MarkItLogo = () => {
                 }}
             >
                 <Icon as={MdStore} boxSize={7} />
-                <Heading fontSize={30} fontWeight={800} letterSpacing={-1}>
+                <Heading fontSize={30} fontWeight={700} letterSpacing={-1}>
                     MarkIt
                 </Heading>
             </HStack>
@@ -209,7 +172,6 @@ const MarkItMenu = () => {
         setMenuItems(loggedIn ? loggedInMI : loggedOutMI);
     }, [loggedIn]);
 
-    // { href: "/notifications", label: "Notifications" },
     return (
         <HStack spacing={8}>
             {loggedIn && (
@@ -269,17 +231,7 @@ const UserAvatar = (props) => {
                             size={"lg"}
                             name={user.firstName + " " + user.lastName}
                             position={"relative"}
-                        >
-                            {/* <IconButton
-                                size={"xs"}
-                                aspectRatio={1}
-                                boxSize={4}
-                                bottom={-1}
-                                right={-1}
-                                position={"absolute"}
-                                icon={<Icon as={MdEdit} boxSize={3} />}
-                            /> */}
-                        </Avatar>
+                        ></Avatar>
                         <Heading size="md" mt={1}>
                             Hi, {user.firstName}!
                         </Heading>
@@ -302,7 +254,7 @@ const MarkItMenuItem = ({ label, onClick, href, icon }) => {
     const [isActive, setIsActive] = useState(false);
     const router = useRouter();
     useEffect(() => {
-        (router.pathname.split("/"));
+        router.pathname.split("/");
         setIsActive(
             router.pathname.split("/").length !== 0 &&
                 router.pathname.split("/")[1] === label.toLowerCase()
@@ -325,25 +277,11 @@ const MarkItMenuItem = ({ label, onClick, href, icon }) => {
             }}
         >
             <VStack spacing={0}>
-                {/* <Icon as={icon} boxSize={"24px"} /> */}
-
                 <p style={{ whiteSpace: "nowrap", fontSize: 12 }}>{label}</p>
             </VStack>
         </Link>
     );
 };
-
-function generateRandomHexColors(length) {
-    const colors = [];
-
-    for (let i = 0; i < length; i++) {
-        const randomColor =
-            "#" + Math.floor(Math.random() * 16777215).toString(16);
-        colors.push(randomColor);
-    }
-
-    return colors;
-}
 
 const MarkItLoginModal = () => {
     const [readOnly, setReadOnly] = useState(true);
@@ -352,9 +290,6 @@ const MarkItLoginModal = () => {
     const [loading, setLoading] = useState(false);
     const [saveLogin, setSaveLogin] = useState(false);
     const [newUserPhoto, setNewUserPhoto] = useState();
-    const [randomColors, setRandomColors] = useState(
-        generateRandomHexColors(5)
-    );
     const loggedIn = useSelector((state) => state.account.loggedIn);
     const user = useSelector((state) => state.account.user);
     const showLogin = useSelector((state) => state.app.showLogin);
@@ -376,8 +311,6 @@ const MarkItLoginModal = () => {
     useEffect(() => {
         updateCanSubmit();
     }, [loginCreds]);
-
-    const genNewColors = () => setRandomColors(generateRandomHexColors(5));
 
     const updateCanSubmit = () => {
         const hasEmail =
@@ -524,7 +457,7 @@ const MarkItLoginModal = () => {
                                                 onChange={handleChange}
                                             />
                                             <HStack>
-                                                <Button
+                                                {/* <Button
                                                     variant={"ghost"}
                                                     leftIcon={
                                                         <Icon as={MdShuffle} />
@@ -533,7 +466,7 @@ const MarkItLoginModal = () => {
                                                     onClick={genNewColors}
                                                 >
                                                     Random
-                                                </Button>
+                                                </Button> */}
                                                 <Button
                                                     onClick={() =>
                                                         inputRef?.current?.click()
