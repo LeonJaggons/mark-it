@@ -1,43 +1,39 @@
-import { MarkItItem } from "@/redux/reducer/itemSlice";
-import GoogleMapReact from "google-map-react";
+import { toggleShowLogin } from "@/redux/reducer/appSlice";
+import { deleteLikeItem, isItemLiked, likeItem } from "@/services/item_service";
+import { sendMessage } from "@/services/message_service";
 import {
     Box,
-    HStack,
-    VStack,
-    Icon,
-    Heading,
-    Image,
     Button,
-    Text,
-    Card,
-    Tag,
+    HStack,
+    Heading,
+    Icon,
     IconButton,
-    useMediaQuery,
-    Stack,
+    Image,
     Modal,
     ModalBody,
-    Textarea,
     ModalContent,
     ModalOverlay,
+    Stack,
+    Tag,
+    Text,
+    Textarea,
+    VStack,
+    useMediaQuery,
 } from "@chakra-ui/react";
-import React, { ReactNode, useEffect, useState } from "react";
+import GoogleMapReact from "google-map-react";
+import moment from "moment";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
     MdApps,
     MdArrowBack,
-    MdBookmark,
     MdBookmarkAdd,
     MdBookmarkRemove,
-    MdIosShare,
     MdMoreHoriz,
     MdSend,
     MdShare,
 } from "react-icons/md";
-import moment from "moment";
-import Link from "next/link";
-import { deleteLikeItem, isItemLiked, likeItem } from "@/services/item_service";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "@/services/message_service";
-import { toggleShowLogin } from "@/redux/reducer/appSlice";
 
 export const MarkItItemDisplay = (props) => {
     const [showMessage, setShowMessage] = useState(false);
@@ -48,7 +44,7 @@ export const MarkItItemDisplay = (props) => {
     const openMessage = () => setShowMessage(true);
     const closeMessage = () => setShowMessage(false);
     return (
-        <Box>
+        <Box w={"full"}>
             <Box
                 flex={1}
                 w={"full"}

@@ -20,12 +20,16 @@ export default async function handler(
     const itemCollection = collection(fireStore, "item");
     let items;
     if (category) {
-        ("RUN 1");
-        const catQuery = query(
-            itemCollection,
-            where("category", "==", category),
-            where("userID", "!=", userID)
-        );
+        console.log("RUN 1");
+        console.log(userID ? 1 : 0);
+        console.log(category);
+        const catQuery = userID
+            ? query(
+                  itemCollection,
+                  where("category", "==", category),
+                  where("userID", "!=", userID)
+              )
+            : query(itemCollection, where("category", "==", category));
         const itemDocs = await getDocs(catQuery);
         items = itemDocs.docs.map((itemDc) => {
             return {
@@ -55,8 +59,8 @@ export default async function handler(
 
         res.status(200).json(item);
     } else {
-        ("RUN 4");
-        const itemsQry = query(itemCollection, where("userID", "==", userID));
+        console.log("RUN 4");
+        const itemsQry = query(itemCollection);
         const itemDocs = await getDocs(itemsQry);
         items = itemDocs.docs.map((itemDc) => {
             return {
@@ -66,6 +70,19 @@ export default async function handler(
         });
     }
     if (items) {
+        if (userID) {
+            const userDoc = doc(collection(fireStore, "user"), userID);
+            const userLoc = (await getDoc(userDoc)).data().location;
+            if (userLoc) {
+                items = items.map((i) => {
+                    return {
+                        ...i,
+                        distance: getDistance(i.location, userLoc),
+                    };
+                });
+            }
+        }
+        console.log(items);
         res.status(200).json(items);
     } else {
         const itemsQry = query(itemCollection, where("userID", "!=", userID));
@@ -81,7 +98,12 @@ export default async function handler(
     }
 }
 
-function getDistance(lat1, lon1, lat2, lon2) {
+function getDistance(loc1, loc2) {
+    const lat1 = loc1.latitude;
+    const lat2 = loc2.latitude;
+
+    const lon1 = loc1.longitude;
+    const lon2 = loc2.longitude;
     const earthRadius = 6371; // Radius of the Earth in kilometers
 
     // Convert latitude and longitude from degrees to radians
@@ -103,5 +125,5 @@ function getDistance(lat1, lon1, lat2, lon2) {
     // Calculate the distance in kilometers
     const distance = earthRadius * c;
 
-    return distance;
+    return distance / 1.609;
 }

@@ -1,7 +1,8 @@
-import { Button, Icon, VStack, Box, Center, Spinner } from "@chakra-ui/react";
+import { setSelectedCategory } from "@/redux/reducer/itemSlice";
+import { getItemCategories } from "@/services/item_service";
+import { Box, Button, Center, Icon, Spinner, VStack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import {
     MdAdfScanner,
     MdApps,
@@ -23,8 +24,7 @@ import {
     MdToys,
     MdVideoChat,
 } from "react-icons/md";
-import { useRouter } from "next/router";
-import { setSelectedCategory } from "@/redux/reducer/itemSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const CategoriesList = () => {
     const router = useRouter();
@@ -33,8 +33,8 @@ export const CategoriesList = () => {
     const [catSelected, setCatSelected] = useState(false);
     const getCategories = async () => {
         setLoading(true);
-        const res = await axios.get("/api/category");
-        setCategories([...res.data]);
+        const cats = await getItemCategories();
+        setCategories([...cats]);
         setLoading(false);
     };
 

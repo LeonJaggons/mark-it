@@ -1,38 +1,4 @@
-import {
-    AbsoluteCenter,
-    Box,
-    Button,
-    Checkbox,
-    Divider,
-    HStack,
-    Heading,
-    Icon,
-    Input,
-    InputLeftElement,
-    Link,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalOverlay,
-    Stack,
-    Avatar,
-    VStack,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    PopoverBody,
-    Select,
-    Tabs,
-    TabList,
-    TabPanels,
-    TabPanel,
-    Tab,
-} from "@chakra-ui/react";
-import { signOut as fireSignOut } from "firebase/auth";
-import NextLink from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleShowLogin } from "@/redux/reducer/appSlice";
+import { fireAuth } from "@/firebase/firebase-init";
 import {
     setLoginPassword,
     setLoginUsername,
@@ -42,19 +8,51 @@ import {
     setNewUserPassword,
     signOut,
 } from "@/redux/reducer/accountSlice";
+import { toggleShowLogin } from "@/redux/reducer/appSlice";
 import { createAccount, loginUser } from "@/services/auth_services";
+import { postRandomItem } from "@/services/item_service";
 import {
+    Avatar,
+    Box,
+    Button,
+    Checkbox,
+    HStack,
+    Heading,
+    Icon,
+    Input,
+    Link,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalOverlay,
+    Popover,
+    PopoverBody,
+    PopoverContent,
+    PopoverTrigger,
+    Select,
+    Stack,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    VStack,
+} from "@chakra-ui/react";
+import { signOut as fireSignOut } from "firebase/auth";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import {
+    MdAdd,
     MdLocationOn,
-    MdStore,
-    MdUpload,
-    MdOutlineShoppingBag,
-    MdOutlineNotifications,
     MdOutlineChatBubbleOutline,
     MdOutlineFavoriteBorder,
-    MdAdd,
+    MdOutlineNotifications,
+    MdOutlineShoppingBag,
+    MdStore,
+    MdUpload,
 } from "react-icons/md";
-import { fireAuth } from "@/firebase/firebase-init";
-import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 const MarkItHeader = () => {
     const labelStyles = {
         mt: 2,
@@ -186,6 +184,8 @@ const MarkItMenu = () => {
                     Post an Item
                 </Button>
             )}
+
+            <PostRandomItemButton />
             {menuItems.map((m) => (
                 <MarkItMenuItem
                     key={m.label + "-menu-item"}
@@ -248,6 +248,14 @@ const UserAvatar = (props) => {
                 </PopoverBody>
             </PopoverContent>
         </Popover>
+    );
+};
+
+const PostRandomItemButton = () => {
+    return (
+        <Button colorScheme={"red"} size={"sm"} onClick={postRandomItem}>
+            Post Random Item
+        </Button>
     );
 };
 const MarkItMenuItem = ({ label, onClick, href, icon }) => {
@@ -418,6 +426,7 @@ const MarkItLoginModal = () => {
                                                         e.target.checked
                                                     )
                                                 }
+                                                size={"sm"}
                                             >
                                                 Remember me
                                             </Checkbox>
