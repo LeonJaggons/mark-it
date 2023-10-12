@@ -75,6 +75,9 @@ export const BrowseItem = (props) => {
                 <Box p={2} pt={1}>
                     <Heading size={"xs"}>${props.item.price}</Heading>
                     <Text fontSize={"sm"}>{props.item.title}</Text>
+                    <Text fontSize={"12px"} color={"gray.600"}>
+                        {parseInt(props.item.distance)} mi
+                    </Text>
                 </Box>
             </VStack>
         </Card>

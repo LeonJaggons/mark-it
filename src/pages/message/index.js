@@ -11,7 +11,11 @@ const Message = () => {
             <Head>
                 <title> Message</title>
             </Head>
-            <VStack height={"full"} w={"full"} align={"flex-start"}>
+            <VStack
+                height={"calc(100vh - 130px)"}
+                w={"full"}
+                align={"flex-start"}
+            >
                 <HStack flex={1} w={"full"}>
                     <MessageInbox />
                     {focusedMessage && <Messager />}

@@ -174,24 +174,29 @@ export const Messager = () => {
 };
 const Chatbox = (props) => {
     const user = useSelector((state) => state.account.user);
-    const [isSent, setIsSent] = useState(false);
+    const [isSent, setIsSent] = useState();
     useEffect(() => {
         setIsSent(user.userID === props.message.from);
     }, [props.message, user]);
     return (
-        <HStack w={"full"} justify={isSent ? "flex-end" : "flex-start"}>
-            <Box
-                maxW={"55%"}
-                p={2}
-                px={4}
-                backgroundColor={isSent ? "messenger.500" : "gray.200"}
-                borderRadius={10}
-            >
-                <Text color={isSent ? "whiteAlpha.900" : "black"} fontSize={14}>
-                    {props.message.content}
-                </Text>
-            </Box>
-        </HStack>
+        isSent && (
+            <HStack w={"full"} justify={isSent ? "flex-end" : "flex-start"}>
+                <Box
+                    maxW={"55%"}
+                    p={2}
+                    px={4}
+                    backgroundColor={isSent ? "messenger.500" : "gray.200"}
+                    borderRadius={10}
+                >
+                    <Text
+                        color={isSent ? "whiteAlpha.900" : "black"}
+                        fontSize={14}
+                    >
+                        {props.message.content}
+                    </Text>
+                </Box>
+            </HStack>
+        )
     );
 };
 export const MessageInbox = () => {
@@ -211,7 +216,7 @@ export const MessageInbox = () => {
             shadow={"none"}
             border={"1px solid rgba(0,0,0,.1)"}
         >
-            <Box w={"full"} p={4} align={"flex-start"} pb={0}>
+            <Box w={"full"} h={"full"} p={4} align={"flex-start"} pb={0}>
                 <HStack justify={"space-between"} w={"full"}>
                     <Heading size={"md"}>Messages</Heading>
                     <IconButton
@@ -248,6 +253,7 @@ const InboxItem = (props) => {
     const focusedMessage = useSelector((state) => state.item.focusedMessage);
     const [focused, setFocused] = useState(false);
     const loadItem = async () => {
+        console.log(props.message);
         const itemData = await getItemByID(props.message.itemID);
         itemData;
         setItem({ ...itemData });
@@ -294,8 +300,9 @@ const InboxItem = (props) => {
                     align={"center"}
                     color={focused ? "white" : "black"}
                 >
+                    {console.log(item)}
                     <Image
-                        src={item.images[0]}
+                        src={item.images && item.images[0]}
                         w={"50px"}
                         objectFit={"cover"}
                         borderRadius={"30px"}

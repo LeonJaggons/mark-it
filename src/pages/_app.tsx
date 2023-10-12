@@ -51,10 +51,13 @@ export default function App({ Component, pageProps }: AppProps) {
                             px={!onPost && "5vw"}
                             py={!onPost && "16px"}
                             height={!onPost ? "fit-content" : "100vh"}
+                            flex={1}
                         >
                             {onBrowse && <BrowseFilters></BrowseFilters>}
                             <Box
                                 id={"mi-content"}
+                                flex={1}
+                                h={"100%"}
                                 // overflowY={"scroll"}
                             >
                                 <Component {...pageProps} />
