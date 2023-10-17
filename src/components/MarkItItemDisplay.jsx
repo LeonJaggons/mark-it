@@ -23,6 +23,7 @@ import {
 import GoogleMapReact from "google-map-react";
 import moment from "moment";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
     MdApps,
@@ -39,32 +40,34 @@ export const MarkItItemDisplay = (props) => {
     const [showMessage, setShowMessage] = useState(false);
     const [selectedImage, setSelectedImage] = useState(0);
     const [useSmallLayout] = useMediaQuery("(max-width: 1100px)");
+    const [onPost, setOnPost] = useState(false);
     const loggedIn = useSelector((state) => state.account.loggedIn);
     const user = useSelector((state) => state.account.user);
     const openMessage = () => setShowMessage(true);
     const closeMessage = () => setShowMessage(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (router.isReady) {
+            setOnPost(router.pathname.includes("post"));
+        }
+    }, [router]);
     return (
-        <Box w={"full"}>
-            <Box
-                flex={1}
-                w={"full"}
-                // border={"1px solid rgba(0,0,0,.1)"}
-                shadow={"none"}
-                h={"calc(100vh - 80px)"}
-            >
+        <Box w={"full"} flex={1}>
+            <Box shadow={"none"}>
                 <Stack
                     direction={useSmallLayout ? "column" : "row"}
                     flex={2}
                     height={"100%"}
                 >
                     <VStack
-                        flex={3}
+                        flex={1}
                         height={"100%"}
                         w={"full"}
                         align={"flex-start"}
                         position={"relative"}
                     >
-                        <Box flexGrow={1} position={"relative"}>
+                        <Box position={"relative"} w={"full"}>
                             <Image
                                 src={props.item.images[selectedImage]}
                                 objectFit={"cover"}
@@ -73,6 +76,37 @@ export const MarkItItemDisplay = (props) => {
                                 borderRadius={5}
                             ></Image>
                         </Box>
+                        <HStack
+                            position={"absolute"}
+                            bottom={2}
+                            alignSelf={"center"}
+                            overflowX={"scroll"}
+                            padding={2}
+                            backgroundColor={"blackAlpha.600"}
+                            borderRadius={5}
+                        >
+                            {props.items &&
+                                props.item.images.map((i, index) => (
+                                    <Image
+                                        filter={
+                                            index === selectedImage &&
+                                            "brightness(90%)"
+                                        }
+                                        borderWidth={
+                                            index === selectedImage && 2
+                                        }
+                                        borderColor={"messenger.600"}
+                                        borderStyle={"solid"}
+                                        borderRadius={5}
+                                        src={i}
+                                        cursor={"pointer"}
+                                        height={"55px"}
+                                        aspectRatio={1}
+                                        objectFit={"cover"}
+                                        onClick={() => setSelectedImage(index)}
+                                    />
+                                ))}
+                        </HStack>
                         {!props.isPreview && (
                             <IconButton
                                 as={Link}
@@ -88,36 +122,8 @@ export const MarkItItemDisplay = (props) => {
                                 left={2}
                             />
                         )}
-                        <HStack
-                            position={"absolute"}
-                            bottom={2}
-                            alignSelf={"center"}
-                            overflowX={"scroll"}
-                            padding={2}
-                            backgroundColor={"blackAlpha.600"}
-                            borderRadius={5}
-                        >
-                            {props.item.images.map((i, index) => (
-                                <Image
-                                    filter={
-                                        index === selectedImage &&
-                                        "brightness(90%)"
-                                    }
-                                    borderWidth={index === selectedImage && 2}
-                                    borderColor={"messenger.600"}
-                                    borderStyle={"solid"}
-                                    borderRadius={5}
-                                    src={i}
-                                    cursor={"pointer"}
-                                    height={"55px"}
-                                    aspectRatio={1}
-                                    objectFit={"cover"}
-                                    onClick={() => setSelectedImage(index)}
-                                />
-                            ))}
-                        </HStack>
                     </VStack>
-                    <Box flex={2} padding={4} height={"100%"}>
+                    <Box flex={1} padding={4} height={"100%"}>
                         <VStack
                             align={"flex-start"}
                             spacing={1}
@@ -216,7 +222,7 @@ export const MarkItItemDisplay = (props) => {
                     </Box>
                 </Stack>
             </Box>
-            <Heading mt={6}>More Content</Heading>
+            {!onPost && <Heading mt={6}>More Content</Heading>}
         </Box>
     );
 };
