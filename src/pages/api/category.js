@@ -1,14 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { categories } from "@/constants/product_categories.js";
-import {
-    addDoc,
-    collection,
-    getDocs,
-    orderBy,
-    query,
-    where,
-} from "firebase/firestore";
 import { fireStore } from "@/firebase/firebase-init";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 export default async function handler(req, res) {
     // const cats = Array.from(categories);

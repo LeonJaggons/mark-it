@@ -1,9 +1,7 @@
 import { HStack, VStack } from "@chakra-ui/react";
-import React from "react";
-import { getMessages } from "../../services/message_service";
+import Head from "next/head";
 import { useSelector } from "react-redux";
 import { MessageInbox, Messager } from "../../components/MessageInbox";
-import Head from "next/head";
 
 const Message = () => {
     const loggedIn = useSelector((state) => state.account.loggedIn);
@@ -14,9 +12,7 @@ const Message = () => {
                 <title> Message</title>
             </Head>
             <VStack
-                paddingX={"7vw"}
-                paddingY={"18px"}
-                height={"full"}
+                height={"calc(100vh - 130px)"}
                 w={"full"}
                 align={"flex-start"}
             >

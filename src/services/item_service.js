@@ -1,12 +1,14 @@
 import { fireStorage, fireStore } from "@/firebase/firebase-init";
-import { MarkItItem } from "@/redux/reducer/itemSlice";
 import { store } from "@/redux/store";
+import { faker } from "@faker-js/faker";
 import axios from "axios";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-export const postNewItem = async () => {
-    const originalItem = store.getState().item.postItem;
+export const postNewItem = async (originalItem = null) => {
+    if (!originalItem) {
+        originalItem = store.getState().item.postItem;
+    }
     let postItem = { ...originalItem };
     const user = store.getState().account.user;
     const images = postItem.images;
@@ -27,18 +29,23 @@ export const postNewItem = async () => {
             let i = 0;
             for (let img of images) {
                 i++;
-                const imgRef = ref(
-                    fireStorage,
-                    `item/${newItemID}/imgs/img-${i}.jpg`
-                );
-                const imgRes = await fetch(img).catch((err) => err);
-                const imgBlob = await imgRes.blob();
-                const imgStoreRef = await uploadBytes(imgRef, imgBlob).catch(
-                    (err) => err
-                );
-                if (imgStoreRef) {
-                    const dlURL = await getDownloadURL(imgStoreRef.ref);
-                    dlURLs.push(dlURL);
+                if (typeof img !== "string") {
+                    const imgRef = ref(
+                        fireStorage,
+                        `item/${newItemID}/imgs/img-${i}.jpg`
+                    );
+                    const imgRes = await fetch(img).catch((err) => err);
+                    const imgBlob = await imgRes.blob();
+                    const imgStoreRef = await uploadBytes(
+                        imgRef,
+                        imgBlob
+                    ).catch((err) => err);
+                    if (imgStoreRef) {
+                        const dlURL = await getDownloadURL(imgStoreRef.ref);
+                        dlURLs.push(dlURL);
+                    }
+                } else {
+                    dlURLs.push(img);
                 }
             }
         }
@@ -50,6 +57,48 @@ export const postNewItem = async () => {
     }
 };
 
+function getRandomUSLocation() {
+    const minLat = 24.396308;
+    const maxLat = 49.384358;
+    const minLng = -125.0;
+    const maxLng = -66.93457;
+
+    const randomLat = Math.random() * (maxLat - minLat) + minLat;
+    const randomLng = Math.random() * (maxLng - minLng) + minLng;
+
+    const location = {
+        latitude: randomLat,
+        longitude: randomLng,
+    };
+
+    return location;
+}
+
+export const postRandomItem = async () => {
+    const userID = store.getState().account.user?.userID;
+    if (!userID) return;
+    const categories = await getItemCategories();
+    const catIndex = Math.floor(Math.random() * categories.length);
+    const randomItem = {
+        userID: userID,
+        title: faker.commerce.productName(),
+        price: faker.commerce.price(),
+        description: faker.commerce.productDescription(),
+        condition: "Used - Like New",
+        category: categories[catIndex].name,
+        location: getRandomUSLocation(),
+        images: [],
+    };
+
+    for (let i = 0; i < 3; i++) {
+        const image = faker.image.urlLoremFlickr({
+            width: 400,
+            height: 400,
+        });
+        randomItem.images.push(image);
+    }
+    await postNewItem(randomItem);
+};
 export const getItemsByCategory = async (category) => {
     const userID = store.getState().account.user?.userID;
     const res = await axios.get(`/api/item`, {
@@ -69,10 +118,16 @@ export const getUserItems = async () => {
 
 export const getAllItems = async () => {
     const userID = store.getState().account.user?.userID;
-    const res = await axios.get("/api/item", {
-        params: { userID: userID ?? "none" },
-    });
+    let res;
+    if (userID) {
+        res = await axios.get("/api/item", {
+            params: { userID: userID ?? "none" },
+        });
+    } else {
+        res = await axios.get("/api/item");
+    }
     const items = res.data;
+    console.log(items);
     return items;
 };
 
@@ -107,4 +162,9 @@ export const likeItem = async (itemID) => {
 export const deleteLikeItem = async (itemID) => {
     const userID = store.getState().account.user.userID;
     await axios.delete(`/api/favorite?itemID=${itemID}&userID=${userID}`);
+};
+
+export const getItemCategories = async () => {
+    const res = await axios.get("/api/category");
+    return [...res.data];
 };

@@ -1,8 +1,9 @@
+import { BrowseItem } from "@/components/BrowseItem";
+import { getItemsByCategory } from "@/services/item_service";
 import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { getItemsByCategory } from "@/services/item_service";
-import { BrowseItem } from "@/components/BrowseItem";
+
 const Category = () => {
     const router = useRouter();
     const [category, setCategory] = useState();

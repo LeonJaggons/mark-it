@@ -8,26 +8,41 @@ import {
     Box,
     HStack,
     Card,
-    Divider,
     RadioGroup,
     Radio,
     CheckboxGroup,
     Checkbox,
-    Collapse,
+    useDisclosure,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalBody,
+    Select,
+    InputGroup,
+    InputRightAddon,
+    InputRightElement,
+    IconButton,
 } from "@chakra-ui/react";
-import { MdAdd } from "react-icons/md";
+import {
+    MdAdd,
+    MdLocationCity,
+    MdLocationSearching,
+    MdSearch,
+} from "react-icons/md";
 import Link from "next/link";
 import { CategoriesList } from "./CategoriesButton";
 import { MarkItSearch } from "./MarkItSearch";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-
+import axios from "axios";
+import { debounce, find } from "lodash";
+import GoogleMapReact from "google-map-react";
 export const BrowseFilters = () => {
     const router = useRouter();
     const [catSelected, setCatSelected] = useState();
     useEffect(() => {
         const selectedCat = router.query.category;
-        setCatSelected(selectedCat ?? "");
+        setCatSelected(selectedCat ?? "Marketplace");
     }, [router]);
     return (
         <Card
@@ -50,6 +65,7 @@ export const BrowseFilters = () => {
                     {catSelected}
                 </Heading>
                 <MarkItSearch />
+                <LocationFilter />
             </Box>
             <Box overflowY={"scroll"} flex={1}>
                 <VStack
@@ -116,6 +132,127 @@ export const BrowseFilters = () => {
                 </Button>
             </Box>
         </Card>
+    );
+};
+
+const LocationFilter = () => {
+    const { isOpen, onClose, onOpen } = useDisclosure();
+    const [selectedLocationName, setSelectedLocationName] = useState();
+    const [selectedLocation, setSelectedLocation] = useState();
+    const [locations, setLocations] = useState([]);
+
+    const [locQ, setLocQ] = useState();
+    const [zip, setZip] = useState();
+
+    const loadQueryLocations = async (query) => {
+        const res = await axios.get(`/api/cities?q=${query}`);
+        setLocations([...res.data]);
+        if (res.data.length === 1) {
+            setSelectedLocationName(res.data[0].name);
+        }
+    };
+    const debouncedLoadQuery = debounce(loadQueryLocations, 500);
+    const loadZipLocations = async () => {
+        const res = await axios.get(`/api/cities?zip=${zip}`);
+        setLocations([...res.data]);
+        if (res.data.length === 1) {
+            setSelectedLocationName(res.data[0].name);
+        }
+    };
+
+    useEffect(() => {
+        if (zip && zip.length > 4) {
+            loadZipLocations();
+        }
+    }, [zip]);
+    useEffect(() => {
+        const newLoc = {
+            ...find(locations, (o) => o.name === selectedLocationName),
+        };
+        setSelectedLocation(newLoc);
+    }, [selectedLocationName]);
+    useEffect(() => {
+        console.log(selectedLocation);
+    }, [selectedLocation]);
+    return (
+        <>
+            <Button
+                onClick={onOpen}
+                mt={2}
+                w={"full"}
+                variant={"ghost"}
+                fontSize={14}
+                justifyContent={"start"}
+                leftIcon={<Icon as={MdLocationSearching} />}
+            >
+                Location
+            </Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalBody p={6}>
+                        <Heading size={"md"} mb={4}>
+                            Location
+                        </Heading>
+                        <HStack></HStack>
+                        <HStack mb={2} spacing={0}>
+                            <Input
+                                placeholder={"City Name"}
+                                flex={1}
+                                onChange={(e) =>
+                                    debouncedLoadQuery(e.target.value)
+                                }
+                                borderRightRadius={0}
+                            />
+                            <Text mx={2}>or</Text>
+                            <Input
+                                placeholder={"Zipcode"}
+                                flex={1}
+                                onChange={(e) => setZip(e.target.value)}
+                            />
+                        </HStack>
+                        <Select
+                            mb={2}
+                            value={selectedLocationName}
+                            onChange={(e) =>
+                                setSelectedLocationName(e.target.value)
+                            }
+                        >
+                            <option value={""}>None</option>
+                            {locations.map((l) => (
+                                <option value={l.name}>
+                                    {l.name}, {l.state}
+                                </option>
+                            ))}
+                        </Select>
+                        {selectedLocation && (
+                            <Box
+                                height={200}
+                                borderRadius={5}
+                                overflow={"hidden"}
+                            >
+                                <GoogleMapReact
+                                    center={{
+                                        lat: selectedLocation.latitude,
+                                        lng: selectedLocation.longitude,
+                                    }}
+                                    options={{
+                                        fullscreenControl: false,
+                                        zoomControl: false,
+                                        panControl: false,
+                                        gestureHandling: "none",
+                                    }}
+                                    zoom={12}
+                                />
+                            </Box>
+                        )}
+                        <Button w={"full"} mt={4} colorScheme={"messenger"}>
+                            Apply
+                        </Button>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+        </>
     );
 };
 export const PostButton = () => {

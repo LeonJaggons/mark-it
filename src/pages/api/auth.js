@@ -1,12 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import {
-    User,
-    UserCredential,
-    signInWithEmailAndPassword,
-} from "firebase/auth";
-import { fireAuth, fireStore } from "@/firebase/firebase-init";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { fireAuth } from "@/firebase/firebase-init";
 import { getUserFromFBUser } from "@/services/auth_services";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default async function handler(req, res) {
     switch (req.method) {
@@ -35,7 +30,6 @@ const handleUserLogin = async (req, res) => {
         password
     ).catch((err) => {
         error = err;
-        
     });
 
     if (!error) {

@@ -1,26 +1,23 @@
-import { Inter } from "next/font/google";
-import {
-    SimpleGrid,
-    Box,
-    HStack,
-    Skeleton,
-    Center,
-    Spinner,
-    Heading,
-    VStack,
-    Icon,
-    Button,
-} from "@chakra-ui/react";
-import { MdArrowBackIos, MdSearchOff } from "react-icons/md";
-import { useEffect, useState } from "react";
-import { setSelectedCategory } from "@/redux/reducer/itemSlice";
-import { getAllItems, getItemsByCategory } from "@/services/item_service";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowseFilters, PostButton } from "@/components/BrowseFilters";
 import { BrowseItem } from "@/components/BrowseItem";
 import { setAppLocation } from "@/redux/reducer/appSlice";
-import { useRouter } from "next/router";
+import { setSelectedCategory } from "@/redux/reducer/itemSlice";
+import { getAllItems, getItemsByCategory } from "@/services/item_service";
+import {
+    Box,
+    Button,
+    Center,
+    Heading,
+    Icon,
+    SimpleGrid,
+    Spinner,
+    VStack,
+} from "@chakra-ui/react";
+import { Inter } from "next/font/google";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { MdArrowBackIos, MdSearchOff } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -126,7 +123,7 @@ export default function Home() {
 const ItemsGrid = ({ items }) => {
     return (
         <Box flex={1} w={"full"}>
-            <SimpleGrid columns={[1, 2, 4, 5]} spacing={4} w={"full"}>
+            <SimpleGrid columns={[1, 1, 3, 4]} spacing={4} w={"full"}>
                 {items.map((i) => (
                     <BrowseItem item={i} fromSaved={false} />
                 ))}
