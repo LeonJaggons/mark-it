@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/constants/product_categories.js", "src/pages/item/index.js", "src/pages/message/index.js", "src/pages/api/auth.js", "src/services/item_service.js", "src/pages/post/index.jsx", "src/pages/index.jsx", "src/pages/components/MarkItItemDisplay.jsx", "src/pages/components/MarkItHeader.jsx", "src/pages/api/message.js", "src/pages/api/category.js", "src/services/auth_services.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/constants/product_categories.js", "src/pages/item/index.js", "src/pages/message/index.js", "src/pages/api/city/auth.js", "src/services/item_service.js", "src/pages/post/index.jsx", "src/pages/index.jsx", "src/pages/components/MarkItItemDisplay.jsx", "src/pages/components/MarkItHeader.jsx", "src/pages/api/message.js", "src/pages/api/city/category.js", "src/services/auth_services.js"],
   "exclude": ["node_modules"]
 }

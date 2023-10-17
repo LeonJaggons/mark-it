@@ -253,7 +253,6 @@ const InboxItem = (props) => {
     const focusedMessage = useSelector((state) => state.item.focusedMessage);
     const [focused, setFocused] = useState(false);
     const loadItem = async () => {
-        console.log(props.message);
         const itemData = await getItemByID(props.message.itemID);
         itemData;
         setItem({ ...itemData });
@@ -300,7 +299,6 @@ const InboxItem = (props) => {
                     align={"center"}
                     color={focused ? "white" : "black"}
                 >
-                    {console.log(item)}
                     <Image
                         src={item.images && item.images[0]}
                         w={"50px"}

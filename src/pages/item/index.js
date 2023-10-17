@@ -1,9 +1,8 @@
 import { getItemByID } from "@/services/item_service";
-import { Center, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MarkItItemDisplay } from "../../components/MarkItItemDisplay";
-import { Box, Center, Spinner } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 
 const index = () => {
     const router = useRouter();

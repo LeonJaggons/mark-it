@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Provider as ReduxProvider, useSelector } from "react-redux";
 
-import CitiesJSON from "../../public/uscities.json";
 import { BrowseFilters } from "@/components/BrowseFilters";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 
@@ -126,13 +125,8 @@ const LocationProvider = (props) => {
         for (let city of CitiesJSON) {
             await addDoc(citiesCollection, city);
             numDone += 1;
-            console.log(
-                "Done with " +
-                    ((numDone / CitiesJSON.length) * 100).toString() +
-                    "%"
-            );
+
             if (numDone >= writeLimit) {
-                console.log("Done");
                 break;
             }
         }

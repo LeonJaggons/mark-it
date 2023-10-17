@@ -10,7 +10,7 @@ import {
     where,
 } from "firebase/firestore";
 import { filter, find, sortBy, uniqBy } from "lodash";
-import CitiesJSON from "../../../public/uscities.json";
+import CitiesJSON from "../uscities.json";
 
 export default async function handler(req, res) {
     const q = req.query.q;

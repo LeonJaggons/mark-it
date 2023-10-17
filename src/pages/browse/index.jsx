@@ -135,7 +135,13 @@ const ItemsGrid = ({ items }) => {
 const NoResultsScreen = ({}) => {
     const router = useRouter();
     return (
-        <VStack alignItems={"flex-start"} flex={1} w={"full"}>
+        <VStack
+            alignItems={"flex-start"}
+            flex={1}
+            w={"full"}
+            h={"full"}
+            pt={"100px"}
+        >
             <Center flex={1} w={"full"} pb={"10px"}>
                 <VStack>
                     <Center
@@ -175,7 +181,7 @@ const NoResultsScreen = ({}) => {
 };
 const LoadingScreen = () => {
     return (
-        <Center flex={1} height={"full"}>
+        <Center flex={1} height={"full"} pt={"180px"}>
             <Spinner />
         </Center>
     );
