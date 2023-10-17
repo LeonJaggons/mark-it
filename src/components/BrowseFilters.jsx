@@ -61,7 +61,7 @@ export const BrowseFilters = () => {
                 <Heading size={"md"}>Filters</Heading>
             </Box> */}
             <Box p={4} borderBottom={"1px solid rgba(0,0,0,.1)"}>
-                <Heading fontSize={"1.5rem"} mb={2}>
+                <Heading fontSize={"1.2rem"} mb={2}>
                     {catSelected}
                 </Heading>
                 <MarkItSearch />
@@ -145,7 +145,7 @@ const LocationFilter = () => {
     const [zip, setZip] = useState();
 
     const loadQueryLocations = async (query) => {
-        const res = await axios.get(`/api/cities?q=${query}`);
+        const res = await axios.get(`/api/city?q=${query}`);
         setLocations([...res.data]);
         if (res.data.length === 1) {
             setSelectedLocationName(res.data[0].name);
@@ -153,7 +153,7 @@ const LocationFilter = () => {
     };
     const debouncedLoadQuery = debounce(loadQueryLocations, 500);
     const loadZipLocations = async () => {
-        const res = await axios.get(`/api/cities?zip=${zip}`);
+        const res = await axios.get(`/api/city?zip=${zip}`);
         setLocations([...res.data]);
         if (res.data.length === 1) {
             setSelectedLocationName(res.data[0].name);
@@ -171,9 +171,7 @@ const LocationFilter = () => {
         };
         setSelectedLocation(newLoc);
     }, [selectedLocationName]);
-    useEffect(() => {
-        console.log(selectedLocation);
-    }, [selectedLocation]);
+    useEffect(() => {}, [selectedLocation]);
     return (
         <>
             <Button

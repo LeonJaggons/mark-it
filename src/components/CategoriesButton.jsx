@@ -120,8 +120,7 @@ const CategoryMenuItem = ({ href, label }) => {
                 leftIcon={
                     <Center
                         w={"36px"}
-                        borderRadius={"20px"}
-                        mr={2}
+                        borderRadius={5}
                         bg={"gray.300"}
                         aspectRatio={1}
                     >
@@ -136,7 +135,7 @@ const CategoryMenuItem = ({ href, label }) => {
                 justifyContent={"flex-start"}
                 onClick={handleNav}
                 fontWeight={selectedCategory === label ? 600 : 400}
-                fontSize={14}
+                fontSize={12}
                 borderRadius={5}
             >
                 <Box>{label}</Box>

@@ -7,13 +7,16 @@ import {
     Text,
     Box,
     Card,
+    HStack,
 } from "@chakra-ui/react";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export const BrowseItem = (props) => {
     const router = useRouter();
+    const [city, setCity] = useState();
     const [imgReady, setImgReady] = useState(false);
     const handleClick = () => {
         if (router.isReady) {
@@ -22,6 +25,15 @@ export const BrowseItem = (props) => {
                 query: { id: props.item.itemID },
             });
         }
+    };
+    const loadCityName = async () => {
+        const res = await axios.get(`/api/city/closest`, {
+            params: {
+                lat: props.item.location.latitude,
+                lng: props.item.location.longitude,
+            },
+        });
+        setCity(res.data);
     };
     useEffect(() => {
         if (props.item && props.item.images) {
@@ -34,6 +46,9 @@ export const BrowseItem = (props) => {
             }
         }
     }, []);
+    useEffect(() => {
+        props.item && loadCityName();
+    }, [props.item]);
     return (
         <Card
             shadow={"none"}
@@ -73,10 +88,17 @@ export const BrowseItem = (props) => {
                     />
                 )}
                 <Box p={2} pt={1}>
-                    <Heading size={"xs"}>${props.item.price}</Heading>
-                    <Text fontSize={"sm"}>{props.item.title}</Text>
-                    <Text fontSize={"12px"} color={"gray.600"}>
-                        {parseInt(props.item.distance)} mi
+                    <Heading size={"xs"} noOfLines={1}>
+                        ${parseInt(props.item.price)}
+                    </Heading>
+                    <Text fontSize={"sm"} noOfLines={1}>
+                        {props.item.title}
+                    </Text>
+
+                    <Text fontSize={"12px"} color={"gray.600"} noOfLines={1}>
+                        {city && `${city.name}, ${city.abbrev}`}
+                        {/* <span style={{ margin: "0px 4px" }}>&#183;</span> */}
+                        {/* {city && `${parseInt(city.distance)} mi`} */}
                     </Text>
                 </Box>
             </VStack>
