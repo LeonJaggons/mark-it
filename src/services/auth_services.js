@@ -73,6 +73,7 @@ export const updateLoginState = (user) => {
         store.dispatch(setLoggedIn(false));
     }
 };
+
 export const getUserFromFBUser = async (user) => {
     const userCollection = collection(fireStore, "user");
     const userDoc = doc(userCollection, user?.uid);

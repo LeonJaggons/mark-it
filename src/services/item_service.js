@@ -127,7 +127,7 @@ export const getAllItems = async () => {
         res = await axios.get("/api/item");
     }
     const items = res.data;
-    console.log(items);
+
     return items;
 };
 
