@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { getItemByID } from "@/services/item_service";
 import { MarkItItemDisplay } from "../../components/MarkItItemDisplay";
 import { Box, Center, Spinner } from "@chakra-ui/react";
+
 const index = () => {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -23,7 +24,6 @@ const index = () => {
         if (router.isReady) {
             const { id, fromSaved } = router.query;
             loadItem(id);
-            "FROM SAVED", fromSaved;
             setFromSaved(fromSaved);
         }
     }, [router.query]);
