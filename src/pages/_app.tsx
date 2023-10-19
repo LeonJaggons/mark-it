@@ -118,22 +118,6 @@ const LocationProvider = (props) => {
         }
     };
 
-    const writeCities = async () => {
-        const citiesCollection = collection(fireStore, "city");
-        let numDone = 0;
-        const writeLimit = 4000;
-        for (let city of CitiesJSON) {
-            await addDoc(citiesCollection, city);
-            numDone += 1;
-
-            if (numDone >= writeLimit) {
-                break;
-            }
-        }
-    };
-    useEffect(() => {
-        // writeCities();
-    }, []);
     useEffect(() => {
         user && updateUserLocation();
     }, [user]);
