@@ -29,22 +29,13 @@ import { useDispatch, useSelector } from "react-redux";
 export const CategoriesList = () => {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [categories, setCategories] = useState([]);
+    const categories = useSelector((state) => state.item.categories);
     const [catSelected, setCatSelected] = useState(false);
-    const getCategories = async () => {
-        setLoading(true);
-        const cats = await getItemCategories();
-        setCategories([...cats]);
-        setLoading(false);
-    };
 
     useEffect(() => {
         const selectedCat = router.query.category;
         setCatSelected(selectedCat != null);
     }, [router]);
-    useEffect(() => {
-        getCategories();
-    }, []);
     return (
         <VStack w={"full"} spacing={1}>
             <CategoryMenuItem label={"All"} key={"CAT-ALL"} />
@@ -135,7 +126,7 @@ const CategoryMenuItem = ({ href, label }) => {
                 justifyContent={"flex-start"}
                 onClick={handleNav}
                 fontWeight={selectedCategory === label ? 600 : 400}
-                fontSize={12}
+                fontSize={"14px"}
                 borderRadius={5}
             >
                 <Box>{label}</Box>

@@ -171,7 +171,7 @@ export const PostDetailsForm = () => {
         };
         dispatch(setPostItem(newPostItem));
     };
-    const updateUserID = () => updatePostItem("userID", user.userID);
+    const updateUserID = () => updatePostItem("userID", user?.userID);
     const updateTitle = (e) => updatePostItem("title", e.target.value);
     const updatePrice = (e) => updatePostItem("price", e.target.value);
     const updateDescription = (e) =>

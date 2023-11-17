@@ -1,11 +1,13 @@
 import { BrowseItem } from "@/components/BrowseItem";
 import { setAppLocation } from "@/redux/reducer/appSlice";
 import { setSelectedCategory } from "@/redux/reducer/itemSlice";
+import { BrowseFilters } from "@/components/BrowseFilters";
 import { getAllItems, getItemsByCategory } from "@/services/item_service";
 import {
     Box,
     Button,
     Center,
+    HStack,
     Heading,
     Icon,
     SimpleGrid,
@@ -54,30 +56,22 @@ export default function Home() {
     };
     useEffect(() => {
         requestLocation();
-        if (router.isReady) {
-            loadItems(router.query.category);
-        }
-        return () => {
-            setItems(null);
-            setCategory(null);
-            dispatch(setSelectedCategory());
-        };
     }, []);
     const user = useSelector((state) => state.account.user);
     useEffect(() => {
-        setItems(null);
+        // setItems(null);
         loadItems(category);
     }, [user, category]);
 
     useEffect(() => {
         if (router.isReady) {
-            setCategory(router.query.category);
+            const cat = router.query.category;
+            setCategory(cat);
         }
     }, [router]);
 
     useEffect(() => {
         if (category) {
-            setItems(null);
             dispatch(setSelectedCategory(category));
 
             loadItems(category);
@@ -90,25 +84,23 @@ export default function Home() {
                     Browse {category && "•"} {category}
                 </title>
             </Head>
-            <Box ml={4} pt={0} h={"full"}>
-                {loading ? (
-                    <LoadingScreen />
-                ) : (
+            <Box pt={0} h={"full"} w={"full"}>
+                <HStack alignItems={"flex-start"} w={"full"}>
+                    <BrowseFilters />
                     <VStack h={"full"} flex={1} align={"flex-start"}>
-                        {/* {category && (
-                            <Heading size={"lg"} mb={2}>
-                                {category}
-                            </Heading>
-                        )} */}
-                        {items && items.length > 0 ? (
-                            <Box flex={1}>
-                                <ItemsGrid items={items} />
+                        {items && !loading ? (
+                            <Box flex={1} w={"full"}>
+                                {items.length > 0 ? (
+                                    <ItemsGrid items={items} />
+                                ) : (
+                                    <NoResultsScreen />
+                                )}
                             </Box>
                         ) : (
-                            <NoResultsScreen />
+                            <LoadingScreen />
                         )}
                     </VStack>
-                )}
+                </HStack>
             </Box>
         </>
     );
@@ -125,7 +117,7 @@ const ItemsGrid = ({ items }) => {
         <Box flex={1} w={"full"}>
             <SimpleGrid columns={[1, 1, 3, 4]} spacing={4} w={"full"}>
                 {items.map((i) => (
-                    <BrowseItem item={i} fromSaved={false} />
+                    <BrowseItem item={i} />
                 ))}
             </SimpleGrid>
         </Box>
@@ -135,53 +127,45 @@ const ItemsGrid = ({ items }) => {
 const NoResultsScreen = ({}) => {
     const router = useRouter();
     return (
-        <VStack
-            alignItems={"flex-start"}
-            flex={1}
-            w={"full"}
-            h={"full"}
-            pt={"100px"}
-        >
-            <Center flex={1} w={"full"} pb={"10px"}>
-                <VStack>
-                    <Center
-                        w={"200px"}
-                        aspectRatio={1}
-                        bg={"gray.100"}
-                        mb={8}
-                        borderRadius={"100px"}
+        <Center flex={1} w={"full"} p={8} h={"80vh"}>
+            <VStack textAlign={"center"}>
+                <Center
+                    w={"200px"}
+                    aspectRatio={1}
+                    bg={"gray.100"}
+                    mb={8}
+                    borderRadius={"100px"}
+                >
+                    <Icon
+                        as={MdSearchOff}
+                        boxSize={"130px"}
+                        color={"gray.500"}
+                    />
+                </Center>
+                <VStack spacing={4}>
+                    <Heading fontWeight={600}>No results found</Heading>
+                    <Heading size={"sm"} fontWeight={400}>
+                        Try adjusting your search or filter to find what you're
+                        looking for.
+                    </Heading>
+                    <Button
+                        onClick={() => router.push("/browse")}
+                        mt={2}
+                        leftIcon={<Icon as={MdArrowBackIos} />}
+                        variant={"link"}
+                        size={"md"}
+                        colorScheme="messenger"
                     >
-                        <Icon
-                            as={MdSearchOff}
-                            boxSize={"130px"}
-                            color={"gray.500"}
-                        />
-                    </Center>
-                    <VStack spacing={4}>
-                        <Heading fontWeight={600}>No results found</Heading>
-                        <Heading size={"sm"} fontWeight={400}>
-                            Try adjusting your search or filter to find what
-                            you're looking for.
-                        </Heading>
-                        <Button
-                            onClick={() => router.push("/browse")}
-                            mt={2}
-                            leftIcon={<Icon as={MdArrowBackIos} />}
-                            variant={"link"}
-                            size={"md"}
-                            colorScheme="messenger"
-                        >
-                            Back to Browse
-                        </Button>
-                    </VStack>
+                        Back to Browse
+                    </Button>
                 </VStack>
-            </Center>
-        </VStack>
+            </VStack>
+        </Center>
     );
 };
 const LoadingScreen = () => {
     return (
-        <Center flex={1} height={"full"} pt={"180px"}>
+        <Center height={"80vh"} w={"full"}>
             <Spinner />
         </Center>
     );

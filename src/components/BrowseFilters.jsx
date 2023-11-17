@@ -22,6 +22,7 @@ import {
     InputRightAddon,
     InputRightElement,
     IconButton,
+    Spinner,
 } from "@chakra-ui/react";
 import {
     MdAdd,
@@ -140,7 +141,7 @@ const LocationFilter = () => {
     const [selectedLocationName, setSelectedLocationName] = useState();
     const [selectedLocation, setSelectedLocation] = useState();
     const [locations, setLocations] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const [locQ, setLocQ] = useState();
     const [zip, setZip] = useState();
 
@@ -150,6 +151,7 @@ const LocationFilter = () => {
         if (res.data.length === 1) {
             setSelectedLocationName(res.data[0].name);
         }
+        setLoading(false);
     };
     const debouncedLoadQuery = debounce(loadQueryLocations, 500);
     const loadZipLocations = async () => {
@@ -158,11 +160,14 @@ const LocationFilter = () => {
         if (res.data.length === 1) {
             setSelectedLocationName(res.data[0].name);
         }
+        setLoading(false);
     };
 
     useEffect(() => {
         if (zip && zip.length > 4) {
-            loadZipLocations();
+            setLoading(true);
+            loadZipLocations(zip);
+            setLoading(false);
         }
     }, [zip]);
     useEffect(() => {
@@ -197,10 +202,10 @@ const LocationFilter = () => {
                             <Input
                                 placeholder={"City Name"}
                                 flex={1}
-                                onChange={(e) =>
-                                    debouncedLoadQuery(e.target.value)
-                                }
-                                borderRightRadius={0}
+                                onChange={(e) => {
+                                    setLoading(true);
+                                    debouncedLoadQuery(e.target.value);
+                                }}
                             />
                             <Text mx={2}>or</Text>
                             <Input
@@ -209,20 +214,28 @@ const LocationFilter = () => {
                                 onChange={(e) => setZip(e.target.value)}
                             />
                         </HStack>
-                        <Select
-                            mb={2}
-                            value={selectedLocationName}
-                            onChange={(e) =>
-                                setSelectedLocationName(e.target.value)
-                            }
-                        >
-                            <option value={""}>None</option>
-                            {locations.map((l) => (
-                                <option value={l.name}>
-                                    {l.name}, {l.state}
-                                </option>
-                            ))}
-                        </Select>
+                        <HStack>
+                            <Select
+                                mb={2}
+                                icon={
+                                    loading && (
+                                        <Spinner colorScheme={"blackAlpha"} />
+                                    )
+                                }
+                                value={selectedLocationName}
+                                onChange={(e) =>
+                                    setSelectedLocationName(e.target.value)
+                                }
+                                isDisabled={loading}
+                            >
+                                <option value={""}>None</option>
+                                {locations.map((l) => (
+                                    <option value={l.name}>
+                                        {l.name}, {l.state}
+                                    </option>
+                                ))}
+                            </Select>
+                        </HStack>
                         {selectedLocation && (
                             <Box
                                 height={200}

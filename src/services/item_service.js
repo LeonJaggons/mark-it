@@ -1,4 +1,5 @@
 import { fireStorage, fireStore } from "@/firebase/firebase-init";
+import { setCategories } from "@/redux/reducer/itemSlice";
 import { store } from "@/redux/store";
 import { faker } from "@faker-js/faker";
 import axios from "axios";
@@ -167,4 +168,19 @@ export const deleteLikeItem = async (itemID) => {
 export const getItemCategories = async () => {
     const res = await axios.get("/api/category");
     return [...res.data];
+};
+
+export const loadItemCategories = async () => {
+    const cats = await getItemCategories();
+    store.dispatch(setCategories(cats));
+};
+
+export const getClosestCity = async (location) => {
+    const res = await axios.get(`/api/city/closest`, {
+        params: {
+            lat: location.latitude,
+            lng: location.longitude,
+        },
+    });
+    return res.data;
 };

@@ -1,9 +1,15 @@
 import { toggleShowLogin } from "@/redux/reducer/appSlice";
-import { deleteLikeItem, isItemLiked, likeItem } from "@/services/item_service";
+import {
+    deleteLikeItem,
+    getClosestCity,
+    isItemLiked,
+    likeItem,
+} from "@/services/item_service";
 import { sendMessage } from "@/services/message_service";
 import {
     Box,
     Button,
+    Center,
     HStack,
     Heading,
     Icon,
@@ -21,6 +27,7 @@ import {
     useMediaQuery,
 } from "@chakra-ui/react";
 import GoogleMapReact from "google-map-react";
+import { zip } from "lodash";
 import moment from "moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,6 +37,7 @@ import {
     MdArrowBack,
     MdBookmarkAdd,
     MdBookmarkRemove,
+    MdClose,
     MdMoreHoriz,
     MdSend,
     MdShare,
@@ -40,6 +48,7 @@ export const MarkItItemDisplay = (props) => {
     const [showMessage, setShowMessage] = useState(false);
     const [selectedImage, setSelectedImage] = useState(0);
     const [useSmallLayout] = useMediaQuery("(max-width: 1100px)");
+    const [city, setCity] = useState();
     const [onPost, setOnPost] = useState(false);
     const loggedIn = useSelector((state) => state.account.loggedIn);
     const user = useSelector((state) => state.account.user);
@@ -52,178 +61,191 @@ export const MarkItItemDisplay = (props) => {
             setOnPost(router.pathname.includes("post"));
         }
     }, [router]);
+    const loadCity = async () => {
+        const closestCity = await getClosestCity(props.item.location);
+        console.log("THISNFSF");
+        console.log(closestCity);
+        setCity(closestCity);
+    };
+    useEffect(() => {
+        props.item.location && loadCity();
+    }, [props.item]);
     return (
-        <Box w={"full"} flex={1}>
-            <Box shadow={"none"}>
-                <Stack
-                    direction={useSmallLayout ? "column" : "row"}
-                    flex={2}
-                    height={"100%"}
+        <Stack
+            direction={useSmallLayout ? "column" : "row"}
+            flex={2}
+            overflow={"hidden"}
+            height={"100%"}
+        >
+            <VStack
+                flex={3}
+                height={"100%"}
+                w={"full"}
+                align={"flex-start"}
+                position={"relative"}
+            >
+                <Image
+                    position={"absolute"}
+                    left={0}
+                    top={0}
+                    src={props.item.images[selectedImage]}
+                    w={"full"}
+                    h={"full"}
+                    objectFit={"cover"}
+                ></Image>
+                <VStack
+                    zIndex={999}
+                    position={"absolute"}
+                    w={"full"}
+                    h={"full"}
                 >
-                    <VStack
-                        flex={1}
-                        height={"100%"}
-                        w={"full"}
-                        align={"flex-start"}
-                        position={"relative"}
+                    <Box flex={1}></Box>
+                    <HStack
+                        // w={"full"}
+                        alignSelf={"center"}
+                        padding={2}
+                        backgroundColor={"blackAlpha.600"}
+                        borderRadius={5}
+                        mb={1}
                     >
-                        <Box position={"relative"} w={"full"}>
-                            <Image
-                                src={props.item.images[selectedImage]}
-                                objectFit={"cover"}
-                                w={"full"}
-                                height={"full"}
-                                borderRadius={5}
-                            ></Image>
-                        </Box>
-                        <HStack
-                            position={"absolute"}
-                            bottom={2}
-                            alignSelf={"center"}
-                            overflowX={"scroll"}
-                            padding={2}
-                            backgroundColor={"blackAlpha.600"}
-                            borderRadius={5}
-                        >
-                            {props.items &&
-                                props.item.images.map((i, index) => (
-                                    <Image
-                                        filter={
-                                            index === selectedImage &&
-                                            "brightness(90%)"
-                                        }
-                                        borderWidth={
-                                            index === selectedImage && 2
-                                        }
-                                        borderColor={"messenger.600"}
-                                        borderStyle={"solid"}
-                                        borderRadius={5}
-                                        src={i}
-                                        cursor={"pointer"}
-                                        height={"55px"}
-                                        aspectRatio={1}
-                                        objectFit={"cover"}
-                                        onClick={() => setSelectedImage(index)}
-                                    />
-                                ))}
-                        </HStack>
-                        {!props.isPreview && (
-                            <IconButton
-                                as={Link}
-                                href={
-                                    props.fromSaved && props.fromSaved == "true"
-                                        ? "/saved"
-                                        : "/"
-                                }
-                                aria-label="Back to browse"
-                                icon={<Icon as={MdArrowBack} />}
-                                position={"absolute"}
-                                top={2}
-                                left={2}
-                            />
-                        )}
-                    </VStack>
-                    <Box flex={1} padding={4} height={"100%"}>
-                        <VStack
-                            align={"flex-start"}
-                            spacing={1}
-                            height={"100%"}
-                        >
-                            <Heading size={"lg"}>
-                                {props.item.title ? props.item.title : "Title"}
-                            </Heading>
-                            <Heading size={"md"} fontWeight={700} my={1}>
-                                {props.item.price
-                                    ? `$${props.item.price}`
-                                    : `Price`}
-                            </Heading>
+                        {props.item &&
+                            props.item.images.map((i, index) => (
+                                <Image
+                                    filter={
+                                        index === selectedImage &&
+                                        "brightness(90%)"
+                                    }
+                                    borderWidth={index === selectedImage && 2}
+                                    borderColor={"messenger.600"}
+                                    borderStyle={"solid"}
+                                    borderRadius={5}
+                                    src={i}
+                                    cursor={"pointer"}
+                                    height={"55px"}
+                                    aspectRatio={1}
+                                    objectFit={"cover"}
+                                    onClick={() => setSelectedImage(index)}
+                                />
+                            ))}
+                    </HStack>
+                </VStack>
+                {!props.isPreview && (
+                    <IconButton
+                        onClick={() => router.back()}
+                        aria-label="Back to browse"
+                        icon={<Icon as={MdClose} boxSize={"26px"} />}
+                        rounded={"full"}
+                        colorScheme={"blackAlpha"}
+                        size={"lg"}
+                        zIndex={999}
+                        position={"absolute"}
+                        top={2}
+                        left={2}
+                    />
+                )}
+            </VStack>
+            <Box flex={1} padding={4} bg={"white"} zIndex={999}>
+                <VStack align={"flex-start"} spacing={1} height={"100%"}>
+                    <Heading size={"lg"}>
+                        {props.item.title ? props.item.title : "Title"}
+                    </Heading>
+                    <Heading size={"md"} fontWeight={700} my={1}>
+                        {props.item.price ? `$${props.item.price}` : `Price`}
+                    </Heading>
+                    <Heading
+                        size={"xs"}
+                        fontWeight={400}
+                        color={"blackAlpha.800"}
+                        mb={2}
+                    >
+                        Posted {moment().format("MMMM D, YYYY")}
+                    </Heading>
+                    {props.item.category && (
+                        <Tag p={2} variant={"outline"}>
+                            <Icon as={MdApps} mr={2} />
                             <Heading
                                 size={"xs"}
-                                fontWeight={400}
+                                fontWeight={600}
                                 color={"blackAlpha.800"}
-                                mb={2}
                             >
-                                Posted {moment().format("MMMM D, YYYY")}
+                                {props.item.category}
                             </Heading>
-                            {props.item.category && (
-                                <Tag p={2} variant={"outline"}>
-                                    <Icon as={MdApps} mr={2} />
-                                    <Heading
-                                        size={"xs"}
-                                        fontWeight={600}
-                                        color={"blackAlpha.800"}
-                                    >
-                                        {props.item.category}
-                                    </Heading>
-                                </Tag>
-                            )}
-                            <HStack my={4} w={"full"}>
-                                <LikeButton itemID={props.item.itemID} />
-                                <ShareButton />
-                                <MoreButton />
-                            </HStack>
+                        </Tag>
+                    )}
+                    <HStack my={4} w={"full"}>
+                        <LikeButton itemID={props.item.itemID} />
+                        <ShareButton />
+                        <MoreButton />
+                    </HStack>
 
-                            <Heading size={"sm"}>Description</Heading>
-                            <Text fontSize={14}>{props.item.description}</Text>
+                    <Heading size={"sm"}>Description</Heading>
+                    <Text fontSize={14}>{props.item.description}</Text>
 
-                            <Heading size={"sm"} mt={4}>
-                                Location
+                    <Heading size={"sm"} mt={4} mb={2}>
+                        Location
+                    </Heading>
+                    {props.item.location && (
+                        <div
+                            style={{
+                                height: 180,
+                                width: "100%",
+                                borderRadius: 5,
+                                overflow: "hidden",
+                            }}
+                        >
+                            <GoogleMapReact
+                                defaultCenter={{
+                                    lat: props.item.location.latitude,
+                                    lng: props.item.location.longitude,
+                                }}
+                                options={{
+                                    fullscreenControl: false,
+                                    zoomControl: false,
+                                    panControl: false,
+                                    gestureHandling: "none",
+                                }}
+                                zoom={15}
+                            />
+                        </div>
+                    )}
+                    {city && (
+                        <>
+                            <Heading size={"sm"} mt={2}>
+                                {city.name}, {city.abbrev}
                             </Heading>
-                            {props.item.location && (
-                                <div
-                                    style={{
-                                        height: 180,
-                                        width: "100%",
-                                        borderRadius: 5,
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    <GoogleMapReact
-                                        defaultCenter={{
-                                            lat: props.item.location.latitude,
-                                            lng: props.item.location.longitude,
-                                        }}
-                                        options={{
-                                            fullscreenControl: false,
-                                            zoomControl: false,
-                                            panControl: false,
-                                            gestureHandling: "none",
-                                        }}
-                                        zoom={15}
-                                    />
-                                </div>
-                            )}
-                            <Box flex={1} />
-                            {user && user.userID !== props.item.userID && (
-                                <VStack w={"full"}>
-                                    {/* <Button
+                            <Text fontSize={"sm"} color={"blackAlpha.600"}>
+                                Location is approximate
+                            </Text>
+                        </>
+                    )}
+                    <Box flex={1} />
+                    {user && user.userID !== props.item.userID && (
+                        <VStack w={"full"}>
+                            {/* <Button
                                     w={"full"}
                                     colorScheme={"messenger"}
                                     isDisabled={props.isPreview}
                                 >
                                     Make an Offer
                                 </Button> */}
-                                    <Button
-                                        w={"full"}
-                                        isDisabled={props.isPreview}
-                                        onClick={openMessage}
-                                        colorScheme={"messenger"}
-                                    >
-                                        Message Seller
-                                    </Button>
-                                    <MessageSellerModal
-                                        visible={showMessage}
-                                        item={props.item}
-                                        close={closeMessage}
-                                    />
-                                </VStack>
-                            )}
+                            <Button
+                                w={"full"}
+                                isDisabled={props.isPreview}
+                                onClick={openMessage}
+                                colorScheme={"messenger"}
+                            >
+                                Message Seller
+                            </Button>
+                            <MessageSellerModal
+                                visible={showMessage}
+                                item={props.item}
+                                close={closeMessage}
+                            />
                         </VStack>
-                    </Box>
-                </Stack>
+                    )}
+                </VStack>
             </Box>
-            {!onPost && <Heading mt={6}>More Content</Heading>}
-        </Box>
+        </Stack>
     );
 };
 

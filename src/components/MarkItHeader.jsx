@@ -171,17 +171,18 @@ const MarkItMenu = () => {
     }, [loggedIn]);
 
     return (
-        <HStack spacing={8}>
+        <HStack spacing={6}>
             {loggedIn && (
                 <Button
                     leftIcon={<Icon as={MdAdd} />}
                     as={NextLink}
+                    variant={"ghost"}
                     href={"/post"}
                     size={"sm"}
-                    fontSize={12}
+                    fontSize={"14px"}
                     colorScheme={"messenger"}
                 >
-                    Post an Item
+                    Post Item
                 </Button>
             )}
 
@@ -196,7 +197,6 @@ const MarkItMenu = () => {
                 />
             ))}
             {loggedIn && <UserAvatar />}
-            <MarkItLoginModal />
         </HStack>
     );
 };
@@ -285,13 +285,13 @@ const MarkItMenuItem = ({ label, onClick, href, icon }) => {
             }}
         >
             <VStack spacing={0}>
-                <p style={{ whiteSpace: "nowrap", fontSize: 12 }}>{label}</p>
+                <p style={{ whiteSpace: "nowrap", fontSize: 14 }}>{label}</p>
             </VStack>
         </Link>
     );
 };
 
-const MarkItLoginModal = () => {
+export const MarkItLoginModal = () => {
     const [readOnly, setReadOnly] = useState(true);
     const dispatch = useDispatch();
     const [canSubmit, setCanSubmit] = useState(false);
@@ -375,12 +375,13 @@ const MarkItLoginModal = () => {
     };
     return (
         <Modal isOpen={!loggedIn && showLogin} onClose={handleClose} isCentered>
-            <ModalOverlay />
+            <ModalOverlay zIndex={999} />
             <ModalContent
                 minH={"320px"}
                 borderRadius={5}
                 overflow={"hidden"}
                 borderWidth={0}
+                zIndex={9999}
             >
                 <ModalBody p={0}>
                     <Tabs

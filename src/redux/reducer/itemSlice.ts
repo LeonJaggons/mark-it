@@ -31,6 +31,7 @@ export interface ItemState {
     focusedMessage: any;
     selectedCategory?: string;
     filters: any;
+    categories?: any;
 }
 
 const EmptyFilters = {
@@ -46,6 +47,7 @@ const initialState: ItemState = {
     focusedMessage: null,
     selectedCategory: null,
     filters: EmptyFilters,
+    categories: [],
 };
 
 const itemSlice = createSlice({
@@ -85,9 +87,16 @@ const itemSlice = createSlice({
                 category: action.payload,
             };
         },
+        setCategories: (state, action: PayloadAction<any>) => {
+            state.categories = action.payload;
+        },
     },
 });
 
-export const { setPostItem, setFocusedMessage, setSelectedCategory } =
-    itemSlice.actions;
+export const {
+    setPostItem,
+    setFocusedMessage,
+    setSelectedCategory,
+    setCategories,
+} = itemSlice.actions;
 export default itemSlice.reducer;

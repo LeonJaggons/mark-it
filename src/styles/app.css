@@ -31,6 +31,7 @@ body {
     background-color: white;
     position: sticky;
     justify-content: space-between;
+    font-size: 18px;
     padding: 16px 5vw;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -53,6 +54,6 @@ body {
 
 .mark-it-menu-item {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 12px !important;
     text-decoration: none !important;
 }

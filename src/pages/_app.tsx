@@ -1,4 +1,4 @@
-import MarkItHeader from "@/components/MarkItHeader";
+import MarkItHeader, { MarkItLoginModal } from "@/components/MarkItHeader";
 import "@/firebase/firebase-init";
 import { fireAuth, fireStore } from "@/firebase/firebase-init";
 import { RootState, store } from "@/redux/store";
@@ -11,15 +11,17 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Provider as ReduxProvider, useSelector } from "react-redux";
 
-import { BrowseFilters } from "@/components/BrowseFilters";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { loadItemCategories } from "@/services/item_service";
 
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const [onPost, setOnPost] = useState<boolean>(false);
+    const [onItem, setOnItem] = useState<boolean>(false);
     const [onBrowse, setOnBrowse] = useState<boolean>(false);
     useEffect(() => {
         // loginUser(true);
+        loadItemCategories();
         onAuthStateChanged(fireAuth, (fbUser) => {
             if (fbUser?.uid) {
                 getUserFromFBUser(fbUser).then((user) => {
@@ -35,6 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
     useEffect(() => {
         if (router.isReady) {
             setOnPost(router.pathname.includes("post"));
+            setOnItem(router.pathname.includes("item"));
             setOnBrowse(router.pathname.includes("browse"));
         }
     }, [router]);
@@ -44,19 +47,24 @@ export default function App({ Component, pageProps }: AppProps) {
             <LocationProvider>
                 <ChakraProvider>
                     <div id={"mi-app-container"}>
-                        {!onPost && <MarkItHeader />}
+                        {!onPost && !onItem && <MarkItHeader />}
                         <Stack
                             direction={onBrowse ? "row" : "column"}
-                            px={!onPost && "5vw"}
-                            py={!onPost && "16px"}
-                            height={!onPost ? "fit-content" : "100vh"}
+                            // px={!onPost && "5vw"}
+                            // py={!onPost && "16px"}
+                            height={
+                                !onPost && !onItem
+                                    ? "calc(100vh - 69px)"
+                                    : "100vh"
+                            }
                             flex={1}
                         >
-                            {onBrowse && <BrowseFilters></BrowseFilters>}
                             <Box
                                 id={"mi-content"}
                                 flex={1}
                                 h={"100%"}
+                                px={!onPost && !onItem && "5%"}
+                                pt={!onPost && !onItem && 4}
                                 // overflowY={"scroll"}
                             >
                                 <Component {...pageProps} />
@@ -66,6 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         <Heading>Footer</Heading>
                     </Box> */}
                     </div>
+                    <MarkItLoginModal />
                 </ChakraProvider>
             </LocationProvider>
         </ReduxProvider>

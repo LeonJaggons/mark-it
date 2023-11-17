@@ -239,15 +239,16 @@ export const MessageInbox = () => {
                         }}
                     />
                 </InputGroup>
+                <VStack w={"full"} spacing={1} pt={2}>
+                    {messages.map((m) => (
+                        <InboxItem message={m} key={"CHAT-" + m.messageID} />
+                    ))}
+                </VStack>
             </Box>
-            <VStack w={"full"} spacing={1} p={4} pt={2}>
-                {messages.map((m) => (
-                    <InboxItem message={m} key={"CHAT-" + m.messageID} />
-                ))}
-            </VStack>
         </Card>
     );
 };
+
 const InboxItem = (props) => {
     const [item, setItem] = useState();
     const focusedMessage = useSelector((state) => state.item.focusedMessage);

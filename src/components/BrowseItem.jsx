@@ -59,7 +59,7 @@ export const BrowseItem = (props) => {
         >
             <VStack
                 as={Link}
-                href={`/item?id=${props.item.itemID}&fromSaved=${props.fromSaved}`}
+                href={`/item?id=${props.item.itemID}`}
                 w={"full"}
                 align={"flex-start"}
                 spacing={1}
